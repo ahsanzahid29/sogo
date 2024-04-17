@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +15,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('login.login');
 });
+Route::get('/forget-password',function(){
+    return view('login.forget-password');
+});
+Route::get('/reset-password', function(){
+    return view('login.reset-password');
+});
+Route::get('/dashboard',function(){
+    return view('dashboard.dashboard');
+});
+Route::get('/users-list',[UserController::class,'index']);
+Route::get('/user-add',[UserController::class,'add']);
+Route::post('/user-save',[UserController::class,'save']);
