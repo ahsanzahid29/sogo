@@ -18,4 +18,12 @@ class UserController extends Controller
         return redirect('/users-list');
 
     }
+
+    public function editProfile(){
+        return view('profile.edit-profile');
+    }
+
+    public function updateProfile(Request $request){
+        return redirect('/dashboard');
+    }
 }

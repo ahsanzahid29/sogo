@@ -88,7 +88,7 @@
                     <!--begin:Menu item-->
                     <div class="menu-item">
                         <!--begin:Menu link-->
-                        <a class="menu-link" href="list-inverters.php">
+                        <a class="menu-link" href="{{ url('/inverters-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-text-align-center fs-2">
 														<span class="path1"></span>
@@ -108,7 +108,7 @@
                     <!--begin:Menu item-->
                     <div class="menu-item">
                         <!--begin:Menu link-->
-                        <a class="menu-link" href="inventory-inverter.php">
+                        <a class="menu-link" href="{{ url('/inverters-inventory-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-text-align-center fs-2">
 														<span class="path1"></span>
@@ -137,7 +137,7 @@
                     <!--begin:Menu item-->
                     <div class="menu-item">
                         <!--begin:Menu link-->
-                        <a class="menu-link" href="sparepart-list.php">
+                        <a class="menu-link" href="{{ url('/spareparts-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-abstract-28 fs-2">
 														<span class="path1"></span>
@@ -156,7 +156,7 @@
                     <!--begin:Menu item-->
                     <div class="menu-item">
                         <!--begin:Menu link-->
-                        <a class="menu-link" href="sparepartsinventory-list.php">
+                        <a class="menu-link" href="{{ url('/sparepart-inventory-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-abstract-28 fs-2">
 														<span class="path1"></span>
@@ -268,7 +268,7 @@
                     <!--begin:Menu item-->
                     <div class="menu-item">
                         <!--begin:Menu link-->
-                        <a class="menu-link" href="edit-profile.php">
+                        <a class="menu-link" href="{{ url('edit-profile') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-user fs-2">
 														<span class="path1"></span>
