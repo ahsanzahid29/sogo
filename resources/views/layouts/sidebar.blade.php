@@ -184,7 +184,7 @@
                     <!--begin:Menu item-->
                     <div class="menu-item">
                         <!--begin:Menu link-->
-                        <a class="menu-link" href="invoice-spaerpart-list.php">
+                        <a class="menu-link" href="{{ url('/invoice-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-abstract-38 fs-2">
 														<span class="path1"></span>
@@ -212,7 +212,7 @@
                     <!--begin:Menu item-->
                     <div class="menu-item">
                         <!--begin:Menu link-->
-                        <a class="menu-link" href="deliverynote-list.php">
+                        <a class="menu-link" href="{{ url('/deliverynote-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-credit-cart fs-2">
 														<span class="path1"></span>
@@ -240,7 +240,7 @@
                     <!--begin:Menu item-->
                     <div class="menu-item">
                         <!--begin:Menu link-->
-                        <a class="menu-link" href="repairticket-list.php">
+                        <a class="menu-link" href="{{ url('/repairticket-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-abstract-26 fs-2">
 														<span class="path1"></span>
