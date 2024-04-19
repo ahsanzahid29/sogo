@@ -6,6 +6,9 @@ use App\Http\Controllers\InverterController;
 use App\Http\Controllers\InverterInventoryController;
 use App\Http\Controllers\SparePartsController;
 use App\Http\Controllers\SparePartsInventoryController;
+use App\Http\Controllers\SparePartsInvoiceController;
+use App\Http\Controllers\DeliveryNoteController;
+use App\Http\Controllers\RepairTicketController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,4 +46,16 @@ Route::post('/sparepart-save',[SparePartsController::class,'save']);
 Route::get('/sparepart-inventory-list',[SparePartsInventoryController::class,'index']);
 Route::get('/edit-profile',[UserController::class,'editProfile']);
 Route::post('/update-profile',[UserController::class,'updateProfile']);
+Route::get('/invoice-list',[SparePartsInvoiceController::class,'index']);
+Route::get('/invoice-add',[SparePartsInvoiceController::class,'add']);
+Route::post('/invoice-save',[SparePartsInvoiceController::class,'save']);
+Route::get('/deliverynote-list',[DeliveryNoteController::class,'index']);
+Route::get('/deliverynote-add',[DeliveryNoteController::class,'add']);
+Route::post('/deliverynote-save',[DeliveryNoteController::class,'save']);
+Route::get('/repairticket-list',[RepairTicketController::class,'index']);
+Route::get('/all-repairtickets',[RepairTicketController::class,'allTickets']);
+
+
+
+
 
