@@ -286,8 +286,9 @@
                     <!--end:Menu item-->
                     <!--begin:Menu item-->
                     <div class="menu-item">
-                        <!--begin:Menu link-->
-                        <a class="menu-link" href="index.php">
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <a class="menu-link" onclick="event.preventDefault(); this.closest('form').submit();">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-map fs-2">
 														<span class="path1"></span>
@@ -298,8 +299,11 @@
 														<span class="path6"></span>
 													</i>
 												</span>
-                            <span class="menu-title">Logout</span>
-                        </a>
+                                <span class="menu-title">Logout</span>
+                            </a>
+                        </form>
+                        <!--begin:Menu link-->
+
                         <!--end:Menu link-->
                     </div>
                     <!--end:Menu item-->

@@ -59,6 +59,7 @@
                         <!--end::Menu separator-->
                         <!--begin::Menu item-->
                         <div class="menu-item px-5">
+
                             <a href="#" class="menu-link px-5">My Profile</a>
                         </div>
                         <!--end::Menu item-->
@@ -67,7 +68,11 @@
                         <!--end::Menu separator-->
                         <!--begin::Menu item-->
                         <div class="menu-item px-5">
-                            <a href="{{url('/')}}" class="menu-link px-5">Sign Out</a>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <a class="menu-link px-5"
+                                        onclick="event.preventDefault(); this.closest('form').submit();">Sign Out</a>
+                            </form>
                         </div>
                         <!--end::Menu item-->
                     </div>
