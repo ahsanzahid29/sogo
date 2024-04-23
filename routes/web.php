@@ -22,17 +22,13 @@ use App\Http\Controllers\RepairTicketController;
 */
 
 Route::get('/', function () {
-    return view('login.login');
+    return view('auth.login');
 });
-Route::get('/forget-password',function(){
-    return view('login.forget-password');
-});
-Route::get('/reset-password', function(){
-    return view('login.reset-password');
-});
-Route::get('/dashboard',function(){
+
+Route::get('/dashboard', function () {
     return view('dashboard.dashboard');
-});
+})->middleware(['auth'])->name('dashboard');
+
 Route::get('/users-list',[UserController::class,'index']);
 Route::get('/user-add',[UserController::class,'add']);
 Route::post('/user-save',[UserController::class,'save']);
@@ -55,7 +51,4 @@ Route::post('/deliverynote-save',[DeliveryNoteController::class,'save']);
 Route::get('/repairticket-list',[RepairTicketController::class,'index']);
 Route::get('/all-repairtickets',[RepairTicketController::class,'allTickets']);
 
-
-
-
-
+require __DIR__.'/auth.php';
