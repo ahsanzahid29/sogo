@@ -40,11 +40,22 @@
             <div class="d-flex flex-center flex-column flex-lg-row-fluid">
                 <!--begin::Wrapper-->
                 <div class="w-lg-500px p-10">
+                    <!--message when password is reset-->
                     @if ($message = Session::get('status'))
                         <div class="alert alert-success mt-2" role="alert">
                             {{ $message }}
                         </div>
                     @endif
+                    <!-- validation error -->
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                     <!--begin::Form-->
                     <form class="form w-100" method="POST"  action="{{ route('login') }}">
                         @csrf
