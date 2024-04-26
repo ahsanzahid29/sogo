@@ -66,6 +66,48 @@
                                 <input type="email" class="form-control form-control-solid" placeholder="User Email" value="{{$user->email}}" disabled/>
                             </div>
                             <div class="mb-10">
+                                <label for="exampleFormControlInput1" class="required form-label">Phone No 1</label>
+                                <input type="text" class="form-control form-control-solid" placeholder="Phone No 1" name ="phoneno_1" value="{{ $user->phoneno_1 }}"/>
+                                @error('phoneno_1')
+                                <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="mb-10">
+                                <label for="exampleFormControlInput1" class="required form-label">Phone No 2</label>
+                                <input type="text" class="form-control form-control-solid" placeholder="Phone No 2" name ="phoneno_2" value="{{ $user->phoneno_2 }}"/>
+                                @error('phoneno_2')
+                                <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="mb-10">
+                                <label for="exampleFormControlInput1" class="required form-label">Address</label>
+                                <textarea class="form-control form-control-solid" placeholder="Address" name ="address">{{ $user->address }}</textarea>
+                                @error('address')
+                                <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="mb-10">
+                                <label for="exampleFormControlInput1" class="required form-label">Billing Address</label>
+                                <textarea class="form-control form-control-solid" placeholder="Billing Address" name ="billing_address">{{ $user->billing_address }}</textarea>
+                                @error('billing_address')
+                                <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="mb-10">
+                                <label for="exampleFormControlInput1" class="required form-label">Shipping Address</label>
+                                <textarea class="form-control form-control-solid" placeholder="Shipping Address" name ="shipping_address">{{$user->shipping_address}}</textarea>
+                                @error('shipping_address')
+                                <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="mb-10">
+                                <label for="exampleFormControlInput1" class="required form-label">Working Hours</label>
+                                <input type="text" class="form-control form-control-solid" placeholder="Working Hours" name ="working_hours" value="{{$user->working_hours}}"/>
+                                @error('working_hours')
+                                <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="mb-10">
                                 <label for="exampleFormControlInput1" class="form-label">User Role</label>
                                 <select class="form-select form-select-solid" disabled aria-label="Select example" >
                                     <option value="0">Select Role</option>
