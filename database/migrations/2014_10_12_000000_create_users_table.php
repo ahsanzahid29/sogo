@@ -21,6 +21,12 @@ class CreateUsersTable extends Migration
             $table->string('password')->nullable();
             $table->unsignedBigInteger('role_id');
             $table->string('profile_pic')->nullable();
+            $table->string('phoneno_1')->nullable();
+            $table->string('phoneno_2')->nullable();
+            $table->text('address')->nullable();
+            $table->text('billing_address')->nullable();
+            $table->text('shipping_address')->nullable();
+            $table->string('working_hours')->nullable();
             $table->enum('status', ['active', 'inactive','deleted']);
             $table->rememberToken();
             $table->timestamps();

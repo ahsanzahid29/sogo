@@ -39,9 +39,16 @@ class UserController extends Controller
 
         if ($request->all()) {
             $this->validate($request, [
-                'name'    => 'required',
-                'email'         => 'required|unique:users,email',
-                'role'       => 'required|not_in:0',
+                'name'             => 'required',
+                'email'            => 'required|unique:users,email',
+                'role'             => 'required|not_in:0',
+                'phoneno_1'        => 'required',
+                'phoneno_2'        => 'required',
+                'address'          =>  'required',
+                'billing_address'  => 'required',
+                'shipping_address' => 'required',
+                'working_hours'    =>  'required'
+
             ]);
             DB::beginTransaction();
             try {
@@ -51,7 +58,13 @@ class UserController extends Controller
                         'name' => $request->name,
                         'email' => $request->email,
                         'role_id' => $request->role,
-                        'status' => $request->status
+                        'status' => $request->status,
+                        'phoneno_1' => $request->phoneno_1,
+                        'phoneno_2' => $request->phoneno_2,
+                        'address' => $request->address,
+                        'billing_address'=> $request->billing_address,
+                        'shipping_address'=> $request->shipping_address,
+                        'working_hours'=> $request->working_hours,
                     ]
                 );
                 // send email to user
@@ -88,12 +101,24 @@ class UserController extends Controller
         if ($request->all()) {
             $this->validate($request, [
                 'name'    => 'required',
+                'phoneno_1'        => 'required',
+                'phoneno_2'        => 'required',
+                'address'          =>  'required',
+                'billing_address'  => 'required',
+                'shipping_address' => 'required',
+                'working_hours'    =>  'required'
             ]);
             DB::beginTransaction();
             try {
                 $newdata = [
                     'name' => $request->name,
                     'status' => $request->status,
+                    'phoneno_1' => $request->phoneno_1,
+                    'phoneno_2' => $request->phoneno_2,
+                    'address' => $request->address,
+                    'billing_address'=> $request->billing_address,
+                    'shipping_address'=> $request->shipping_address,
+                    'working_hours'=> $request->working_hours,
 
                 ];
                 User::where('id', $request->recordid)->update($newdata);
