@@ -3,7 +3,7 @@
     <!--begin::Logo-->
     <div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
         <!--begin::Logo image-->
-        <a href="index.html">
+        <a href="{{ route('dashboard') }}">
             <img alt="Logo" src="{{asset('public/assets/media/logos/default-dark.png')}}" class="h-25px app-sidebar-logo-default" />
             <img alt="Logo" src="{{asset('public/assets/media/logos/default-small.svg')}}" class="h-20px app-sidebar-logo-minimize" />
         </a>
@@ -47,20 +47,21 @@
                         <!--end:Menu link-->
                     </div>
                     <!--end:Menu item-->
-
-                    <!--begin:Menu item-->
-                    <div class="menu-item pt-5">
-                        <!--begin:Menu content-->
-                        <div class="menu-content">
-                            <span class="menu-heading fw-bold text-uppercase fs-7">Users</span>
+                    <!-- begin: sidebar for super admin -->
+                    @if(Auth::user()->role_id==1)
+                        <!--begin:Menu item-->
+                        <div class="menu-item pt-5">
+                            <!--begin:Menu content-->
+                            <div class="menu-content">
+                                <span class="menu-heading fw-bold text-uppercase fs-7">Users</span>
+                            </div>
+                            <!--end:Menu content-->
                         </div>
-                        <!--end:Menu content-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link-->
-                        <a class="menu-link" href="{{ url('/users-list') }}">
+                        <!--end:Menu item-->
+                        <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="{{ url('/users-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-basket fs-2">
 														<span class="path1"></span>
@@ -71,24 +72,24 @@
 														<span class="path6"></span>
 													</i>
 												</span>
-                            <span class="menu-title">Manage Users</span>
-                        </a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item pt-5">
-                        <!--begin:Menu content-->
-                        <div class="menu-content">
-                            <span class="menu-heading fw-bold text-uppercase fs-7">Inverters</span>
+                                <span class="menu-title">Manage Users</span>
+                            </a>
+                            <!--end:Menu link-->
                         </div>
-                        <!--end:Menu content-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link-->
-                        <a class="menu-link" href="{{ url('/inverters-list') }}">
+                        <!--end:Menu item-->
+                        <!--begin:Menu item-->
+                        <div class="menu-item pt-5">
+                            <!--begin:Menu content-->
+                            <div class="menu-content">
+                                <span class="menu-heading fw-bold text-uppercase fs-7">Inverters</span>
+                            </div>
+                            <!--end:Menu content-->
+                        </div>
+                        <!--end:Menu item-->
+                        <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="{{ url('/inverters-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-text-align-center fs-2">
 														<span class="path1"></span>
@@ -99,16 +100,15 @@
 														<span class="path6"></span>
 													</i>
 												</span>
-                            <span class="menu-title">Manage Inverters</span>
-                        </a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link-->
-                        <a class="menu-link" href="{{ url('/inverters-inventory-list') }}">
+                                <span class="menu-title">Manage Inverters</span>
+                            </a>
+                            <!--end:Menu link-->
+                        </div>
+                        <!--end:Menu item-->
+                        <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="{{ url('/inverters-inventory-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-text-align-center fs-2">
 														<span class="path1"></span>
@@ -119,25 +119,25 @@
 														<span class="path6"></span>
 													</i>
 												</span>
-                            <span class="menu-title">Inverters Inventory</span>
-                        </a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
+                                <span class="menu-title">Inverters Inventory</span>
+                            </a>
+                            <!--end:Menu link-->
+                        </div>
+                        <!--end:Menu item-->
 
-                    <!--begin:Menu item-->
-                    <div class="menu-item pt-5">
-                        <!--begin:Menu content-->
-                        <div class="menu-content">
-                            <span class="menu-heading fw-bold text-uppercase fs-7">Spare Parts</span>
+                        <!--begin:Menu item-->
+                        <div class="menu-item pt-5">
+                            <!--begin:Menu content-->
+                            <div class="menu-content">
+                                <span class="menu-heading fw-bold text-uppercase fs-7">Spare Parts</span>
+                            </div>
+                            <!--end:Menu content-->
                         </div>
-                        <!--end:Menu content-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link-->
-                        <a class="menu-link" href="{{ url('/spareparts-list') }}">
+                        <!--end:Menu item-->
+                        <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="{{ url('/spareparts-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-abstract-28 fs-2">
 														<span class="path1"></span>
@@ -148,15 +148,15 @@
 														<span class="path6"></span>
 													</i>
 												</span>
-                            <span class="menu-title">Manage Spare Parts</span>
-                        </a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link-->
-                        <a class="menu-link" href="{{ url('/sparepart-inventory-list') }}">
+                                <span class="menu-title">Manage Spare Parts</span>
+                            </a>
+                            <!--end:Menu link-->
+                        </div>
+                        <!--end:Menu item-->
+                        <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="{{ url('/sparepart-inventory-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-abstract-28 fs-2">
 														<span class="path1"></span>
@@ -167,24 +167,25 @@
 														<span class="path6"></span>
 													</i>
 												</span>
-                            <span class="menu-title">Spare Parts Invertory</span>
-                        </a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item pt-5">
-                        <!--begin:Menu content-->
-                        <div class="menu-content">
-                            <span class="menu-heading fw-bold text-uppercase fs-7">Invoices</span>
+                                <span class="menu-title">Spare Parts Invertory</span>
+                            </a>
+                            <!--end:Menu link-->
                         </div>
-                        <!--end:Menu content-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link-->
-                        <a class="menu-link" href="{{ url('/invoice-list') }}">
+                        <!--end:Menu item-->
+                        <!--begin:Menu item-->
+                        <div class="menu-item pt-5">
+                            <!--begin:Menu content-->
+                            <div class="menu-content">
+                                <span class="menu-heading fw-bold text-uppercase fs-7">Invoices</span>
+                            </div>
+                            <!--end:Menu content-->
+                        </div>
+                        <!--end:Menu item-->
+
+                        <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="{{ url('/invoice-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-abstract-38 fs-2">
 														<span class="path1"></span>
@@ -195,24 +196,25 @@
 														<span class="path6"></span>
 													</i>
 												</span>
-                            <span class="menu-title">Spare Part Invoices</span>
-                        </a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item pt-5">
-                        <!--begin:Menu content-->
-                        <div class="menu-content">
-                            <span class="menu-heading fw-bold text-uppercase fs-7">Delivery Note</span>
+                                <span class="menu-title">Spare Part Invoices</span>
+                            </a>
+                            <!--end:Menu link-->
                         </div>
-                        <!--end:Menu content-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link-->
-                        <a class="menu-link" href="{{ url('/deliverynote-list') }}">
+                        <!--end:Menu item-->
+                        <!--begin:Menu item-->
+                        <div class="menu-item pt-5">
+                            <!--begin:Menu content-->
+                            <div class="menu-content">
+                                <span class="menu-heading fw-bold text-uppercase fs-7">Delivery Note</span>
+                            </div>
+                            <!--end:Menu content-->
+                        </div>
+                        <!--end:Menu item-->
+
+                        <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="{{ url('/deliverynote-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-credit-cart fs-2">
 														<span class="path1"></span>
@@ -223,24 +225,25 @@
 														<span class="path6"></span>
 													</i>
 												</span>
-                            <span class="menu-title">Inverters Delivery Note</span>
-                        </a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item pt-5">
-                        <!--begin:Menu content-->
-                        <div class="menu-content">
-                            <span class="menu-heading fw-bold text-uppercase fs-7">Repair Tickets</span>
+                                <span class="menu-title">Inverters Delivery Note</span>
+                            </a>
+                            <!--end:Menu link-->
                         </div>
-                        <!--end:Menu content-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link-->
-                        <a class="menu-link" href="{{ url('/repairticket-list') }}">
+                        <!--end:Menu item-->
+                        <!--begin:Menu item-->
+                        <div class="menu-item pt-5">
+                            <!--begin:Menu content-->
+                            <div class="menu-content">
+                                <span class="menu-heading fw-bold text-uppercase fs-7">Repair Tickets</span>
+                            </div>
+                            <!--end:Menu content-->
+                        </div>
+                        <!--end:Menu item-->
+
+                        <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="{{ url('/repairticket-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-abstract-26 fs-2">
 														<span class="path1"></span>
@@ -251,11 +254,460 @@
 														<span class="path6"></span>
 													</i>
 												</span>
-                            <span class="menu-title">Manage Repair Tickets</span>
-                        </a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
+                                <span class="menu-title">Manage Repair Tickets</span>
+                            </a>
+                            <!--end:Menu link-->
+                        </div>
+                        <!--end:Menu item-->
+                        @endif
+                    <!-- end: sidebar for super admin -->
+                    <!-- begin: sidebar for  admin -->
+                    @if(Auth::user()->role_id==2)
+                        <!--begin:Menu item-->
+                        <div class="menu-item pt-5">
+                            <!--begin:Menu content-->
+                            <div class="menu-content">
+                                <span class="menu-heading fw-bold text-uppercase fs-7">Inverters</span>
+                            </div>
+                            <!--end:Menu content-->
+                        </div>
+                        <!--end:Menu item-->
+                        <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="{{ url('/inverters-list') }}">
+												<span class="menu-icon">
+													<i class="ki-duotone ki-text-align-center fs-2">
+														<span class="path1"></span>
+														<span class="path2"></span>
+														<span class="path3"></span>
+														<span class="path4"></span>
+														<span class="path5"></span>
+														<span class="path6"></span>
+													</i>
+												</span>
+                                <span class="menu-title">Manage Inverters</span>
+                            </a>
+                            <!--end:Menu link-->
+                        </div>
+                        <!--end:Menu item-->
+                        <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="{{ url('/inverters-inventory-list') }}">
+												<span class="menu-icon">
+													<i class="ki-duotone ki-text-align-center fs-2">
+														<span class="path1"></span>
+														<span class="path2"></span>
+														<span class="path3"></span>
+														<span class="path4"></span>
+														<span class="path5"></span>
+														<span class="path6"></span>
+													</i>
+												</span>
+                                <span class="menu-title">Inverters Inventory</span>
+                            </a>
+                            <!--end:Menu link-->
+                        </div>
+                        <!--end:Menu item-->
+                        <!--begin:Menu item-->
+                        <div class="menu-item pt-5">
+                            <!--begin:Menu content-->
+                            <div class="menu-content">
+                                <span class="menu-heading fw-bold text-uppercase fs-7">Spare Parts</span>
+                            </div>
+                            <!--end:Menu content-->
+                        </div>
+                        <!--end:Menu item-->
+                        <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="{{ url('/spareparts-list') }}">
+												<span class="menu-icon">
+													<i class="ki-duotone ki-abstract-28 fs-2">
+														<span class="path1"></span>
+														<span class="path2"></span>
+														<span class="path3"></span>
+														<span class="path4"></span>
+														<span class="path5"></span>
+														<span class="path6"></span>
+													</i>
+												</span>
+                                <span class="menu-title">Manage Spare Parts</span>
+                            </a>
+                            <!--end:Menu link-->
+                        </div>
+                        <!--end:Menu item-->
+                        <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="{{ url('/sparepart-inventory-list') }}">
+												<span class="menu-icon">
+													<i class="ki-duotone ki-abstract-28 fs-2">
+														<span class="path1"></span>
+														<span class="path2"></span>
+														<span class="path3"></span>
+														<span class="path4"></span>
+														<span class="path5"></span>
+														<span class="path6"></span>
+													</i>
+												</span>
+                                <span class="menu-title">Spare Parts Invertory</span>
+                            </a>
+                            <!--end:Menu link-->
+                        </div>
+                        <!--end:Menu item-->
+                        <!--begin:Menu item-->
+                        <div class="menu-item pt-5">
+                            <!--begin:Menu content-->
+                            <div class="menu-content">
+                                <span class="menu-heading fw-bold text-uppercase fs-7">Invoices</span>
+                            </div>
+                            <!--end:Menu content-->
+                        </div>
+                        <!--end:Menu item-->
+
+                        <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="{{ url('/invoice-list') }}">
+												<span class="menu-icon">
+													<i class="ki-duotone ki-abstract-38 fs-2">
+														<span class="path1"></span>
+														<span class="path2"></span>
+														<span class="path3"></span>
+														<span class="path4"></span>
+														<span class="path5"></span>
+														<span class="path6"></span>
+													</i>
+												</span>
+                                <span class="menu-title">Spare Part Invoices</span>
+                            </a>
+                            <!--end:Menu link-->
+                        </div>
+                        <!--end:Menu item-->
+
+                        <!--begin:Menu item-->
+                        <div class="menu-item pt-5">
+                            <!--begin:Menu content-->
+                            <div class="menu-content">
+                                <span class="menu-heading fw-bold text-uppercase fs-7">Delivery Note</span>
+                            </div>
+                            <!--end:Menu content-->
+                        </div>
+                        <!--end:Menu item-->
+
+                        <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="{{ url('/deliverynote-list') }}">
+												<span class="menu-icon">
+													<i class="ki-duotone ki-credit-cart fs-2">
+														<span class="path1"></span>
+														<span class="path2"></span>
+														<span class="path3"></span>
+														<span class="path4"></span>
+														<span class="path5"></span>
+														<span class="path6"></span>
+													</i>
+												</span>
+                                <span class="menu-title">Inverters Delivery Note</span>
+                            </a>
+                            <!--end:Menu link-->
+                        </div>
+                        <!--end:Menu item-->
+                        <!--begin:Menu item-->
+                        <div class="menu-item pt-5">
+                            <!--begin:Menu content-->
+                            <div class="menu-content">
+                                <span class="menu-heading fw-bold text-uppercase fs-7">Repair Tickets</span>
+                            </div>
+                            <!--end:Menu content-->
+                        </div>
+                        <!--end:Menu item-->
+
+                        <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="{{ url('/repairticket-list') }}">
+												<span class="menu-icon">
+													<i class="ki-duotone ki-abstract-26 fs-2">
+														<span class="path1"></span>
+														<span class="path2"></span>
+														<span class="path3"></span>
+														<span class="path4"></span>
+														<span class="path5"></span>
+														<span class="path6"></span>
+													</i>
+												</span>
+                                <span class="menu-title">Manage Repair Tickets</span>
+                            </a>
+                            <!--end:Menu link-->
+                        </div>
+                        <!--end:Menu item-->
+                    @endif
+                    <!-- end: sidebar for  admin -->
+
+                    <!-- begin: sidebar for  dealer -->
+                    @if(Auth::user()->role_id==3)
+                        <!--begin:Menu item-->
+                        <div class="menu-item pt-5">
+                            <!--begin:Menu content-->
+                            <div class="menu-content">
+                                <span class="menu-heading fw-bold text-uppercase fs-7">Inverters</span>
+                            </div>
+                            <!--end:Menu content-->
+                        </div>
+                        <!--end:Menu item-->
+                        <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="{{ url('/inverters-list') }}">
+												<span class="menu-icon">
+													<i class="ki-duotone ki-text-align-center fs-2">
+														<span class="path1"></span>
+														<span class="path2"></span>
+														<span class="path3"></span>
+														<span class="path4"></span>
+														<span class="path5"></span>
+														<span class="path6"></span>
+													</i>
+												</span>
+                                <span class="menu-title">Manage Inverters</span>
+                            </a>
+                            <!--end:Menu link-->
+                        </div>
+                        <!--end:Menu item-->
+                        <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="{{ url('/inverters-inventory-list') }}">
+												<span class="menu-icon">
+													<i class="ki-duotone ki-text-align-center fs-2">
+														<span class="path1"></span>
+														<span class="path2"></span>
+														<span class="path3"></span>
+														<span class="path4"></span>
+														<span class="path5"></span>
+														<span class="path6"></span>
+													</i>
+												</span>
+                                <span class="menu-title">Inverters Inventory</span>
+                            </a>
+                            <!--end:Menu link-->
+                        </div>
+                        <!--end:Menu item-->
+                        <!--begin:Menu item-->
+                        <div class="menu-item pt-5">
+                            <!--begin:Menu content-->
+                            <div class="menu-content">
+                                <span class="menu-heading fw-bold text-uppercase fs-7">Delivery Note</span>
+                            </div>
+                            <!--end:Menu content-->
+                        </div>
+                        <!--end:Menu item-->
+
+                        <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="{{ url('/deliverynote-list') }}">
+												<span class="menu-icon">
+													<i class="ki-duotone ki-credit-cart fs-2">
+														<span class="path1"></span>
+														<span class="path2"></span>
+														<span class="path3"></span>
+														<span class="path4"></span>
+														<span class="path5"></span>
+														<span class="path6"></span>
+													</i>
+												</span>
+                                <span class="menu-title">Inverters Delivery Note</span>
+                            </a>
+                            <!--end:Menu link-->
+                        </div>
+                        <!--end:Menu item-->
+                        <!--begin:Menu item-->
+                        <div class="menu-item pt-5">
+                            <!--begin:Menu content-->
+                            <div class="menu-content">
+                                <span class="menu-heading fw-bold text-uppercase fs-7">Spare Parts</span>
+                            </div>
+                            <!--end:Menu content-->
+                        </div>
+                        <!--end:Menu item-->
+                        <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="{{ url('/spareparts-list') }}">
+												<span class="menu-icon">
+													<i class="ki-duotone ki-abstract-28 fs-2">
+														<span class="path1"></span>
+														<span class="path2"></span>
+														<span class="path3"></span>
+														<span class="path4"></span>
+														<span class="path5"></span>
+														<span class="path6"></span>
+													</i>
+												</span>
+                                <span class="menu-title">Manage Spare Parts</span>
+                            </a>
+                            <!--end:Menu link-->
+                        </div>
+                        <!--end:Menu item-->
+                    @endif
+                    <!-- end: sidebar for  dealer -->
+
+                    <!-- begin: sidebar for  service center -->
+                    @if(Auth::user()->role_id==4)
+
+                        <!--begin:Menu item-->
+                        <div class="menu-item pt-5">
+                            <!--begin:Menu content-->
+                            <div class="menu-content">
+                                <span class="menu-heading fw-bold text-uppercase fs-7">Inverters</span>
+                            </div>
+                            <!--end:Menu content-->
+                        </div>
+                        <!--end:Menu item-->
+                        <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="{{ url('/inverters-list') }}">
+												<span class="menu-icon">
+													<i class="ki-duotone ki-text-align-center fs-2">
+														<span class="path1"></span>
+														<span class="path2"></span>
+														<span class="path3"></span>
+														<span class="path4"></span>
+														<span class="path5"></span>
+														<span class="path6"></span>
+													</i>
+												</span>
+                                <span class="menu-title">Manage Inverters</span>
+                            </a>
+                            <!--end:Menu link-->
+                        </div>
+                        <!--end:Menu item-->
+                        <!--begin:Menu item-->
+                        <div class="menu-item pt-5">
+                            <!--begin:Menu content-->
+                            <div class="menu-content">
+                                <span class="menu-heading fw-bold text-uppercase fs-7">Spare Parts</span>
+                            </div>
+                            <!--end:Menu content-->
+                        </div>
+                        <!--end:Menu item-->
+                        <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="{{ url('/spareparts-list') }}">
+												<span class="menu-icon">
+													<i class="ki-duotone ki-abstract-28 fs-2">
+														<span class="path1"></span>
+														<span class="path2"></span>
+														<span class="path3"></span>
+														<span class="path4"></span>
+														<span class="path5"></span>
+														<span class="path6"></span>
+													</i>
+												</span>
+                                <span class="menu-title">Manage Spare Parts</span>
+                            </a>
+                            <!--end:Menu link-->
+                        </div>
+                        <!--end:Menu item-->
+                        <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="{{ url('/sparepart-inventory-list') }}">
+												<span class="menu-icon">
+													<i class="ki-duotone ki-abstract-28 fs-2">
+														<span class="path1"></span>
+														<span class="path2"></span>
+														<span class="path3"></span>
+														<span class="path4"></span>
+														<span class="path5"></span>
+														<span class="path6"></span>
+													</i>
+												</span>
+                                <span class="menu-title">Spare Parts Invertory</span>
+                            </a>
+                            <!--end:Menu link-->
+                        </div>
+                        <!--end:Menu item-->
+                        <!--begin:Menu item-->
+                        <div class="menu-item pt-5">
+                            <!--begin:Menu content-->
+                            <div class="menu-content">
+                                <span class="menu-heading fw-bold text-uppercase fs-7">Invoices</span>
+                            </div>
+                            <!--end:Menu content-->
+                        </div>
+                        <!--end:Menu item-->
+                        <!--begin:Menu item-->
+                        <div class="menu-item pt-5">
+                            <!--begin:Menu content-->
+                            <div class="menu-content">
+                                <span class="menu-heading fw-bold text-uppercase fs-7">Invoices</span>
+                            </div>
+                            <!--end:Menu content-->
+                        </div>
+                        <!--end:Menu item-->
+
+                        <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="{{ url('/invoice-list') }}">
+												<span class="menu-icon">
+													<i class="ki-duotone ki-abstract-38 fs-2">
+														<span class="path1"></span>
+														<span class="path2"></span>
+														<span class="path3"></span>
+														<span class="path4"></span>
+														<span class="path5"></span>
+														<span class="path6"></span>
+													</i>
+												</span>
+                                <span class="menu-title">Spare Part Invoices</span>
+                            </a>
+                            <!--end:Menu link-->
+                        </div>
+                        <!--end:Menu item-->
+                        <!--begin:Menu item-->
+                        <div class="menu-item pt-5">
+                            <!--begin:Menu content-->
+                            <div class="menu-content">
+                                <span class="menu-heading fw-bold text-uppercase fs-7">Repair Tickets</span>
+                            </div>
+                            <!--end:Menu content-->
+                        </div>
+                        <!--end:Menu item-->
+
+                        <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="{{ url('/repairticket-list') }}">
+												<span class="menu-icon">
+													<i class="ki-duotone ki-abstract-26 fs-2">
+														<span class="path1"></span>
+														<span class="path2"></span>
+														<span class="path3"></span>
+														<span class="path4"></span>
+														<span class="path5"></span>
+														<span class="path6"></span>
+													</i>
+												</span>
+                                <span class="menu-title">Manage Repair Tickets</span>
+                            </a>
+                            <!--end:Menu link-->
+                        </div>
+                        <!--end:Menu item-->
+
+                    @endif
+                    <!-- end: sidebar for  service center -->
+
+
+
                     <!--begin:Menu item-->
                     <div class="menu-item pt-5">
                         <!--begin:Menu content-->

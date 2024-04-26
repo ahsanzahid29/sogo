@@ -46,9 +46,32 @@
                                 <!--end::Avatar-->
                                 <!--begin::Username-->
                                 <div class="d-flex flex-column">
-                                    <div class="fw-bold d-flex align-items-center fs-5">Ahsan Zahid
-                                        <span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">Super admin</span></div>
-                                    <a href="#" class="fw-semibold text-muted text-hover-primary fs-7">ahsanzahid29@hotmail.com</a>
+                                    <div class="fw-bold d-flex align-items-center fs-5">{{ Auth::user()->name }}
+                                        @switch(Auth::user()->role_id)
+                                            @case(1)
+                                                <span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">
+                                            Super admin</span>
+                                                @break
+
+                                            @case(2)
+                                                <span class="badge badge-light-info fw-bold fs-8 px-2 py-1 ms-2">
+                                            Admin</span>
+                                                @break
+
+                                            @case(3)
+                                                <span class="badge badge-light-warning fw-bold fs-8 px-2 py-1 ms-2">
+                                            Dealer</span>
+                                                @break
+                                            @case(4)
+                                                <span class="badge badge-light-danger fw-bold fs-8 px-2 py-1 ms-2">
+                                            SC</span>
+                                                @break
+
+                                            @default
+
+                                        @endswitch
+                                        </div>
+                                    <a href="#" class="fw-semibold text-muted text-hover-primary fs-7">{{ Auth::user()->email }}</a>
                                 </div>
                                 <!--end::Username-->
                             </div>

@@ -29,9 +29,15 @@ Route::get('/dashboard', function () {
     return view('dashboard.dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::get('/users-list',[UserController::class,'index']);
-Route::get('/user-add',[UserController::class,'add']);
-Route::post('/user-save',[UserController::class,'save']);
+Route::get('/users-list',[UserController::class,'index'])->middleware(['auth'])->name('users-list');
+Route::get('/user-add',[UserController::class,'add'])->middleware(['auth'])->name('user-add');
+Route::post('/user-save',[UserController::class,'save'])->middleware(['auth'])->name('user-save');
+Route::get('/user-edit/{id}', [UserController::class, 'edit'])->middleware(['auth'])->name('edituser');
+Route::post('/user-update',[UserController::class,'update'])->middleware(['auth'])->name('update-user');
+Route::get('/user-password/{id}', [UserController::class, 'changePassword'])->middleware(['auth'])->name('change-password');
+
+
+
 Route::get('/inverters-list',[InverterController::class,'index']);
 Route::get('/inverter-add', [InverterController::class,'add']);
 Route::post('/inverter-save',[InverterController::class,'save']);

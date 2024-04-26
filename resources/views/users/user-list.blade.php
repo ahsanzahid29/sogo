@@ -3,6 +3,13 @@
     <link href="{{asset('public/assets/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
 @endpush
 @section('content')
+    @if(session('status'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('status') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
     <!--begin::Main-->
     <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
         <!--begin::Content wrapper-->
@@ -97,116 +104,52 @@
                                 </tr>
                                 </thead>
                                 <tbody class="fw-semibold text-gray-600">
-                                <tr>
-                                    <td>1</td>
-                                    <td>Ahsan Zahid</td>
-                                    <td>
-                                        <a href="#" class="text-gray-800 text-hover-primary mb-1">ahsan@gmail.com</a>
-                                    </td>
-                                    <td>
-                                        <!--begin::Badges-->
-                                        <div class="badge badge-light-success">Admin</div>
-                                        <!--end::Badges-->
-                                    </td>
-                                    <td>
-                                        <!--begin::Badges-->
-                                        <div class="badge badge-light-success">Active</div>
-                                        <!--end::Badges-->
-                                    </td>
-                                    <td>10 Mar 2024, 5:20 pm</td>
-                                    <td class="text-end">
-                                        <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                            <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                        <!--begin::Menu-->
-                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                            <!--begin::Menu item-->
-                                            <div class="menu-item px-3">
-                                                <a href="#" class="menu-link px-3">Edit</a>
+                                @foreach($users as $user)
+                                    <tr>
+                                        <td>{{$count++}}</td>
+                                        <td>{{$user->name}}</td>
+                                        <td>
+                                            <a href="#" class="text-gray-800 text-hover-primary mb-1">{{ $user->email }}</a>
+                                        </td>
+                                        <td>
+                                            @if($user->role_id==2)
+                                                <div class="badge badge-light-info">Admin</div>
+                                            @elseif($user->role_id==3)
+                                                <div class="badge badge-light-warning">Dealer</div>
+                                            @elseif($user->role_id==4)
+                                                <div class="badge badge-light-danger">Service Center</div>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($user->status=='active')
+                                                <div class="badge badge-light-success">Active</div>
+                                            @else
+                                                <div class="badge badge-light-danger">Inactive</div>
+                                            @endif
+                                        </td>
+                                        <td>{{ date('d M Y, h:i a', strtotime($user->created_at)) }}</td>
+                                        <td class="text-end">
+                                            <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
+                                                <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
+                                            <!--begin::Menu-->
+                                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
+                                                <!--begin::Menu item-->
+                                                <div class="menu-item px-3">
+                                                    <a href="{{route('edituser',$user->id)}}" class="menu-link px-3">Edit</a>
+                                                </div>
+                                                <!--end::Menu item-->
+                                                <!--begin::Menu item-->
+{{--                                                <div class="menu-item px-3">--}}
+{{--                                                    <a href="#" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>--}}
+{{--                                                </div>--}}
+                                                <!--end::Menu item-->
                                             </div>
-                                            <!--end::Menu item-->
-                                            <!--begin::Menu item-->
-                                            <div class="menu-item px-3">
-                                                <a href="#" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
-                                            </div>
-                                            <!--end::Menu item-->
-                                        </div>
-                                        <!--end::Menu-->
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Hassan Khan</td>
-                                    <td>
-                                        <a href="#" class="text-gray-800 text-hover-primary mb-1">hassan@gmail.com</a>
-                                    </td>
-                                    <td>
-                                        <!--begin::Badges-->
-                                        <div class="badge badge-light-warning">Dealers</div>
-                                        <!--end::Badges-->
-                                    </td>
-                                    <td>
-                                        <!--begin::Badges-->
-                                        <div class="badge badge-light-danger">Inactive</div>
-                                        <!--end::Badges-->
-                                    </td>
-                                    <td>10 Mar 2024, 5:20 pm</td>
-                                    <td class="text-end">
-                                        <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                            <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                        <!--begin::Menu-->
-                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                            <!--begin::Menu item-->
-                                            <div class="menu-item px-3">
-                                                <a href="#" class="menu-link px-3">Edit</a>
-                                            </div>
-                                            <!--end::Menu item-->
-                                            <!--begin::Menu item-->
-                                            <div class="menu-item px-3">
-                                                <a href="#" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
-                                            </div>
-                                            <!--end::Menu item-->
-                                        </div>
-                                        <!--end::Menu-->
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Sohail Riaz</td>
-                                    <td>
-                                        <a href="#" class="text-gray-800 text-hover-primary mb-1">sohail@gmail.com</a>
-                                    </td>
-                                    <td>
-                                        <!--begin::Badges-->
-                                        <div class="badge badge-light-danger">Service Center</div>
-                                        <!--end::Badges-->
-                                    </td>
-                                    <td>
-                                        <!--begin::Badges-->
-                                        <div class="badge badge-light-success">Active</div>
-                                        <!--end::Badges-->
-                                    </td>
-                                    <td>10 Mar 2024, 5:20 pm</td>
-                                    <td class="text-end">
-                                        <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                            <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                        <!--begin::Menu-->
-                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                            <!--begin::Menu item-->
-                                            <div class="menu-item px-3">
-                                                <a href="#" class="menu-link px-3">Edit</a>
-                                            </div>
-                                            <!--end::Menu item-->
-                                            <!--begin::Menu item-->
-                                            <div class="menu-item px-3">
-                                                <a href="#" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
-                                            </div>
-                                            <!--end::Menu item-->
-                                        </div>
-                                        <!--end::Menu-->
-                                    </td>
-                                </tr>
+                                            <!--end::Menu-->
+                                        </td>
+                                    </tr>
 
-                                </tbody>
+                                @endforeach
+                          </tbody>
                                 <!--end::Table body-->
                             </table>
                             <!--end::Table-->

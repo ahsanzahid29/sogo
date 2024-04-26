@@ -10,7 +10,7 @@
                 <!--begin::Page title-->
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <!--begin::Title-->
-                    <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">Add User</h1>
+                    <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">Edit User</h1>
                     <!--end::Title-->
                     <!--begin::Breadcrumb-->
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
@@ -25,7 +25,7 @@
                         </li>
                         <!--end::Item-->
                         <!--begin::Item-->
-                        <li class="breadcrumb-item text-muted">Add User</li>
+                        <li class="breadcrumb-item text-muted">Edit User</li>
                         <!--end::Item-->
                     </ul>
                     <!--end::Breadcrumb-->
@@ -49,54 +49,49 @@
                         <!--end::Card title-->
 
                         <!--begin::Card body-->
-                        <form class="form w-100" method="POST" action="{{ url('/user-save') }}">
+                        <form class="form w-100" method="POST" action="{{ route('update-user') }}">
                             @csrf
+                            <input type="hidden" name="recordid" value="{{ $user->id }}" />
                         <div class="card-body pt-0">
                             <div class="mb-10">
                                 <label for="exampleFormControlInput1" class="required form-label">Name</label>
-                                <input type="text" name="name" class="form-control form-control-solid" placeholder="Name"/>
+                                <input type="text" name="name" class="form-control form-control-solid" value="{{$user->name}}" placeholder="Name"/>
                                 @error('name')
                                 <div class="alert alert-danger mt-2">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             <div class="mb-10">
-                                <label for="exampleFormControlInput1" class="required form-label">Email</label>
-                                <input type="email" class="form-control form-control-solid" placeholder="User Email" name ="email"/>
-                                @error('email')
-                                <div class="alert alert-danger mt-2">{{ $message }}</div>
-                                @enderror
+                                <label for="exampleFormControlInput1" class="form-label">Email</label>
+                                <input type="email" class="form-control form-control-solid" placeholder="User Email" value="{{$user->email}}" disabled/>
                             </div>
                             <div class="mb-10">
-                                <label for="exampleFormControlInput1" class="required form-label">User Role</label>
-                                <select class="form-select form-select-solid" name="role" aria-label="Select example" >
+                                <label for="exampleFormControlInput1" class="form-label">User Role</label>
+                                <select class="form-select form-select-solid" disabled aria-label="Select example" >
                                     <option value="0">Select Role</option>
-                                    <option value="2">Admin</option>
-                                    <option value="3">Dealer</option>
-                                    <option value="4">Service Center</option>
+                                    <option value="2" @if($user->role_id==2) selected @endif>Admin</option>
+                                    <option value="3" @if($user->role_id==3) selected @endif>Dealer</option>
+                                    <option value="4" @if($user->role_id==4) selected @endif>Service Center</option>
                                 </select>
-                                @error('role')
-                                <div class="alert alert-danger mt-2">{{ $message }}</div>
-                                @enderror
-
                             </div>
 
                             <div class="mb-10">
                                 <label for="exampleFormControlInput1" class="required form-label">Status</label>
                                 <div class="form-check form-check-custom form-check-solid">
-                                    <input class="form-check-input" type="radio" value="active" checked name="status"  id="flexCheckboxLg"/>
+                                    <input class="form-check-input" type="radio" value="active" @if($user->status=='active') checked @endif name="status"  id="flexCheckboxLg"/>
                                     <label class="form-check-label" for="flexCheckboxLg">
                                         Active
                                     </label>
                                     <div class="p-5"></div>
-                                    <input class="form-check-input" type="radio" value="inactive" name="status"  id="flexCheckboxLg"/>
+                                    <input class="form-check-input" type="radio" value="inactive" @if($user->status=='inactive') checked @endif name="status"  id="flexCheckboxLg"/>
                                     <label class="form-check-label" for="flexCheckboxLg">
                                         Inactive
                                     </label>
                                 </div>
                             </div>
                             <div class="mb-10">
-                                <button type="submit" class="btn btn-success">Save</button>
+                                <button type="submit" class="btn btn-info">Update</button>
+                                <a href="{{ route('change-password',$user->id) }}" class="btn btn-warning">Forget Password</a>
                                 <a href="{{ url('/users-list') }}" class="btn btn-secondary">Cancel</a>
                             </div>
                         </div>
