@@ -3,6 +3,12 @@
     <link href="{{asset('public/assets/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
 @endpush
 @section('content')
+    @if(session('status'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('status') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
     <!--begin::Main-->
     <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
         <!--begin::Content wrapper-->
@@ -14,7 +20,7 @@
                     <!--begin::Page title-->
                     <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                         <!--begin::Title-->
-                        <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">Users Listing</h1>
+                        <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">Inverter Listing</h1>
                         <!--end::Title-->
                         <!--begin::Breadcrumb-->
                         <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
@@ -87,7 +93,7 @@
                             <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_customers_table">
                                 <thead>
                                 <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
-                                    <th>Image</th>
+                                    <th>Name</th>
                                     <th class="min-w-125px">Type</th>
                                     <th class="min-w-125px">Name</th>
                                     <th class="min-w-125px">Category</th>
@@ -97,13 +103,25 @@
                                 </tr>
                                 </thead>
                                 <tbody class="fw-semibold text-gray-600">
+                                @foreach($inverters as $row)
                                 <tr>
-                                    <td></td>
-                                    <td>Single</td>
-                                    <td>Inverter 1</td>
-                                    <td>Category 1</td>
-                                    <td>N/D</td>
-                                    <td>500</td>
+                                    <td>{{ $row->inverter_name }}</td>
+                                    <td>{{ $row->inverter_packaging==1 ? 'Carton' : 'Pieces' }}</td>
+                                    <td>{{ $row->no_of_pieces }}</td>
+                                    <td>
+                                        @if($row->category==1)
+                                            {{ 'Off-grid solar Inverters' }}
+                                            @elseif($row->category==2)
+                                              {{ 'Hybrid solar Inverters' }}
+                                           @elseif($row->category==3)
+                                            {{ 'Lithium Battery' }}
+                                           @elseif($row->category==4)
+                                            {{ 'Inverter Accessories' }}
+                                        @endif
+
+                                    </td>
+                                    <td>{{ $row->brand }}</td>
+                                    <td>{{ $row->total_quantity }}</td>
                                     <td class="text-end">
                                         <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
                                             <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
@@ -111,44 +129,14 @@
                                         <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-3">
-                                                <a href="#" class="menu-link px-3">Edit</a>
-                                            </div>
-                                            <!--end::Menu item-->
-                                            <!--begin::Menu item-->
-                                            <div class="menu-item px-3">
-                                                <a href="#" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
+                                                <a href="{{route('edit-inverter',$row->id)}}" class="menu-link px-3">Edit</a>
                                             </div>
                                             <!--end::Menu item-->
                                         </div>
                                         <!--end::Menu-->
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td></td>
-                                    <td>Single</td>
-                                    <td>Inverter 1</td>
-                                    <td>Category 1</td>
-                                    <td>N/D</td>
-                                    <td>500</td>
-                                    <td class="text-end">
-                                        <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                            <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                        <!--begin::Menu-->
-                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                            <!--begin::Menu item-->
-                                            <div class="menu-item px-3">
-                                                <a href="#" class="menu-link px-3">Edit</a>
-                                            </div>
-                                            <!--end::Menu item-->
-                                            <!--begin::Menu item-->
-                                            <div class="menu-item px-3">
-                                                <a href="#" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
-                                            </div>
-                                            <!--end::Menu item-->
-                                        </div>
-                                        <!--end::Menu-->
-                                    </td>
-                                </tr>
+                                @endforeach
                                 </tbody>
                                 <!--end::Table body-->
                             </table>

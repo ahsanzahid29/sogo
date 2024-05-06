@@ -38,9 +38,14 @@ Route::get('/user-password/{id}', [UserController::class, 'changePassword'])->mi
 
 
 
-Route::get('/inverters-list',[InverterController::class,'index']);
-Route::get('/inverter-add', [InverterController::class,'add']);
-Route::post('/inverter-save',[InverterController::class,'save']);
+Route::get('/inverters-list',[InverterController::class,'index'])->middleware(['auth']);
+Route::get('/inverter-add', [InverterController::class,'add'])->middleware(['auth']);
+Route::post('/inverter-save',[InverterController::class,'save'])->middleware(['auth'])->name('inverter-add');
+Route::get('/inverter-edit/{id}', [InverterController::class, 'edit'])->middleware(['auth'])->name('edit-inverter');
+Route::post('/inverter-update',[InverterController::class,'update'])->middleware(['auth'])->name('update-inverter');
+
+
+
 Route::get('/inverters-inventory-list',[InverterInventoryController::class,'index']);
 Route::get('/spareparts-list',[SparePartsController::class,'index']);
 Route::get('/sparepart-add', [SparePartsController::class,'add']);

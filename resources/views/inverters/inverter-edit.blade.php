@@ -25,7 +25,7 @@
                         </li>
                         <!--end::Item-->
                         <!--begin::Item-->
-                        <li class="breadcrumb-item text-muted">Add Inverter</li>
+                        <li class="breadcrumb-item text-muted">Edit Inverter</li>
                         <!--end::Item-->
                     </ul>
                     <!--end::Breadcrumb-->
@@ -47,21 +47,25 @@
 
                         </div>
                         <!--end::Card title-->
-                        <form class="form w-100" method="POST" action="{{ route('inverter-add') }}" enctype="multipart/form-data">
+                        <form class="form w-100" method="POST" action="{{ route('update-inverter') }}" enctype="multipart/form-data">
                             @csrf
+                            <input type="hidden" name="recordid" value="{{ $inverter->id }}" />
 
                         <!--begin::Card body-->
                         <div class="card-body pt-0">
                             <div class="form-group row mb-5">
                                 <div class="col-md-12 mb-5">
                                     <label class="required form-label">Inverter Name:</label>
-                                    <input type="text" name="inverter_name" class="form-control mb-2 mb-md-0" placeholder="Inverter Name" required />
+                                    <input type="text" name="inverter_name" class="form-control mb-2 mb-md-0" value="{{$inverter->inverter_name}}" placeholder="Inverter Name" required />
                                 </div>
                             </div>
                                 <div class="form-group row mb-5">
                                 <div class="col-md-4 mb-5">
                                     <label class="required form-label">Inverter Image:</label>
                                     <input type="file" name="inverter_image" class="form-control mb-2 mb-md-0" />
+                                    @if($inverter->inverter_image!=null)
+                                    <a target="_blank" href="{{asset('public/files/inverters/'.$inverter->inverter_image)}}">View</a>
+                                    @endif
                                     @error('inverter_image')
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                                     @enderror
@@ -70,49 +74,49 @@
                                     <label for="exampleFormControlInput1" class="required form-label">Packaging</label>
                                     <select name="inverter_packaging" class="form-select form-select-solid" aria-label="Select example">
                                         <option>Select Packaging</option>
-                                        <option value="1">Carton</option>
-                                        <option value="2">Pieces</option>
+                                        <option value="1" @if($inverter->inverter_packaging==1) selected @endif>Carton</option>
+                                        <option value="2" @if($inverter->inverter_packaging==2) selected @endif>Pieces</option>
                                     </select>
                                 </div>
                                 <div class="col-md-4 mb-5">
                                     <label class="form-label">Pieces:</label>
-                                    <input type="text" name="no_of_pieces" class="form-control mb-2 mb-md-0" placeholder="Number of pieces" />
+                                    <input type="text" name="no_of_pieces" class="form-control mb-2 mb-md-0" value="{{$inverter->no_of_pieces}}" placeholder="Number of pieces" />
                                 </div>
                             </div>
 
                             <div class="form-group row mb-5">
                                 <div class="col-md-4 mb-5">
                                     <label class="form-label">Brand:</label>
-                                    <input type="text" name="brand" class="form-control mb-2 mb-md-0" placeholder="Enter Inverter Brand" />
+                                    <input type="text" name="brand" class="form-control mb-2 mb-md-0" value="{{$inverter->brand}}" placeholder="Enter Inverter Brand" />
                                 </div>
                                 <div class="col-md-4 mb-5">
                                     <label for="exampleFormControlInput1" class="required form-label">Product Category</label>
                                     <select name="category" class="form-select form-select-solid" aria-label="Select example">
                                         <option value="0">Select Category</option>
-                                        <option value="1">Off-grid solar Inverters</option>
-                                        <option value="2">Hybrid solar Inverters</option>
-                                        <option value="3">Lithium Battery</option>
-                                        <option value="4">Inverter Accessories</option>
+                                        <option value="1" @if($inverter->category==1) selected @endif>Off-grid solar Inverters</option>
+                                        <option value="2" @if($inverter->category==2) selected @endif>Hybrid solar Inverters</option>
+                                        <option value="3" @if($inverter->category==3) selected @endif>Lithium Battery</option>
+                                        <option value="4" @if($inverter->category==4) selected @endif>Inverter Accessories</option>
                                     </select>
                                 </div>
                                 <div class="col-md-4 mb-5">
                                     <label class="form-label">Model Number :</label>
-                                    <input type="text" name="modal_number" class="form-control mb-2 mb-md-0" placeholder="Model Number" />
+                                    <input type="text" name="modal_number" class="form-control mb-2 mb-md-0" value="{{$inverter->modal_number}}" placeholder="Model Number" />
                                 </div>
                             </div>
 
                             <div class="form-group row mb-5">
                                 <div class="col-md-4 mb-5">
                                     <label class="form-label">Product Warranty:</label>
-                                    <input type="text" name="product_warranty" class="form-control mb-2 mb-md-0" placeholder="Product Warranty" />
+                                    <input type="text" name="product_warranty" class="form-control mb-2 mb-md-0" value="{{$inverter->product_warranty}}" placeholder="Product Warranty" />
                                 </div>
                                 <div class="col-md-4 mb-5">
                                     <label class="form-label">Service Warranty:</label>
-                                    <input type="text" name="service_warranty" class="form-control mb-2 mb-md-0" placeholder="Service Warranty" />
+                                    <input type="text" name="service_warranty" class="form-control mb-2 mb-md-0" value="{{$inverter->service_warranty}}" placeholder="Service Warranty" />
                                 </div>
                                 <div class="col-md-4 mb-5">
                                     <label class="form-label">Warranty Lag :</label>
-                                    <input type="text" name="warranty_lag" class="form-control mb-2 mb-md-0" placeholder="Warranty Lag" />
+                                    <input type="text" name="warranty_lag" class="form-control mb-2 mb-md-0" value="{{$inverter->warranty_lag}}" placeholder="Warranty Lag" />
                                 </div>
                             </div>
 
@@ -120,14 +124,23 @@
                                 <div class="col-md-4 mb-5">
                                     <label class="form-label">Product Catalog:</label>
                                     <input type="file" name="product_catalog" class="form-control mb-2 mb-md-0" />
+                                    @if($inverter->product_catalog!=null)
+                                        <a target="_blank" href="{{asset('public/files/invertercatalog/'.$inverter->product_catalog)}}">View</a>
+                                    @endif
                                 </div>
                                 <div class="col-md-4 mb-5">
                                     <label class="form-label">Product Manual:</label>
                                     <input type="file" name="product_manual" class="form-control mb-2 mb-md-0" />
+                                    @if($inverter->product_manual!=null)
+                                        <a target="_blank" href="{{asset('public/files/productmanaual/'.$inverter->product_manual)}}">View</a>
+                                    @endif
                                 </div>
                                 <div class="col-md-4 mb-5">
                                     <label class="form-label">Troubleshhot Guide :</label>
                                     <input type="file" name="troubleshoot_guide" class="form-control mb-2 mb-md-0" />
+                                    @if($inverter->troubleshoot_guide!=null)
+                                        <a target="_blank" href="{{asset('public/files/troubleshootguide/'.$inverter->troubleshoot_guide)}}">View</a>
+                                    @endif
                                 </div>
                             </div>
 
@@ -135,7 +148,7 @@
 
                                 <div class="col-md-12">
 
-                                    <button type="submit" class="btn btn-success">Save</button>
+                                    <button type="submit" class="btn btn-warning">Update</button>
                                     <a href="{{ url('/inverters-list') }}" class="btn btn-secondary">Cancel</a>
                                 </div>
                             </div>
