@@ -66,7 +66,7 @@
                                 <!--begin::Toolbar-->
                                 <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
                                     <!--begin::Add customer-->
-                                    <a href="#" class="btn btn-primary">Add Inventory via CSV</a>
+                                    <a href="{{ route('add-inverter-inventory') }}" class="btn btn-primary">Add Inventory via CSV</a>
                                     <!--end::Add customer-->
                                 </div>
                                 <!--end::Toolbar-->
@@ -97,24 +97,20 @@
                                 </tr>
                                 </thead>
                                 <tbody class="fw-semibold text-gray-600">
+                                @if($model_number)
+                                @for($i=0;$i<count($model_number);$i++)
                                 <tr>
-                                    <td>Test 1</td>
-                                    <td>PG-01</td>
-                                    <td>OD-01</td>
-                                    <td>Test</td>
-                                    <td>April 1st, 2024</td>
-                                    <td>April 6th, 2024</td>
-                                    <td>100</td>
+                                    <td>{{$model_number[$i]}}</td>
+                                    <td>{{$serial_number[$i]}}</td>
+                                    <td>{{ $order_no[$i] }}</td>
+                                    <td>{{$container_no[$i]}}</td>
+                                    <td>{{ date('d M, Y',strtotime($receipt_date[$i])) }}</td>
+                                    <td>{{ date('d M, Y',strtotime($entry_date[$i])) }}</td>
+                                    <td>{{ $qty[$i] }}</td>
                                 </tr>
-                                <tr>
-                                    <td>Test 2</td>
-                                    <td>PG-02</td>
-                                    <td>OD-02</td>
-                                    <td>Test</td>
-                                    <td>April 2nd, 2024</td>
-                                    <td>April 16th, 2024</td>
-                                    <td>300</td>
-                                </tr>
+                                @endfor
+                                    @endif
+
                                 </tbody>
                                 <!--end::Table body-->
                             </table>

@@ -16,7 +16,7 @@
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                         <!--begin::Item-->
                         <li class="breadcrumb-item text-muted">
-                            <a href="{{ url('/') }}" class="text-muted text-hover-primary">Dashboard</a>
+                            <a href="{{ route('dashboard') }}" class="text-muted text-hover-primary">Dashboard</a>
                         </li>
                         <!--end::Item-->
                         <!--begin::Item-->
