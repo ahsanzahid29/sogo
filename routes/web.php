@@ -46,7 +46,14 @@ Route::post('/inverter-update',[InverterController::class,'update'])->middleware
 
 
 
-Route::get('/inverters-inventory-list',[InverterInventoryController::class,'index']);
+Route::get('/inverters-inventory-list',[InverterInventoryController::class,'index'])->middleware(['auth'])->name('list-inverter-inventory');
+Route::get('/inverters-inventory-add', [InverterInventoryController::class,'add'])->middleware(['auth'])->name('add-inverter-inventory');
+Route::post('/inventory-save',[InverterInventoryController::class,'save'])->middleware(['auth'])->name('save-inverter-inventory');
+
+
+
+
+
 Route::get('/spareparts-list',[SparePartsController::class,'index']);
 Route::get('/sparepart-add', [SparePartsController::class,'add']);
 Route::post('/sparepart-save',[SparePartsController::class,'save']);
