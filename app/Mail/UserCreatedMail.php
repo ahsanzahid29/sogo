@@ -16,11 +16,11 @@ class UserCreatedMail extends Mailable
      *
      * @return void
      */
-    public $randomString;
+    public $baseUrl;
 
-    public function __construct($randomString)
+    public function __construct($baseUrl)
     {
-        $this->randomString = $randomString;
+        $this->baseUrl = $baseUrl;
     }
 
     /**

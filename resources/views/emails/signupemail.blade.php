@@ -4,6 +4,7 @@
     <title>Welcome to SOGO</title>
 </head>
 <body>
-<p>Your new Password is: {{ $randomString }}</p>
+<p>Please click link below to create your Password:</p>
+<p> <a href="{{$baseUrl}}">Click Here</a></p>
 </body>
 </html>

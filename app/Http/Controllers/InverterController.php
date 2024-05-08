@@ -29,6 +29,10 @@ class InverterController extends Controller
                'inverter_image' => 'required|mimes:jpeg,jpg,png,gif',
 
             ]);
+            $productCatalogName='';
+            $productManaualName='';
+            $troubleshootGuideName='';
+            $inverterImageName='';
 
             DB::beginTransaction();
             try {
