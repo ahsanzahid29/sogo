@@ -47,7 +47,14 @@ class UserController extends Controller
                 'address'          =>  'required',
                 'billing_address'  => 'required',
                 'shipping_address' => 'required',
-                'working_hours'    =>  'required'
+                'working_hours'    =>  'required',
+                'monday_timing'    =>  'required',
+                'tuesday_timing'    =>  'required',
+                'wednesday_timing'    =>  'required',
+                'thursday_timing'    =>  'required',
+                'friday_timing'    =>  'required',
+                'saturday_timing'    =>  'required',
+                'sunday_timing'    =>  'required',
 
             ]);
             DB::beginTransaction();
@@ -55,28 +62,43 @@ class UserController extends Controller
 
                 $user = User::create(
                     [
-                        'name' => $request->name,
-                        'email' => $request->email,
-                        'role_id' => $request->role,
-                        'status' => $request->status,
-                        'phoneno_1' => $request->phoneno_1,
-                        'phoneno_2' => $request->phoneno_2,
-                        'address' => $request->address,
-                        'billing_address'=> $request->billing_address,
-                        'shipping_address'=> $request->shipping_address,
-                        'working_hours'=> $request->working_hours,
+                        'name'                => $request->name,
+                        'email'               => $request->email,
+                        'role_id'             => $request->role,
+                        'status'              => $request->status,
+                        'phoneno_1'           => $request->phoneno_1,
+                        'phoneno_2'           => $request->phoneno_2,
+                        'address'             => $request->address,
+                        'billing_address'     => $request->billing_address,
+                        'shipping_address'    => $request->shipping_address,
+                        'working_hours'       => $request->working_hours,
+                        'monday_timing'       =>  $request->monday_timing,
+                        'tuesday_timing'      =>  $request->tuesday_timing,
+                        'wednesday_timing'    =>  $request->wednesday_timing,
+                        'thursday_timing'     =>  $request->thursday_timing,
+                        'friday_timing'       =>  $request->friday_timing,
+                        'saturday_timing'     =>  $request->saturday_timing,
+                        'sunday_timing'       =>  $request->sunday_timing,
+                        'uuid'                => (string) Str::uuid(),
                     ]
                 );
+                $userDetail = User::find($user->id);
+                $userUuid = $userDetail->uuid;
+                $baseUrl = url("/add-password/$userUuid");
+
+
+
+
                 // send email to user
                 $randomString = Str::random(6);
                 //check user is added or not
                 if ($user->id) {
-                    Mail::to($user->email)->send(new UserCreatedMail($randomString));
+                    Mail::to($user->email)->send(new UserCreatedMail($baseUrl));
                     // add user password
-                    $newdata = [
-                        'password' => Hash::make($randomString),
-                    ];
-                    User::where('id', $user->id)->update($newdata);
+//                    $newdata = [
+//                        'password' => Hash::make($randomString),
+//                    ];
+//                    User::where('id', $user->id)->update($newdata);
                 }
                 DB::commit();
 
@@ -90,6 +112,7 @@ class UserController extends Controller
 
         }
     }
+
 
     public function edit($id){
         $data['user'] = User::find($id);
@@ -106,19 +129,33 @@ class UserController extends Controller
                 'address'          =>  'required',
                 'billing_address'  => 'required',
                 'shipping_address' => 'required',
-                'working_hours'    =>  'required'
+                'working_hours'    =>  'required',
+                'monday_timing'    =>  'required',
+                'tuesday_timing'    =>  'required',
+                'wednesday_timing'    =>  'required',
+                'thursday_timing'    =>  'required',
+                'friday_timing'    =>  'required',
+                'saturday_timing'    =>  'required',
+                'sunday_timing'    =>  'required',
             ]);
             DB::beginTransaction();
             try {
                 $newdata = [
-                    'name' => $request->name,
-                    'status' => $request->status,
-                    'phoneno_1' => $request->phoneno_1,
-                    'phoneno_2' => $request->phoneno_2,
-                    'address' => $request->address,
-                    'billing_address'=> $request->billing_address,
-                    'shipping_address'=> $request->shipping_address,
-                    'working_hours'=> $request->working_hours,
+                    'name'                => $request->name,
+                    'status'              => $request->status,
+                    'phoneno_1'           => $request->phoneno_1,
+                    'phoneno_2'           => $request->phoneno_2,
+                    'address'             => $request->address,
+                    'billing_address'     => $request->billing_address,
+                    'shipping_address'    => $request->shipping_address,
+                    'working_hours'       => $request->working_hours,
+                    'monday_timing'       =>  $request->monday_timing,
+                    'tuesday_timing'      =>  $request->tuesday_timing,
+                    'wednesday_timing'    =>  $request->wednesday_timing,
+                    'thursday_timing'     =>  $request->thursday_timing,
+                    'friday_timing'       =>  $request->friday_timing,
+                    'saturday_timing'     =>  $request->saturday_timing,
+                    'sunday_timing'       =>  $request->sunday_timing,
 
                 ];
                 User::where('id', $request->recordid)->update($newdata);
@@ -139,22 +176,18 @@ class UserController extends Controller
     public function changePassword($id)
     {
         $user = User::find($id);
-        $randomString = Str::random(6);
-        //check user id is valid
-        if ($user->id) {
-            Mail::to($user->email)->send(new UserCreatedMail($randomString));
-            // add user password
-            $newdata = [
-                'password' => Hash::make($randomString),
-            ];
-            User::where('id', $user->id)->update($newdata);
+        $userUuid = $user->uuid;
+        $baseUrl = url("/add-password/$userUuid");
 
-            return redirect('/users-list')->with('status', 'Password sent via email');
+        //check user is found
+        if ($user->id) {
+
+            Mail::to($user->email)->send(new UserCreatedMail($baseUrl));
+
+            return redirect('/users-list')->with('status', 'Email sent to user for password change');
 
         }
         return redirect('/users-list')->with('status', 'Something went wrong');
-
-
 
     }
 

@@ -15,6 +15,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->string('uuid')->unique();
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
@@ -27,6 +28,13 @@ class CreateUsersTable extends Migration
             $table->text('billing_address')->nullable();
             $table->text('shipping_address')->nullable();
             $table->string('working_hours')->nullable();
+            $table->string('monday_timing')->nullable();
+            $table->string('tuesday_timing')->nullable();
+            $table->string('wednesday_timing')->nullable();
+            $table->string('thursday_timing')->nullable();
+            $table->string('friday_timing')->nullable();
+            $table->string('saturday_timing')->nullable();
+            $table->string('sunday_timing')->nullable();
             $table->enum('status', ['active', 'inactive','deleted']);
             $table->rememberToken();
             $table->timestamps();

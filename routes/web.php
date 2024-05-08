@@ -9,6 +9,7 @@ use App\Http\Controllers\SparePartsInventoryController;
 use App\Http\Controllers\SparePartsInvoiceController;
 use App\Http\Controllers\DeliveryNoteController;
 use App\Http\Controllers\RepairTicketController;
+use App\Http\Controllers\GeneralController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +36,10 @@ Route::post('/user-save',[UserController::class,'save'])->middleware(['auth'])->
 Route::get('/user-edit/{id}', [UserController::class, 'edit'])->middleware(['auth'])->name('edituser');
 Route::post('/user-update',[UserController::class,'update'])->middleware(['auth'])->name('update-user');
 Route::get('/user-password/{id}', [UserController::class, 'changePassword'])->middleware(['auth'])->name('change-password');
+Route::get('/add-password/{uuid}', [GeneralController::class, 'addPassword'])->name('addPassword');
+Route::post('/save-password',[GeneralController::class,'savePassword'])->name('password.add');
+
+
 
 
 
