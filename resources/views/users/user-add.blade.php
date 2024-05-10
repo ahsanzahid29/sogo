@@ -106,13 +106,13 @@
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="col-md-4 mb-5">
-                                    <label class="required form-label">Working Hours:</label>
-                                    <input type="text" class="form-control form-control-solid" placeholder="Working Hours" name ="working_hours"/>
-                                    @error('working_hours')
-                                    <div class="alert alert-danger mt-2">{{ $message }}</div>
-                                    @enderror
-                                </div>
+{{--                                <div class="col-md-4 mb-5">--}}
+{{--                                    <label class="required form-label">Working Hours:</label>--}}
+{{--                                    <input type="text" class="form-control form-control-solid" placeholder="Working Hours" name ="working_hours"/>--}}
+{{--                                    @error('working_hours')--}}
+{{--                                    <div class="alert alert-danger mt-2">{{ $message }}</div>--}}
+{{--                                    @enderror--}}
+{{--                                </div>--}}
                                 <div class="col-md-4 mb-5">
                                     <label class="required form-label">User Role:</label>
                                     <select class="form-select form-select-solid" name="role" aria-label="Select example" >
@@ -131,21 +131,21 @@
                             <div class="form-group row mb-5 mt-5">
                                 <div class="col-md-4 mb-5">
                                     <label class="required form-label">Monday Timing:</label>
-                                    <input type="text" class="form-control form-control-solid" placeholder="Monday Timing" name ="monday_timing"/>
+                                    <input type="text" class="form-control form-control-solid" placeholder="9am - 5pm" name ="monday_timing"/>
                                     @error('monday_timing')
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="col-md-4 mb-5">
                                     <label class="required form-label">Tuesday Timing:</label>
-                                    <input type="text" class="form-control form-control-solid" placeholder="Tuesday Timing" name ="tuesday_timing"/>
+                                    <input type="text" class="form-control form-control-solid" placeholder="9am - 5pm" name ="tuesday_timing"/>
                                     @error('tuesday_timing')
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="col-md-4 mb-5">
                                     <label class="required form-label">Wednesday Timing:</label>
-                                    <input type="text" class="form-control form-control-solid" placeholder="Wednesday Timing" name ="wednesday_timing"/>
+                                    <input type="text" class="form-control form-control-solid" placeholder="9am - 5pm" name ="wednesday_timing"/>
                                     @error('wednesday_timing')
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                                     @enderror
@@ -154,21 +154,21 @@
                             <div class="form-group row mb-5 mt-5">
                                 <div class="col-md-4 mb-5">
                                     <label class="required form-label">Thursday Timing:</label>
-                                    <input type="text" class="form-control form-control-solid" placeholder="Thursday Timing" name ="thursday_timing"/>
+                                    <input type="text" class="form-control form-control-solid" placeholder="9am - 5pm" name ="thursday_timing"/>
                                     @error('thursday_timing')
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="col-md-4 mb-5">
                                     <label class="required form-label">Friday Timing:</label>
-                                    <input type="text" class="form-control form-control-solid" placeholder="Friday Timing" name ="friday_timing"/>
+                                    <input type="text" class="form-control form-control-solid" placeholder="9am - 4pm" name ="friday_timing"/>
                                     @error('friday_timing')
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="col-md-4 mb-5">
                                     <label class="required form-label">Saturday Timing:</label>
-                                    <input type="text" class="form-control form-control-solid" placeholder="Saturday Timing" name ="saturday_timing"/>
+                                    <input type="text" class="form-control form-control-solid" placeholder="closed" name ="saturday_timing"/>
                                     @error('saturday_timing')
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                                     @enderror
@@ -177,7 +177,7 @@
                             <div class="form-group row mb-5 mt-5">
                                 <div class="col-md-4 mb-5">
                                     <label class="required form-label">Sunday Timing:</label>
-                                    <input type="text" class="form-control form-control-solid" placeholder="Sunday Timing" name ="sunday_timing"/>
+                                    <input type="text" class="form-control form-control-solid" placeholder="closed" name ="sunday_timing"/>
                                     @error('sunday_timing')
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                                     @enderror

@@ -107,16 +107,16 @@
 
                             <div class="form-group row mb-5">
                                 <div class="col-md-4 mb-5">
-                                    <label class="form-label">Product Warranty:</label>
-                                    <input type="text" name="product_warranty" class="form-control mb-2 mb-md-0" value="{{$inverter->product_warranty}}" placeholder="Product Warranty" />
+                                    <label class="form-label">Product Warranty (in Years):</label>
+                                    <input type="number" name="product_warranty" class="form-control mb-2 mb-md-0" value="{{$inverter->product_warranty}}" placeholder="Product Warranty" />
                                 </div>
                                 <div class="col-md-4 mb-5">
-                                    <label class="form-label">Service Warranty:</label>
-                                    <input type="text" name="service_warranty" class="form-control mb-2 mb-md-0" value="{{$inverter->service_warranty}}" placeholder="Service Warranty" />
+                                    <label class="form-label">Service Warranty (in Years):</label>
+                                    <input type="number" name="service_warranty" class="form-control mb-2 mb-md-0" value="{{$inverter->service_warranty}}" placeholder="Service Warranty" />
                                 </div>
                                 <div class="col-md-4 mb-5">
-                                    <label class="form-label">Warranty Lag :</label>
-                                    <input type="text" name="warranty_lag" class="form-control mb-2 mb-md-0" value="{{$inverter->warranty_lag}}" placeholder="Warranty Lag" />
+                                    <label class="form-label">Warranty Lag (in Years) :</label>
+                                    <input type="number" name="warranty_lag" class="form-control mb-2 mb-md-0" value="{{$inverter->warranty_lag}}" placeholder="Warranty Lag" />
                                 </div>
                             </div>
 
@@ -127,12 +127,18 @@
                                     @if($inverter->product_catalog!=null)
                                         <a target="_blank" href="{{asset('public/files/invertercatalog/'.$inverter->product_catalog)}}">View</a>
                                     @endif
+                                    @error('product_catalog')
+                                    <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="col-md-4 mb-5">
                                     <label class="form-label">Product Manual:</label>
                                     <input type="file" name="product_manual" class="form-control mb-2 mb-md-0" />
                                     @if($inverter->product_manual!=null)
                                         <a target="_blank" href="{{asset('public/files/productmanaual/'.$inverter->product_manual)}}">View</a>
+                                        @error('product_manual')
+                                        <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                        @enderror
                                     @endif
                                 </div>
                                 <div class="col-md-4 mb-5">

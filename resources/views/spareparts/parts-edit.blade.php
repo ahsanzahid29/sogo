@@ -7,6 +7,12 @@
     </style>
 @endpush
 @section('content')
+    @if(session('status'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('status') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
      <!--begin::Main-->
     <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
         <!--begin::Content wrapper-->
@@ -17,7 +23,7 @@
                 <!--begin::Page title-->
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <!--begin::Title-->
-                    <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">Add Spare Part</h1>
+                    <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">Edit Spare Part</h1>
                     <!--end::Title-->
                     <!--begin::Breadcrumb-->
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
@@ -32,7 +38,7 @@
                         </li>
                         <!--end::Item-->
                         <!--begin::Item-->
-                        <li class="breadcrumb-item text-muted">Add Spare Part</li>
+                        <li class="breadcrumb-item text-muted">Edit Spare Part</li>
                         <!--end::Item-->
                     </ul>
                     <!--end::Breadcrumb-->
@@ -54,21 +60,23 @@
 
                         </div>
                         <!--end::Card title-->
-                        <form class="form w-100" method="POST" action="{{ route('save-spartpart') }}">
+                        <form class="form w-100" method="POST" action="{{ route('update-spartpart') }}">
                             @csrf
-                        <!--begin::Card body-->
+                            <input type="hidden" name="recordid" value="{{ $sparePart->id }}" />
+
+                            <!--begin::Card body-->
                         <div class="card-body pt-0">
                             <div class="form-group row mb-5">
                                 <div class="col-md-4 mb-5">
                                     <label class="form-label">Spart Part Name:</label>
-                                    <input type="text" class="form-control mb-2 mb-md-0" name="name" placeholder="Spart Part Name" />
+                                    <input type="text" class="form-control mb-2 mb-md-0" name="name" placeholder="Spart Part Name" value="{{ $sparePart->name }}" />
                                     @error('name')
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="col-md-4 mb-5">
                                     <label class="form-label">Factory Code:</label>
-                                    <input type="text" class="form-control mb-2 mb-md-0" name="factory_code" placeholder="Factory Code" />
+                                    <input type="text" class="form-control mb-2 mb-md-0" name="factory_code" placeholder="Factory Code" value="{{ $sparePart->factory_code }}" />
                                     @error('factory_code')
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                                     @enderror
@@ -78,8 +86,8 @@
                                     <label for="exampleFormControlInput1" class="required form-label">Part Type</label>
                                     <select class="form-select form-select-solid" name="part_type" aria-label="Select example">
                                         <option value="0">Select Part Type</option>
-                                        <option value="1">Type 1</option>
-                                        <option value="2">Type 2</option>
+                                        <option value="1" @if($sparePart->part_type==1) selected @endif>Type 1</option>
+                                        <option value="2" @if($sparePart->part_type==2) selected @endif>Type 2</option>
                                     </select>
                                     @error('part_type')
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>
@@ -91,7 +99,7 @@
                             <div class="form-group row mb-5">
                                 <div class="col-md-4 mb-5">
                                     <label class="form-label">Voltage Rating :</label>
-                                    <input type="text" class="form-control mb-2 mb-md-0" name="voltage_rating" placeholder="Voltage Rating" />
+                                    <input type="text" class="form-control mb-2 mb-md-0" name="voltage_rating" placeholder="Voltage Rating" value="{{ $sparePart->voltage_rating }}" />
                                     @error('voltage_rating')
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                                     @enderror
@@ -99,14 +107,14 @@
 
                                 <div class="col-md-4 mb-5">
                                     <label class="form-label">Ampere Rating :</label>
-                                    <input type="text" class="form-control mb-2 mb-md-0" name="ampeare_rating" placeholder="Ampere Rating" />
+                                    <input type="text" class="form-control mb-2 mb-md-0" name="ampeare_rating" placeholder="Ampere Rating" value="{{ $sparePart->ampeare_rating }}" />
                                     @error('ampeare_rating')
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="col-md-4 mb-5">
                                     <label class="form-label">Sale Price :</label>
-                                    <input type="text" class="form-control mb-2 mb-md-0" name="sale_price" placeholder="Sale Price" />
+                                    <input type="text" class="form-control mb-2 mb-md-0" name="sale_price" placeholder="Sale Price" value="{{ $sparePart->sale_price }}" />
                                     @error('sale_price')
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                                     @enderror
@@ -117,30 +125,60 @@
                             <div class="form-group row mb-5">
                                 <div class="col-md-4 mb-5">
                                     <label class="form-label">Base Unit :</label>
-                                    <input type="text" class="form-control mb-2 mb-md-0" name="base_unit" placeholder="Base Unit" />
+                                    <input type="text" class="form-control mb-2 mb-md-0" name="base_unit" placeholder="Base Unit" value="{{ $sparePart->base_unit }}" />
                                     @error('base_unit')
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="col-md-4 mb-5">
                                     <label class="form-label">Pieces :</label>
-                                    <input type="text" class="form-control mb-2 mb-md-0" name="pieces" placeholder="Pieces" />
+                                    <input type="text" class="form-control mb-2 mb-md-0" name="pieces" placeholder="Pieces" value="{{ $sparePart->pieces }}" />
                                     @error('pieces')
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="col-md-4 mb-5 mt-7">
-                                    <button type="button" class="btn btn-success add-form">Add Inverter Modal</button>
 
-                                </div>
 
                             </div>
+                            @if(count($sparePartModel)>0)
+                                <div class="form-group row mb-3">
+                                    <h1>Selected Inverter Models</h1>
+                                    <div class="table-responsive mt-4">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                            <tr class="fw-bold fs-6 text-gray-800">
+                                                <th>Model</th>
+                                                <th>Dosage</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            @foreach($sparePartModel as $rowSpm)
+                                                <tr>
+                                                    <td>{{ $rowSpm->model }}</td>
+                                                    <td>{{ $rowSpm->dosage }}</td>
+                                                    <td><a href="{{route('delete-sparepart-model',$rowSpm->model_id)}}" class="btn btn-small btn-light-danger"> Delete</a></td>
+                                                </tr>
+                                            @endforeach
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                @endif
+                            <div class="form-group row mb-5">
+                              <div class="col-md-6 mb-5 mt-7">
+                              <button type="button" class="btn btn-success add-form">Add Inverter Modal</button>
+                              </div>
+                            </div>
+
+
                             <div id="form-container">
 
                                     <div class="form-group row mb-5 repeatable-section">
                                         <div class="col-md-4 mb-5 mt-2">
-                                            <label for="exampleFormControlInput1" class=" required form-label">Inverter Model</label>
-                                            <select name="inverter_modal[]" class="form-select form-select-solid" required>
+                                            <label for="exampleFormControlInput1" class=" form-label">Inverter Model</label>
+                                            <select name="inverter_modal[]" class="form-select form-select-solid">
                                                 <option value="" selected>Select Inverter Modal</option>
                                                 @foreach($inverters as $row)
                                                 <option value="{{$row->id}}">{{ $row->modal_number }}</option>
@@ -148,15 +186,15 @@
                                             </select>
                                         </div>
                                         <div class="col-md-4 mb-5">
-                                            <label class=" required form-label">Dosage :</label>
-                                            <input type="text" name="dosage[]" class="form-control mb-2 mb-md-0" placeholder="Dosage" required />
+                                            <label class=" form-label">Dosage :</label>
+                                            <input type="text" name="dosage[]" class="form-control mb-2 mb-md-0" placeholder="Dosage" />
                                         </div>
 
                                     </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-12">
-                                    <button type="submit" class="btn btn-success">Save</button>
+                                    <button type="submit" class="btn btn-warning">Update</button>
                                     <a href="{{ url('/spareparts-list') }}" class="btn btn-secondary">Cancel</a>
                                 </div>
                             </div>

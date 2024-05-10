@@ -44,6 +44,12 @@
             <div id="kt_app_content" class="app-content flex-column-fluid">
                 <!--begin::Content container-->
                 <div id="kt_app_content_container" class="app-container container-xxl">
+                    @if(session('status'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ session('status') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
                     <!--begin::Card-->
                     <div class="card">
                         <!--begin::Card header-->
@@ -87,26 +93,26 @@
                             <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_customers_table">
                                 <thead>
                                 <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
-                                    <th>Model Number</th>
+                                    <th>S.No</th>
+                                    <th class="min-w-125px">Model Number</th>
                                     <th class="min-w-125px">Serial Number</th>
                                     <th class="min-w-125px">Order Number</th>
                                     <th class="min-w-125px">Container Number</th>
                                     <th class="min-w-125px">Date of Receipt</th>
-                                    <th class="min-w-125px">Date of Entry</th>
-                                    <th class="text-end min-w-70px">Quantity</th>
+                                    <th class="text-end min-w-70px">Date of Entry</th>
                                 </tr>
                                 </thead>
                                 <tbody class="fw-semibold text-gray-600">
                                 @if($model_number)
                                 @for($i=0;$i<count($model_number);$i++)
                                 <tr>
+                                    <td>{{ $count ++ }}</td>
                                     <td>{{$model_number[$i]}}</td>
                                     <td>{{$serial_number[$i]}}</td>
                                     <td>{{ $order_no[$i] }}</td>
                                     <td>{{$container_no[$i]}}</td>
                                     <td>{{ date('d M, Y',strtotime($receipt_date[$i])) }}</td>
                                     <td>{{ date('d M, Y',strtotime($entry_date[$i])) }}</td>
-                                    <td>{{ $qty[$i] }}</td>
                                 </tr>
                                 @endfor
                                     @endif
