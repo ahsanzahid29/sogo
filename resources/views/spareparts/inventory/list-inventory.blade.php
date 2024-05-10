@@ -43,6 +43,12 @@
             <div id="kt_app_content" class="app-content flex-column-fluid">
                 <!--begin::Content container-->
                 <div id="kt_app_content_container" class="app-container container-xxl">
+                    @if(session('status'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ session('status') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
                     <!--begin::Card-->
                     <div class="card">
                         <!--begin::Card header-->
@@ -65,7 +71,7 @@
                                 <!--begin::Toolbar-->
                                 <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
                                     <!--begin::Add customer-->
-                                    <a href="#" class="btn btn-primary">Add Spare Part Inventory via CSV</a>
+                                    <a href="{{ route('add-sparepart-inventory') }}" class="btn btn-primary">Add Spare Part Inventory via CSV</a>
                                     <!--end::Add customer-->
                                 </div>
                                 <!--end::Toolbar-->
@@ -92,28 +98,31 @@
                                     <th class="min-w-125px">Part Type</th>
                                     <th class="min-w-125px">Order Number</th>
                                     <th class="min-w-125px">Date of Receipt</th>
-                                    <th class="text-end min-w-70px">Quantity</th>
+                                    <th class="text-end min-w-70px">Voltage Rating</th>
                                 </tr>
                                 </thead>
                                 <tbody class="fw-semibold text-gray-600">
+                                @if($factoryCode)
+                                    @for($i=0;$i<count($factoryCode);$i++)
                                 <tr>
-                                    <td>1</td>
-                                    <td>SP-01</td>
-                                    <td>Pieces</td>
-                                    <td>Test</td>
-                                    <td>TT-009</td>
-                                    <td>April 6th, 2024</td>
-                                    <td>1200</td>
+                                    <td>{{ $count ++ }}</td>
+                                    <td>{{$factoryCode[$i]}}</td>
+                                    <td>{{$partName[$i]}}</td>
+                                    <td>
+
+                                        @if($partType[$i]==1)
+                                            {{ 'Type 1' }}
+                                        @elseif( $partType[$i]==2)
+                                            {{ 'Type 2' }}
+                                        @endif
+                                    </td>
+                                    <td>{{$orderNumber[$i]}}</td>
+                                    <td>{{ date('d M, Y',strtotime($receiptDate[$i])) }}</td>
+                                    <td>{{ $voltageRating[$i] }}</td>
                                 </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>SP-01</td>
-                                    <td>Pieces</td>
-                                    <td>Test</td>
-                                    <td>TT-100</td>
-                                    <td>April 6th, 2024</td>
-                                    <td>2000</td>
-                                </tr>
+                                    @endfor
+                                @endif
+
                                 </tbody>
                                 <!--end::Table body-->
                             </table>

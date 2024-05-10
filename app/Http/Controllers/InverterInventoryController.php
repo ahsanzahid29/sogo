@@ -36,13 +36,13 @@ class InverterInventoryController extends Controller
             $order_no[]       = $detail->order_number;
             $model_number[]   = $row->model_number;
             $serial_number[]  = $row->serial_number;
-            $qty[]            = $row->qty;
             $receipt_date[]   = $detail->date_of_receipt;
             $entry_date[]     = $detail->date_of_entry;
 
         }
+        $count=1;
 
-        return view('inverters.inventory.list-inventory',compact('model_number','serial_number','qty','order_no','receipt_date','entry_date','container_no'));
+        return view('inverters.inventory.list-inventory',compact('model_number','serial_number','count','order_no','receipt_date','entry_date','container_no'));
     }
 
     public function add(){

@@ -68,13 +68,13 @@
                                 </div>
                                 <div class="col-md-4 mb-5">
                                     <label for="exampleFormControlInput1" class="required form-label">Packaging</label>
-                                    <select name="inverter_packaging" class="form-select form-select-solid" aria-label="Select example">
+                                    <select id="packaging" name="inverter_packaging" class="form-select form-select-solid" aria-label="Select example">
                                         <option>Select Packaging</option>
                                         <option value="1">Carton</option>
                                         <option value="2">Pieces</option>
                                     </select>
                                 </div>
-                                <div class="col-md-4 mb-5">
+                                <div class="col-md-4 mb-5" id="pieces" style="display: none;">
                                     <label class="form-label">Pieces:</label>
                                     <input type="text" name="no_of_pieces" class="form-control mb-2 mb-md-0" placeholder="Number of pieces" />
                                 </div>
@@ -103,27 +103,33 @@
 
                             <div class="form-group row mb-5">
                                 <div class="col-md-4 mb-5">
-                                    <label class="form-label">Product Warranty:</label>
-                                    <input type="text" name="product_warranty" class="form-control mb-2 mb-md-0" placeholder="Product Warranty" />
+                                    <label class="form-label">Product Warranty (in Years):</label>
+                                    <input type="number" name="product_warranty" class="form-control mb-2 mb-md-0" placeholder="Product Warranty" />
                                 </div>
                                 <div class="col-md-4 mb-5">
-                                    <label class="form-label">Service Warranty:</label>
-                                    <input type="text" name="service_warranty" class="form-control mb-2 mb-md-0" placeholder="Service Warranty" />
+                                    <label class="form-label">Service Warranty (in Years):</label>
+                                    <input type="number" name="service_warranty" class="form-control mb-2 mb-md-0" placeholder="Service Warranty" />
                                 </div>
                                 <div class="col-md-4 mb-5">
-                                    <label class="form-label">Warranty Lag :</label>
-                                    <input type="text" name="warranty_lag" class="form-control mb-2 mb-md-0" placeholder="Warranty Lag" />
+                                    <label class="form-label">Warranty Lag (in Months) :</label>
+                                    <input type="number" name="warranty_lag" class="form-control mb-2 mb-md-0" placeholder="Warranty Lag" />
                                 </div>
                             </div>
 
                             <div class="form-group row mb-5">
                                 <div class="col-md-4 mb-5">
-                                    <label class="form-label">Product Catalog:</label>
+                                    <label class="required form-label">Product Catalog:</label>
                                     <input type="file" name="product_catalog" class="form-control mb-2 mb-md-0" />
+                                    @error('product_catalog')
+                                    <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="col-md-4 mb-5">
-                                    <label class="form-label">Product Manual:</label>
+                                    <label class="required form-label">Product Manual:</label>
                                     <input type="file" name="product_manual" class="form-control mb-2 mb-md-0" />
+                                    @error('product_manual')
+                                    <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="col-md-4 mb-5">
                                     <label class="form-label">Troubleshhot Guide :</label>
@@ -178,3 +184,20 @@
     </div>
     <!--end:::Main-->
 @endsection
+@push('scripts_bottom')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#packaging').change(function() {
+            var selectedOption = $(this).val();
+
+            // Show text field if the selected option value is '3'
+            if(selectedOption === '2') {
+                $('#pieces').show();
+            } else {
+                $('#pieces').hide();
+            }
+        });
+    });
+</script>
+@endpush

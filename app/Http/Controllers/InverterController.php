@@ -16,6 +16,7 @@ class InverterController extends Controller
     }
     public function index(){
         $data['inverters'] = Inverter::all();
+        $data['count'] =1;
         return view('inverters.inverter-list', $data);
     }
 
@@ -27,6 +28,8 @@ class InverterController extends Controller
         if ($request->all()) {
             $this->validate($request, [
                'inverter_image' => 'required|mimes:jpeg,jpg,png,gif',
+               'product_catalog' => 'required|mimes:pdf',
+               'product_manual' => 'required|mimes:pdf',
 
             ]);
             $productCatalogName='';
@@ -95,7 +98,7 @@ class InverterController extends Controller
                     [
                         'inverter_name'      => $request->inverter_name,
                         'inverter_packaging' => $request->inverter_packaging,
-                        'no_of_pieces' => $request->no_of_pieces,
+                        'no_of_pieces' => $request->no_of_pieces ? $request->no_of_pieces: '' ,
                         'brand' => $request->brand,
                         'category' => $request->category,
                         'modal_number' => $request->modal_number,
@@ -139,6 +142,8 @@ class InverterController extends Controller
         if ($request->all()) {
             $this->validate($request, [
                 'inverter_image' => 'nullable|mimes:jpeg,jpg,png,gif',
+                'product_catalog' => 'nullable|mimes:pdf',
+                'product_manual' => 'nullable|mimes:pdf',
 
             ]);
             // get previous detail in case of image and files

@@ -44,6 +44,12 @@
             <div id="kt_app_content" class="app-content flex-column-fluid">
                 <!--begin::Content container-->
                 <div id="kt_app_content_container" class="app-container container-xxl">
+                    @if(session('status'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ session('status') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
                     <!--begin::Card-->
                     <div class="card">
                         <!--begin::Card header-->
@@ -87,34 +93,44 @@
                             <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_customers_table">
                                 <thead>
                                 <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
-                                    <th>Image</th>
-                                    <th class="min-w-125px">Product Name</th>
-                                    <th class="min-w-125px">Product Code</th>
-                                    <th class="min-w-125px">Category</th>
-                                    <th class="min-w-125px">Tax</th>
-                                    <th class="min-w-125px">Date of Entry</th>
+                                    <th>Part Name</th>
+                                    <th class="min-w-125px">Factory Code</th>
+                                    <th class="min-w-125px">Part Type</th>
+                                    <th class="min-w-125px">Sale Price</th>
+                                    <th class="min-w-125px">Voltage Rating</th>
+                                    <th class="min-w-125px">Quantity</th>
                                     <th class="text-end min-w-70px">Quantity</th>
                                 </tr>
                                 </thead>
                                 <tbody class="fw-semibold text-gray-600">
+                                @foreach($spareParts as $row)
                                 <tr>
-                                    <td></td>
-                                    <td>Spare Part 1</td>
-                                    <td>SP-01</td>
-                                    <td>First Category</td>
-                                    <td>Inclusive</td>
-                                    <td>April 6th, 2024</td>
-                                    <td>500</td>
+                                    <td>{{ $row->name }}</td>
+                                    <td>{{ $row->factory_code }}</td>
+                                    <td> @if($row->part_type==1)
+                                            {{ 'Type 1' }}
+                                        @elseif($row->part_type==2)
+                                            {{ 'Type 2' }}
+                                        @endif
+                                    </td>
+                                    <td>{{ $row->sale_price }}</td>
+                                    <td>{{ $row->voltage_rating }}</td>
+                                    <td>{{ $row->total_quantity }}</td>
+                                    <td class="text-end">
+                                        <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
+                                            <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
+                                        <!--begin::Menu-->
+                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
+                                            <!--begin::Menu item-->
+                                            <div class="menu-item px-3">
+                                                <a href="{{route('edit-sparepart',$row->id)}}" class="menu-link px-3">Edit</a>
+                                            </div>
+                                            <!--end::Menu item-->
+                                        </div>
+                                        <!--end::Menu-->
+                                    </td>
                                 </tr>
-                                <tr>
-                                    <td></td>
-                                    <td>Spare Part 2</td>
-                                    <td>SP-02</td>
-                                    <td>Second Category</td>
-                                    <td>Exclusive</td>
-                                    <td>April 6th, 2024</td>
-                                    <td>300</td>
-                                </tr>
+                                @endforeach
                                 </tbody>
                                 <!--end::Table body-->
                             </table>

@@ -3,12 +3,6 @@
     <link href="{{asset('public/assets/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
 @endpush
 @section('content')
-    @if(session('status'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('status') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
     <!--begin::Main-->
     <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
         <!--begin::Content wrapper-->
@@ -50,6 +44,12 @@
             <div id="kt_app_content" class="app-content flex-column-fluid">
                 <!--begin::Content container-->
                 <div id="kt_app_content_container" class="app-container container-xxl">
+                    @if(session('status'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ session('status') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
                     <!--begin::Card-->
                     <div class="card">
                         <!--begin::Card header-->
@@ -93,8 +93,8 @@
                             <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_customers_table">
                                 <thead>
                                 <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
-                                    <th>Name</th>
-                                    <th class="min-w-125px">Type</th>
+                                    <th>S. No</th>
+                                    <th class="min-w-125px">Model Number</th>
                                     <th class="min-w-125px">Name</th>
                                     <th class="min-w-125px">Category</th>
                                     <th class="min-w-125px">Brand</th>
@@ -105,9 +105,9 @@
                                 <tbody class="fw-semibold text-gray-600">
                                 @foreach($inverters as $row)
                                 <tr>
+                                    <td>{{ $count++ }}</td>
+                                    <td>{{ $row->modal_number }}</td>
                                     <td>{{ $row->inverter_name }}</td>
-                                    <td>{{ $row->inverter_packaging==1 ? 'Carton' : 'Pieces' }}</td>
-                                    <td>{{ $row->no_of_pieces }}</td>
                                     <td>
                                         @if($row->category==1)
                                             {{ 'Off-grid solar Inverters' }}
