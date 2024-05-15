@@ -142,7 +142,7 @@
                             </div>
                             @if(count($sparePartModel)>0)
                                 <div class="form-group row mb-3">
-                                    <h1>Selected Inverter Models</h1>
+                                    <h1>Selected Product Models</h1>
                                     <div class="table-responsive mt-4">
                                         <table class="table table-bordered">
                                             <thead>
@@ -168,7 +168,7 @@
                                 @endif
                             <div class="form-group row mb-5">
                               <div class="col-md-6 mb-5 mt-7">
-                              <button type="button" class="btn btn-success add-form">Add Inverter Modal</button>
+                              <button type="button" class="btn btn-success add-form">Add Product Modal</button>
                               </div>
                             </div>
 
@@ -177,9 +177,9 @@
 
                                     <div class="form-group row mb-5 repeatable-section">
                                         <div class="col-md-4 mb-5 mt-2">
-                                            <label for="exampleFormControlInput1" class=" form-label">Inverter Model</label>
+                                            <label for="exampleFormControlInput1" class=" form-label">Product Model</label>
                                             <select name="inverter_modal[]" class="form-select form-select-solid">
-                                                <option value="" selected>Select Inverter Modal</option>
+                                                <option value="" selected>Select Product Modal</option>
                                                 @foreach($inverters as $row)
                                                 <option value="{{$row->id}}">{{ $row->modal_number }}</option>
                                                 @endforeach

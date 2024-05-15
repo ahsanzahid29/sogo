@@ -101,6 +101,10 @@ class InverterInventoryController extends Controller
                     ];
 
                 }
+                else{
+                    return back()->withErrors(['inventory_file' => 'Invalid data']);
+
+                }
 
                 // Validate row data
                 $validator = Validator::make($data, [

@@ -14,7 +14,7 @@
                     <!--begin::Page title-->
                     <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                         <!--begin::Title-->
-                        <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">Inverter Listing</h1>
+                        <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">Product Listing</h1>
                         <!--end::Title-->
                         <!--begin::Breadcrumb-->
                         <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
@@ -62,7 +62,7 @@
                                         <span class="path1"></span>
                                         <span class="path2"></span>
                                     </i>
-                                    <input type="text" data-kt-customer-table-filter="search" class="form-control form-control-solid w-250px ps-13" placeholder="Search Inverters" />
+                                    <input type="text" data-kt-customer-table-filter="search" class="form-control form-control-solid w-250px ps-13" placeholder="Search Product" />
                                 </div>
                                 <!--end::Search-->
                             </div>
@@ -72,7 +72,7 @@
                                 <!--begin::Toolbar-->
                                 <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
                                     <!--begin::Add customer-->
-                                    <a href="{{ url('/inverter-add') }}" class="btn btn-primary">Add Inverter</a>
+                                    <a href="{{ url('/inverter-add') }}" class="btn btn-primary">Add Product</a>
                                     <!--end::Add customer-->
                                 </div>
                                 <!--end::Toolbar-->
@@ -123,6 +123,7 @@
                                     <td>{{ $row->brand }}</td>
                                     <td>{{ $row->total_quantity }}</td>
                                     <td class="text-end">
+                                        @if($role==1)
                                         <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
                                             <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
                                         <!--begin::Menu-->
@@ -134,6 +135,7 @@
                                             <!--end::Menu item-->
                                         </div>
                                         <!--end::Menu-->
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach

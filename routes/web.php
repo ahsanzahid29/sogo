@@ -21,6 +21,15 @@ use App\Http\Controllers\GeneralController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/clear-cache', function() {
+    Artisan::call('cache:clear');
+    Artisan::call('config:clear');
+    Artisan::call('config:cache');
+    Artisan::call('view:clear');
+    Artisan::call('optimize:clear');
+    return "Cache Cleared!";
+
+});
 
 Route::get('/', function () {
     return view('auth.login');
@@ -76,9 +85,17 @@ Route::post('/sparepart-inventory-save',[SparePartsInventoryController::class,'s
 
 Route::get('/edit-profile',[UserController::class,'editProfile']);
 Route::post('/update-profile',[UserController::class,'updateProfile']);
+
+
 Route::get('/invoice-list',[SparePartsInvoiceController::class,'index']);
 Route::get('/invoice-add',[SparePartsInvoiceController::class,'add']);
+Route::get('/serviceuser-detail/{id}', [SparePartsInvoiceController::class, 'detail'])->middleware(['auth'])->name('serviceuser-detail');
+Route::get('/part-detail',[SparePartsInvoiceController::class,'partDetail'])->middleware(['auth'])->name('sparepart-detail-invoice');
 Route::post('/invoice-save',[SparePartsInvoiceController::class,'save']);
+Route::get('/sparepartinvoice-detail/{id}', [SparePartsInvoiceController::class, 'show'])->middleware(['auth'])->name('viewinvoice');
+Route::get('/invoice-status/{id}', [SparePartsInvoiceController::class, 'update'])->middleware(['auth'])->name('change-invoice');
+
+
 Route::get('/deliverynote-list',[DeliveryNoteController::class,'index']);
 Route::get('/deliverynote-add',[DeliveryNoteController::class,'add']);
 Route::post('/deliverynote-save',[DeliveryNoteController::class,'save']);

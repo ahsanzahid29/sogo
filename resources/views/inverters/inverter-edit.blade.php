@@ -10,7 +10,7 @@
                 <!--begin::Page title-->
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <!--begin::Title-->
-                    <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">Add Inverter</h1>
+                    <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">Add Product</h1>
                     <!--end::Title-->
                     <!--begin::Breadcrumb-->
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
@@ -55,13 +55,13 @@
                         <div class="card-body pt-0">
                             <div class="form-group row mb-5">
                                 <div class="col-md-12 mb-5">
-                                    <label class="required form-label">Inverter Name:</label>
+                                    <label class="required form-label">Product Name:</label>
                                     <input type="text" name="inverter_name" class="form-control mb-2 mb-md-0" value="{{$inverter->inverter_name}}" placeholder="Inverter Name" required />
                                 </div>
                             </div>
                                 <div class="form-group row mb-5">
                                 <div class="col-md-4 mb-5">
-                                    <label class="required form-label">Inverter Image:</label>
+                                    <label class="required form-label">Product Image:</label>
                                     <input type="file" name="inverter_image" class="form-control mb-2 mb-md-0" />
                                     @if($inverter->inverter_image!=null)
                                     <a target="_blank" href="{{asset('public/files/inverters/'.$inverter->inverter_image)}}">View</a>

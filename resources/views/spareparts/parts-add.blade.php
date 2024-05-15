@@ -130,7 +130,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-4 mb-5 mt-7">
-                                    <button type="button" class="btn btn-success add-form">Add Inverter Modal</button>
+                                    <button type="button" class="btn btn-success add-form">Add Product Modal</button>
 
                                 </div>
 
@@ -139,9 +139,9 @@
 
                                     <div class="form-group row mb-5 repeatable-section">
                                         <div class="col-md-4 mb-5 mt-2">
-                                            <label for="exampleFormControlInput1" class=" required form-label">Inverter Model</label>
+                                            <label for="exampleFormControlInput1" class=" required form-label">Product Model</label>
                                             <select name="inverter_modal[]" class="form-select form-select-solid" required>
-                                                <option value="" selected>Select Inverter Modal</option>
+                                                <option value="" selected>Select Product Modal</option>
                                                 @foreach($inverters as $row)
                                                 <option value="{{$row->id}}">{{ $row->modal_number }}</option>
                                                 @endforeach

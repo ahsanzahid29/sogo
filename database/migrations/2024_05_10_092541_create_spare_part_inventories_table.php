@@ -21,6 +21,7 @@ class CreateSparePartInventoriesTable extends Migration
             $table->date('repair_date')->nullable();
             $table->string('csv_key')->nullable();
             $table->string('order_number')->nullable();
+            $table->string('serial_number')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('sparepart_id')->references('id')->on('spare_parts');
             $table->timestamps();

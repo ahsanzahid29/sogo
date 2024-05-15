@@ -50,6 +50,40 @@
                             <form class="form w-100" method="POST" action="{{ url('/invoice-save') }}">
                                 @csrf
                             <div class="card-body p-12">
+                                <div class="form-group row mb-5">
+                                    <div class="col-md-6 mb-5">
+                                        <label for="exampleFormControlInput1" class="required form-label">FOC</label>
+                                        <select id="foc" name="foc" class="form-select form-select-solid" aria-label="Select example" required>
+                                            <option value="">Select FOC</option>
+                                            <option value="1">Yes</option>
+                                            <option value="2">No</option>
+                                        </select>
+                                        @error('foc')
+                                        <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-6 mb-5">
+                                        <label for="exampleFormControlInput1" class="required form-label">Service Center</label>
+                                        <select id="service_user" name="service_user" class="form-select form-select-solid" aria-label="Select example" required>
+                                            <option value="">Select User</option>
+                                            @foreach($serviceCenterUser as $row)
+                                            <option value="{{ $row->id }}">{{ $row->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('service_user')
+                                        <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div id="sc_detail">
+
+                                </div>
+                                <div class="form-group row mb-5">
+                                    <div class="col-md-6 mb-5">
+                                <button id="addItemBtn" class="btn btn-light-success">Add</button>
+                                    </div>
+                                </div>
+
                                 <div class="row mb-5">
                                     <div class="col-12">
                                         <table class="table table-row-dashed table-row-gray-300 gy-7">
@@ -59,49 +93,49 @@
                                                 <th>Net Unit Price</th>
                                                 <th>Current Stock</th>
                                                 <th>Qty</th>
+                                                <th>Tax (%)</th>
                                                 <th>Discount</th>
-                                                <th>Tax</th>
                                                 <th>Subtotal</th>
                                                 <th>Action</th>
                                             </tr>
                                             </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td> <input type="text" id="orderTax" class="form-control"></td>
-                                                <td> <input type="text" id="orderTax" class="form-control"></td>
-                                                <td> <input type="text" id="orderTax" class="form-control"></td>
-                                                <td> <input type="text" id="orderTax" class="form-control"></td>
-                                                <td> <input type="text" id="orderTax" class="form-control"></td>
-                                                <td> <input type="text" id="orderTax" class="form-control"></td>
-                                                <td> <input type="text" id="orderTax" class="form-control"></td>
-                                                <td><button type="button" class="btn btn-sm btn-icon btn-active-color-primary" data-kt-element="remove-item">
-                                                        <i class="ki-duotone ki-trash fs-3">
-                                                            <span class="path1"></span>
-                                                            <span class="path2"></span>
-                                                            <span class="path3"></span>
-                                                            <span class="path4"></span>
-                                                            <span class="path5"></span>
-                                                        </i>
-                                                    </button></td>
-                                            </tr>
-                                            <tr>
-                                                <td> <input type="text" id="orderTax" class="form-control"></td>
-                                                <td> <input type="text" id="orderTax" class="form-control"></td>
-                                                <td> <input type="text" id="orderTax" class="form-control"></td>
-                                                <td> <input type="text" id="orderTax" class="form-control"></td>
-                                                <td> <input type="text" id="orderTax" class="form-control"></td>
-                                                <td> <input type="text" id="orderTax" class="form-control"></td>
-                                                <td> <input type="text" id="orderTax" class="form-control"></td>
-                                                <td><button type="button" class="btn btn-sm btn-icon btn-active-color-primary" data-kt-element="remove-item">
-                                                        <i class="ki-duotone ki-trash fs-3">
-                                                            <span class="path1"></span>
-                                                            <span class="path2"></span>
-                                                            <span class="path3"></span>
-                                                            <span class="path4"></span>
-                                                            <span class="path5"></span>
-                                                        </i>
-                                                    </button></td>
-                                            </tr>
+                                            <tbody id="inputRow">
+{{--                                            <tr>--}}
+{{--                                                <td> <input type="text" id="orderTax" class="form-control"></td>--}}
+{{--                                                <td> <input type="text" id="orderTax" class="form-control"></td>--}}
+{{--                                                <td> <input type="text" id="orderTax" class="form-control"></td>--}}
+{{--                                                <td> <input type="text" id="orderTax" class="form-control"></td>--}}
+{{--                                                <td> <input type="text" id="orderTax" class="form-control"></td>--}}
+{{--                                                <td> <input type="text" id="orderTax" class="form-control"></td>--}}
+{{--                                                <td> <input type="text" id="orderTax" class="form-control"></td>--}}
+{{--                                                <td><button type="button" class="btn btn-sm btn-icon btn-active-color-primary" data-kt-element="remove-item">--}}
+{{--                                                        <i class="ki-duotone ki-trash fs-3">--}}
+{{--                                                            <span class="path1"></span>--}}
+{{--                                                            <span class="path2"></span>--}}
+{{--                                                            <span class="path3"></span>--}}
+{{--                                                            <span class="path4"></span>--}}
+{{--                                                            <span class="path5"></span>--}}
+{{--                                                        </i>--}}
+{{--                                                    </button></td>--}}
+{{--                                            </tr>--}}
+{{--                                            <tr>--}}
+{{--                                                <td> <input type="text" id="orderTax" class="form-control"></td>--}}
+{{--                                                <td> <input type="text" id="orderTax" class="form-control"></td>--}}
+{{--                                                <td> <input type="text" id="orderTax" class="form-control"></td>--}}
+{{--                                                <td> <input type="text" id="orderTax" class="form-control"></td>--}}
+{{--                                                <td> <input type="text" id="orderTax" class="form-control"></td>--}}
+{{--                                                <td> <input type="text" id="orderTax" class="form-control"></td>--}}
+{{--                                                <td> <input type="text" id="orderTax" class="form-control"></td>--}}
+{{--                                                <td><button type="button" class="btn btn-sm btn-icon btn-active-color-primary" data-kt-element="remove-item">--}}
+{{--                                                        <i class="ki-duotone ki-trash fs-3">--}}
+{{--                                                            <span class="path1"></span>--}}
+{{--                                                            <span class="path2"></span>--}}
+{{--                                                            <span class="path3"></span>--}}
+{{--                                                            <span class="path4"></span>--}}
+{{--                                                            <span class="path5"></span>--}}
+{{--                                                        </i>--}}
+{{--                                                    </button></td>--}}
+{{--                                            </tr>--}}
                                             </tbody>
                                         </table>
                                     </div>
@@ -109,26 +143,10 @@
 
                                 <!-- Form inputs -->
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="orderTax">Order Tax</label>
-                                            <input type="text" id="orderTax" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="discount">Discount</label>
-                                            <input type="text" id="discount" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="shipping">Shipping</label>
-                                            <select class="form-control" id="shipping">
-                                                <option>Option 1</option>
-                                                <option>Option 2</option>
-                                                <!-- More options -->
-                                            </select>
+                                            <label for="discount">Invoice Discount</label>
+                                            <input name="discount" placeholder="Invoice Discount" type="text" id="discount" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -139,11 +157,12 @@
                                         <table class="table">
                                             <tr>
                                                 <th>Grand Total:</th>
-                                                <td>PKR 0.00</td>
+                                                <td id="grandTotal">PKR 0.00</td>
                                             </tr>
                                         </table>
                                     </div>
                                 </div>
+                                <input type="hidden" name="total" id="invoice_total" />
                                 <!-- Submit button -->
                                 <div class="row">
                                     <div class="col-12 text-right">
@@ -182,3 +201,120 @@
     </div>
     <!--end:::Main-->
 @endsection
+@push('scripts_bottom')
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var parts = @json($spareParts);
+            $('#service_user').change(function() {
+                var selectedOption = $(this).val();
+                if(selectedOption!=0){
+                    $.ajax({
+                        url: "{{ url('/serviceuser-detail') }}/" + selectedOption,
+                        context: document.body,
+                        error: function (data, transport) {
+                            alert("Sorry, the operation is failed.");
+                        },
+                        success: function (data) {
+                            $('#sc_detail').html(data);
+                        }
+                    });
+                }
+                else{
+                    $('#sc_detail').empty();
+
+                }
+
+            });
+            $('#addItemBtn').click(function(e) {
+                e.preventDefault();  // This stops the default form submission action
+                var selectHtml = '<select name="sparepart[]" class="form-control part-dropdown" required>';
+                selectHtml += '<option value="">Select Spare Part</option>';
+                parts.forEach(function(option) {
+                    selectHtml += '<option value="' + option.id + '">' + option.name + '</option>';
+                });
+                selectHtml += '</select>';
+                var newRow = '<tr>' +
+                    '<td>' + selectHtml + '</td>' +
+                    '<td><input type="text" name="sale_price[]" placeholder="Net unit price" class="form-control unit-price" readonly></td>' +
+                    '<td><input type="text" placeholder="Current Stock" class="form-control current-stock " readonly></td>' +
+                    '<td><input type="number" name="qty[]" placeholder="Quantity" class="form-control qty" required></td>' +
+                    '<td><input type="text" name="item_tax[]" placeholder="Tax (%)" class="form-control tax-input" required></td>' +
+                    '<td><input type="text" name="item_discount[]" placeholder="Discount" class="form-control discount-input" required></td>' +
+                    '<td><input type="text" name="item_total[]" placeholder="Sub Total" class="form-control total-cost"></td>' +
+                    '<td><button class="btn btn-light-danger btn-xs removeBtn">Remove</button></td>' +
+                    '</tr>';
+                $('#inputRow').append(newRow);
+                updateGrandTotal();
+            });
+
+            // Event delegation to handle click on dynamically created remove buttons
+            $('#inputRow').on('click', '.removeBtn', function() {
+                $(this).closest('tr').empty(); // This empties the content of the td that contains the clicked button
+                updateGrandTotal();
+            });
+
+            $('#inputRow').on('change', '.part-dropdown', function() {
+                var selectedPartId = $(this).val();
+                var $unitPriceField = $(this).closest('tr').find('.unit-price');
+                var $currentstockField = $(this).closest('tr').find('.current-stock');
+
+                if (selectedPartId) {
+                    $.ajax({
+                        url: "{{ url('/part-detail') }}",
+                        type: 'GET',
+                        data: { partId: selectedPartId },
+                        success: function(response) {
+                            $unitPriceField.val(response.netPrice);
+                            $currentstockField.val(response.currentStock);
+                        },
+                        error: function(xhr) {
+                            console.error('Error fetching tax data:', xhr.responseText);
+                        }
+                    });
+                } else {
+                    $unitPriceField.val(''); // Clear tax output if no part is selected
+                }
+            });
+            $('#inputRow').on('input', '.quantity-input, .price-input, .tax-input, .discount-input', function() {
+                var $row = $(this).closest('tr');
+                var focVal  = $('#foc').val();
+                if(focVal==1){
+                    var taxRate = 0;
+                    var discount = 0;
+                    var subtotal = 0;
+                    var totalCost = 0;  // Calculate total cost including tax
+                    var costwithDiscount = 0;
+                }
+                else{
+                    var quantity = parseFloat($row.find('.qty').val()) || 0;
+                    var price = parseFloat($row.find('.unit-price').val()) || 0;
+                    var taxRate = parseFloat($row.find('.tax-input').val()) || 0;
+                    var discount = parseFloat($row.find('.discount-input').val()) || 0;
+                    var subtotal = quantity * price;
+                    var totalCost = subtotal + (subtotal * (taxRate / 100));  // Calculate total cost including tax
+                    var costwithDiscount = totalCost - discount;
+                }
+                $row.find('.total-cost').val(costwithDiscount.toFixed(2));  // Display total cost, formatted to 2 decimal places
+                updateGrandTotal();
+            });
+
+            // Event handler for discount changes
+            $('#discount').on('input', function() {
+                updateGrandTotal();
+            });
+
+        });
+        function updateGrandTotal() {
+            var total = 0;
+            $('.total-cost').each(function() {
+                total += parseFloat($(this).val()) || 0;
+            });
+            var discount = parseFloat($('#discount').val()) || 0;
+            var grandTotal = total - discount;
+            $('#grandTotal').text('PKR ' + grandTotal.toFixed(2));
+            $('#invoice_total').val(grandTotal.toFixed(2)); // Display formatted grand total
+
+        }
+    </script>
+@endpush

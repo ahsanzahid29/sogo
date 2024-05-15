@@ -67,7 +67,7 @@ class SparePartsInventoryController extends Controller
             // Now create an associative array with header names as keys and their indices as values
             $headerIndexes = array_flip($headers);
             // Check for required columns
-            $requiredColumns = ['Factorycode','Ordernumber','Dateofreceipt'];
+            $requiredColumns = ['Factorycode','Serialnumber','Ordernumber','Dateofreceipt'];
             $headerIndexes = array_flip($headers);
             //dd($requiredColumns,$headerIndexes);
 
@@ -94,7 +94,13 @@ class SparePartsInventoryController extends Controller
                         'repair_date'      =>    date('Y-m-d',strtotime($row[$headerIndexes['Dateofreceipt']])) ?? '',
                         'csv_key'        =>  $key,
                         'order_number' =>   $row[$headerIndexes['Ordernumber']] ?? '',
+                        'serial_number' =>   $row[$headerIndexes['Serialnumber']] ?? '',
                     ];
+
+                }
+                else{
+                    return back()->withErrors(['inventory_file' => 'Invalid data']);
+
 
                 }
 
@@ -104,6 +110,7 @@ class SparePartsInventoryController extends Controller
                     'factory_code' => 'required',
                     'repair_date' => 'required',
                     'order_number' => 'required',
+                    'serial_number' => 'required',
                 ]);
 
                 if ($validator->fails()) {
