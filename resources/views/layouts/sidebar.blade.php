@@ -81,7 +81,7 @@
                         <div class="menu-item pt-5">
                             <!--begin:Menu content-->
                             <div class="menu-content">
-                                <span class="menu-heading fw-bold text-uppercase fs-7">Inverters</span>
+                                <span class="menu-heading fw-bold text-uppercase fs-7">Products</span>
                             </div>
                             <!--end:Menu content-->
                         </div>
@@ -100,7 +100,7 @@
 														<span class="path6"></span>
 													</i>
 												</span>
-                                <span class="menu-title">Manage Inverters</span>
+                                <span class="menu-title">Manage Products</span>
                             </a>
                             <!--end:Menu link-->
                         </div>
@@ -119,7 +119,7 @@
 														<span class="path6"></span>
 													</i>
 												</span>
-                                <span class="menu-title">Inverters Inventory</span>
+                                <span class="menu-title">Products Inventory</span>
                             </a>
                             <!--end:Menu link-->
                         </div>
@@ -267,7 +267,7 @@
                         <div class="menu-item pt-5">
                             <!--begin:Menu content-->
                             <div class="menu-content">
-                                <span class="menu-heading fw-bold text-uppercase fs-7">Inverters</span>
+                                <span class="menu-heading fw-bold text-uppercase fs-7">Products</span>
                             </div>
                             <!--end:Menu content-->
                         </div>
@@ -286,7 +286,7 @@
 														<span class="path6"></span>
 													</i>
 												</span>
-                                <span class="menu-title">Manage Inverters</span>
+                                <span class="menu-title">Manage Products</span>
                             </a>
                             <!--end:Menu link-->
                         </div>
@@ -305,7 +305,7 @@
 														<span class="path6"></span>
 													</i>
 												</span>
-                                <span class="menu-title">Inverters Inventory</span>
+                                <span class="menu-title">Products Inventory</span>
                             </a>
                             <!--end:Menu link-->
                         </div>
@@ -454,7 +454,7 @@
                         <div class="menu-item pt-5">
                             <!--begin:Menu content-->
                             <div class="menu-content">
-                                <span class="menu-heading fw-bold text-uppercase fs-7">Inverters</span>
+                                <span class="menu-heading fw-bold text-uppercase fs-7">Products</span>
                             </div>
                             <!--end:Menu content-->
                         </div>
@@ -473,7 +473,7 @@
 														<span class="path6"></span>
 													</i>
 												</span>
-                                <span class="menu-title">Manage Inverters</span>
+                                <span class="menu-title">Manage Products</span>
                             </a>
                             <!--end:Menu link-->
                         </div>
@@ -492,7 +492,7 @@
 														<span class="path6"></span>
 													</i>
 												</span>
-                                <span class="menu-title">Inverters Inventory</span>
+                                <span class="menu-title">Products Inventory</span>
                             </a>
                             <!--end:Menu link-->
                         </div>
@@ -564,7 +564,7 @@
                         <div class="menu-item pt-5">
                             <!--begin:Menu content-->
                             <div class="menu-content">
-                                <span class="menu-heading fw-bold text-uppercase fs-7">Inverters</span>
+                                <span class="menu-heading fw-bold text-uppercase fs-7">Products</span>
                             </div>
                             <!--end:Menu content-->
                         </div>
@@ -583,7 +583,7 @@
 														<span class="path6"></span>
 													</i>
 												</span>
-                                <span class="menu-title">Manage Inverters</span>
+                                <span class="menu-title">Manage Products</span>
                             </a>
                             <!--end:Menu link-->
                         </div>

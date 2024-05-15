@@ -17,6 +17,7 @@ class InverterController extends Controller
     public function index(){
         $data['inverters'] = Inverter::all();
         $data['count'] =1;
+        $data['role'] = Auth::user()->role_id;
         return view('inverters.inverter-list', $data);
     }
 

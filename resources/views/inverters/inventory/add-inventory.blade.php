@@ -26,7 +26,7 @@
                         </li>
                         <!--end::Item-->
                         <!--begin::Item-->
-                        <li class="breadcrumb-item text-muted">Add Inventory via CSV</li>
+                        <li class="breadcrumb-item text-muted">Add Product via CSV</li>
                         <!--end::Item-->
                     </ul>
                     <!--end::Breadcrumb-->
@@ -55,7 +55,7 @@
                             <div class="card-body pt-0">
                                 <div class="form-group row mb-5">
                                     <div class="col-md-9 mb-5">
-                                        <label class="required form-label">Inventory File CSV:</label>
+                                        <label class="required form-label">Product File CSV:</label>
                                         <input type="file" accept=".csv" name="inventory_file" class="form-control mb-2 mb-md-0" />
                                         @error('inventory_file')
                                         <div class="alert alert-danger mt-2">{{ $message }}</div>

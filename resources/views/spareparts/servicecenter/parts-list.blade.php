@@ -69,13 +69,7 @@
                             <!--begin::Card title-->
                             <!--begin::Card toolbar-->
                             <div class="card-toolbar">
-                                <!--begin::Toolbar-->
-                                <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
-                                    <!--begin::Add customer-->
-                                    <a href="{{ url('/sparepart-add') }}" class="btn btn-primary">Add Spare Part</a>
-                                    <!--end::Add customer-->
-                                </div>
-                                <!--end::Toolbar-->
+
                                 <!--begin::Group actions-->
                                 <div class="d-flex justify-content-end align-items-center d-none" data-kt-customer-table-toolbar="selected">
                                     <div class="fw-bold me-5">
@@ -98,39 +92,26 @@
                                     <th class="min-w-125px">Part Type</th>
                                     <th class="min-w-125px">Sale Price</th>
                                     <th class="min-w-125px">Voltage Rating</th>
-                                    <th class="min-w-125px">Quantity</th>
-                                    <th class="text-end min-w-70px">Action</th>
+                                    <th class="min-w-125px">Ampear Rating</th>
+                                    <th class="text-end min-w-70px">Base Unit</th>
                                 </tr>
                                 </thead>
                                 <tbody class="fw-semibold text-gray-600">
-                                @foreach($spareParts as $row)
+                                @foreach($sparePartsForSc as $row)
                                 <tr>
-                                    <td>{{ $row->name }}</td>
-                                    <td>{{ $row->factory_code }}</td>
-                                    <td> @if($row->part_type==1)
+                                    <td>{{ $row->partname }}</td>
+                                    <td>{{ $row->factorycode }}</td>
+                                    <td> @if($row->parttype==1)
                                             {{ 'Type 1' }}
-                                        @elseif($row->part_type==2)
+                                        @elseif($row->parttype==2)
                                             {{ 'Type 2' }}
                                         @endif
                                     </td>
-                                    <td>{{ $row->sale_price }}</td>
-                                    <td>{{ $row->voltage_rating }}</td>
-                                    <td>{{ $row->total_quantity }}</td>
-                                    <td class="text-end">
-                                        @if($role==1)
-                                        <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                            <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                        <!--begin::Menu-->
-                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                            <!--begin::Menu item-->
-                                            <div class="menu-item px-3">
-                                                <a href="{{route('edit-sparepart',$row->id)}}" class="menu-link px-3">Edit</a>
-                                            </div>
-                                            <!--end::Menu item-->
-                                        </div>
-                                        <!--end::Menu-->
-                                        @endif
-                                    </td>
+                                    <td>{{ $row->saleprice }}</td>
+                                    <td>{{ $row->voltagerating }}</td>
+                                    <td>{{ $row->ampearrating }}</td>
+                                    <td>{{ $row->baseunit }}</td>
+
                                 </tr>
                                 @endforeach
                                 </tbody>

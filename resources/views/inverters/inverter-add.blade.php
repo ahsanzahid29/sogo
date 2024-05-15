@@ -10,7 +10,7 @@
                 <!--begin::Page title-->
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <!--begin::Title-->
-                    <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">Add Inverter</h1>
+                    <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">Add Product</h1>
                     <!--end::Title-->
                     <!--begin::Breadcrumb-->
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
@@ -25,7 +25,7 @@
                         </li>
                         <!--end::Item-->
                         <!--begin::Item-->
-                        <li class="breadcrumb-item text-muted">Add Inverter</li>
+                        <li class="breadcrumb-item text-muted">Add Product</li>
                         <!--end::Item-->
                     </ul>
                     <!--end::Breadcrumb-->
@@ -54,13 +54,13 @@
                         <div class="card-body pt-0">
                             <div class="form-group row mb-5">
                                 <div class="col-md-12 mb-5">
-                                    <label class="required form-label">Inverter Name:</label>
+                                    <label class="required form-label">Product Name:</label>
                                     <input type="text" name="inverter_name" class="form-control mb-2 mb-md-0" placeholder="Inverter Name" required />
                                 </div>
                             </div>
                                 <div class="form-group row mb-5">
                                 <div class="col-md-4 mb-5">
-                                    <label class="required form-label">Inverter Image:</label>
+                                    <label class="required form-label">Product Image:</label>
                                     <input type="file" name="inverter_image" class="form-control mb-2 mb-md-0" />
                                     @error('inverter_image')
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>
@@ -192,7 +192,7 @@
             var selectedOption = $(this).val();
 
             // Show text field if the selected option value is '3'
-            if(selectedOption === '2') {
+            if(selectedOption === '1') {
                 $('#pieces').show();
             } else {
                 $('#pieces').hide();

@@ -30,5 +30,44 @@ class UserSeeder extends Seeder
                 ]
             );
         }
+        $user = User::where('email', 'firstadmin@yopmail.com')->first();
+        if (empty($user)) {
+            User::create(
+                [
+                    'name'     => 'First Admin',
+                    'email'    => 'firstadmin@yopmail.com',
+                    'password' => Hash::make('123456789'),
+                    'role_id'  => 2,
+                    'status'   => 'Active',
+                    'uuid'     => (string) Str::uuid(),
+                ]
+            );
+        }
+        $user = User::where('email', 'firstdealer@yopmail.com')->first();
+        if (empty($user)) {
+            User::create(
+                [
+                    'name'     => 'First Dealer',
+                    'email'    => 'firstdealer@yopmail.com',
+                    'password' => Hash::make('123456789'),
+                    'role_id'  => 3,
+                    'status'   => 'Active',
+                    'uuid'     => (string) Str::uuid(),
+                ]
+            );
+        }
+        $user = User::where('email', 'firstsc@yopmail.com')->first();
+        if (empty($user)) {
+            User::create(
+                [
+                    'name'     => 'First Service User',
+                    'email'    => 'firstsc@yopmail.com',
+                    'password' => Hash::make('123456789'),
+                    'role_id'  => 4,
+                    'status'   => 'Active',
+                    'uuid'     => (string) Str::uuid(),
+                ]
+            );
+        }
     }
 }
