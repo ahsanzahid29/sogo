@@ -89,6 +89,25 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
+                            <a class="menu-link" href="{{ url('/product-category-list') }}">
+												<span class="menu-icon">
+													<i class="ki-duotone ki-text-align-center fs-2">
+														<span class="path1"></span>
+														<span class="path2"></span>
+														<span class="path3"></span>
+														<span class="path4"></span>
+														<span class="path5"></span>
+														<span class="path6"></span>
+													</i>
+												</span>
+                                <span class="menu-title">Manage Products Category</span>
+                            </a>
+                            <!--end:Menu link-->
+                        </div>
+                        <!--end:Menu item-->
+                        <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
                             <a class="menu-link" href="{{ url('/inverters-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-text-align-center fs-2">
@@ -132,6 +151,25 @@
                                 <span class="menu-heading fw-bold text-uppercase fs-7">Spare Parts</span>
                             </div>
                             <!--end:Menu content-->
+                        </div>
+                        <!--end:Menu item-->
+                        <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="{{ url('/spareparts-category-list') }}">
+												<span class="menu-icon">
+													<i class="ki-duotone ki-abstract-28 fs-2">
+														<span class="path1"></span>
+														<span class="path2"></span>
+														<span class="path3"></span>
+														<span class="path4"></span>
+														<span class="path5"></span>
+														<span class="path6"></span>
+													</i>
+												</span>
+                                <span class="menu-title">Manage Spare Parts Category</span>
+                            </a>
+                            <!--end:Menu link-->
                         </div>
                         <!--end:Menu item-->
                         <!--begin:Menu item-->

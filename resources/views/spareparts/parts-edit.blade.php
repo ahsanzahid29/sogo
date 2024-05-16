@@ -86,8 +86,9 @@
                                     <label for="exampleFormControlInput1" class="required form-label">Part Type</label>
                                     <select class="form-select form-select-solid" name="part_type" aria-label="Select example">
                                         <option value="0">Select Part Type</option>
-                                        <option value="1" @if($sparePart->part_type==1) selected @endif>Type 1</option>
-                                        <option value="2" @if($sparePart->part_type==2) selected @endif>Type 2</option>
+                                        @foreach($sparePartCategory as $row)
+                                            <option value="{{ $row->id }}" @if($sparePart->part_type==$row->id) selected @endif>{{ $row->name }}</option>
+                                        @endforeach
                                     </select>
                                     @error('part_type')
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>

@@ -25,7 +25,7 @@
                         </li>
                         <!--end::Item-->
                         <!--begin::Item-->
-                        <li class="breadcrumb-item text-muted">Edit Inverter</li>
+                        <li class="breadcrumb-item text-muted">Edit Product</li>
                         <!--end::Item-->
                     </ul>
                     <!--end::Breadcrumb-->
@@ -93,10 +93,9 @@
                                     <label for="exampleFormControlInput1" class="required form-label">Product Category</label>
                                     <select name="category" class="form-select form-select-solid" aria-label="Select example">
                                         <option value="0">Select Category</option>
-                                        <option value="1" @if($inverter->category==1) selected @endif>Off-grid solar Inverters</option>
-                                        <option value="2" @if($inverter->category==2) selected @endif>Hybrid solar Inverters</option>
-                                        <option value="3" @if($inverter->category==3) selected @endif>Lithium Battery</option>
-                                        <option value="4" @if($inverter->category==4) selected @endif>Inverter Accessories</option>
+                                        @foreach($productCategory as $row)
+                                            <option value="{{ $row->id }}" @if($inverter->category==$row->id) selected @endif>{{ $row->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="col-md-4 mb-5">

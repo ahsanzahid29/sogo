@@ -10,6 +10,8 @@ use App\Http\Controllers\SparePartsInvoiceController;
 use App\Http\Controllers\DeliveryNoteController;
 use App\Http\Controllers\RepairTicketController;
 use App\Http\Controllers\GeneralController;
+use App\Http\Controllers\ProductCategoryController;
+use App\Http\Controllers\SparePartCategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,11 +60,26 @@ Route::post('/inverter-save',[InverterController::class,'save'])->middleware(['a
 Route::get('/inverter-edit/{id}', [InverterController::class, 'edit'])->middleware(['auth'])->name('edit-inverter');
 Route::post('/inverter-update',[InverterController::class,'update'])->middleware(['auth'])->name('update-inverter');
 
+Route::get('/product-category-list',[ProductCategoryController::class,'index'])->middleware(['auth']);
+Route::post('/product-category-save',[ProductCategoryController::class,'save'])->middleware(['auth'])->name('product-category-add');
+Route::get('/product-category-edit/{id}', [ProductCategoryController::class, 'edit'])->middleware(['auth'])->name('edit-product-category');
+Route::post('/product-category-update',[ProductCategoryController::class,'update'])->middleware(['auth'])->name('product-category-update');
+Route::get('/product-category-delete/{id}', [ProductCategoryController::class, 'delete'])->middleware(['auth'])->name('delete-product-category');
+
+
 
 
 Route::get('/inverters-inventory-list',[InverterInventoryController::class,'index'])->middleware(['auth'])->name('list-inverter-inventory');
 Route::get('/inverters-inventory-add', [InverterInventoryController::class,'add'])->middleware(['auth'])->name('add-inverter-inventory');
 Route::post('/inventory-save',[InverterInventoryController::class,'save'])->middleware(['auth'])->name('save-inverter-inventory');
+
+
+
+Route::get('/spareparts-category-list',[SparePartCategoryController::class,'index'])->middleware(['auth'])->name('list-category-spartpart');
+Route::post('/sparepart-category-save',[SparePartCategoryController::class,'save'])->middleware(['auth'])->name('sparepart-category-add');
+Route::get('/sparepart-category-edit/{id}', [SparePartCategoryController::class, 'edit'])->middleware(['auth'])->name('edit-sparepart-category');
+Route::post('/sparepart-category-update',[SparePartCategoryController::class,'update'])->middleware(['auth'])->name('sparepart-category-update');
+Route::get('/sparepart-category-delete/{id}', [SparePartCategoryController::class, 'delete'])->middleware(['auth'])->name('delete-sparepart-category');
 
 
 

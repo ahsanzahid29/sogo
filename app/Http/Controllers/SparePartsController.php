@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Inverter;
 use App\Models\SparePart;
+use App\Models\SparePartCategory;
 use App\Models\SparePartInvoiceItem;
 use App\Models\SparePartModel;
 use Illuminate\Http\Request;
@@ -22,10 +23,11 @@ class SparePartsController extends Controller
         $data['role'] = Auth::user()->role_id;
         if($data['role']==4){
             $data['sparePartsForSc']= SparePartInvoiceItem::select(DB::raw('SUM(spare_part_invoice_items.quantity) as total_quantity'),
-                'spare_parts.name as partname','spare_parts.factory_code as factorycode','spare_parts.part_type as parttype',
+                'spare_parts.name as partname','spare_part_categories.name as factorycode','spare_parts.part_type as parttype',
                 'spare_parts.voltage_rating as voltagerating','spare_parts.ampeare_rating as ampearrating',
             'spare_parts.sale_price as saleprice','spare_parts.base_unit as baseunit')
                 ->join('spare_parts', 'spare_part_invoice_items.sparepart_id', '=', 'spare_parts.id')
+                ->join('spare_part_categories', 'spare_parts.part_type', '=', 'spare_part_categories.id')
                 ->groupBy('spare_part_invoice_items.sparepart_id', 'spare_parts.name','spare_parts.factory_code',
                     'spare_parts.part_type','spare_parts.voltage_rating','spare_parts.ampeare_rating','spare_parts.sale_price',
                 'spare_parts.base_unit')
@@ -34,12 +36,15 @@ class SparePartsController extends Controller
             //dd($data['sparePartsForSc']);
             return view('spareparts.servicecenter.parts-list', $data);
         }
-        $data['spareParts'] = SparePart::all();
+        $data['spareParts'] = SparePart::select('spare_parts.*','spare_part_categories.name as category')
+            ->join('spare_part_categories', 'spare_parts.part_type', '=', 'spare_part_categories.id')
+            ->get();
         return view('spareparts.parts-list', $data);
     }
 
     public function add(){
         $data['inverters']= Inverter::get();
+        $data['sparePartCategory'] = SparePartCategory::all();
         return view('spareparts.parts-add',$data);
     }
 
@@ -108,6 +113,7 @@ class SparePartsController extends Controller
             ->join('inverters', 'spare_part_models.inverter_id', '=', 'inverters.id')
             ->where('spare_part_models.sparepart_id',$id)
             ->get();
+        $data['sparePartCategory'] = SparePartCategory::all();
         return view('spareparts.parts-edit',$data);
 
     }
