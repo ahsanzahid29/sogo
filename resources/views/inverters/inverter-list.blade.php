@@ -108,18 +108,7 @@
                                     <td>{{ $count++ }}</td>
                                     <td>{{ $row->modal_number }}</td>
                                     <td>{{ $row->inverter_name }}</td>
-                                    <td>
-                                        @if($row->category==1)
-                                            {{ 'Off-grid solar Inverters' }}
-                                            @elseif($row->category==2)
-                                              {{ 'Hybrid solar Inverters' }}
-                                           @elseif($row->category==3)
-                                            {{ 'Lithium Battery' }}
-                                           @elseif($row->category==4)
-                                            {{ 'Inverter Accessories' }}
-                                        @endif
-
-                                    </td>
+                                    <td>{{ $row->category_name }}</td>
                                     <td>{{ $row->brand }}</td>
                                     <td>{{ $row->total_quantity }}</td>
                                     <td class="text-end">

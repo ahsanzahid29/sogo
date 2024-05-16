@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Inverter;
+use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -15,14 +16,20 @@ class InverterController extends Controller
         //$this->middleware('checkrole');
     }
     public function index(){
-        $data['inverters'] = Inverter::all();
+        $data['inverters'] = Inverter::select('inverters.modal_number as modal_number','inverters.id as id'
+        ,'inverters.inverter_name as inverter_name','inverters.brand as brand','inverters.total_quantity as total_quantity',
+        'product_categories.name as category_name')
+            ->join('product_categories', 'inverters.category', '=', 'product_categories.id')
+            ->get();
+
         $data['count'] =1;
         $data['role'] = Auth::user()->role_id;
         return view('inverters.inverter-list', $data);
     }
 
     public function add(){
-        return view('inverters.inverter-add');
+        $data['productCategory'] = ProductCategory::all();
+        return view('inverters.inverter-add',$data);
     }
 
     public function save(Request $request){
@@ -130,8 +137,9 @@ class InverterController extends Controller
 
     public function edit($id){
        $inverter = Inverter::find($id);
+       $productCategory = ProductCategory::all();
        if($inverter){
-           return view('inverters.inverter-edit', compact('inverter'));
+           return view('inverters.inverter-edit', compact('inverter','productCategory'));
 
        }
        else{

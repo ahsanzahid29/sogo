@@ -89,10 +89,9 @@
                                     <label for="exampleFormControlInput1" class="required form-label">Product Category</label>
                                     <select name="category" class="form-select form-select-solid" aria-label="Select example">
                                         <option value="0">Select Category</option>
-                                        <option value="1">Off-grid solar Inverters</option>
-                                        <option value="2">Hybrid solar Inverters</option>
-                                        <option value="3">Lithium Battery</option>
-                                        <option value="4">Inverter Accessories</option>
+                                        @foreach($productCategory as $row)
+                                        <option value="{{ $row->id }}">{{ $row->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="col-md-4 mb-5">

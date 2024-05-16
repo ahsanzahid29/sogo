@@ -107,11 +107,7 @@
                                 <tr>
                                     <td>{{ $row->name }}</td>
                                     <td>{{ $row->factory_code }}</td>
-                                    <td> @if($row->part_type==1)
-                                            {{ 'Type 1' }}
-                                        @elseif($row->part_type==2)
-                                            {{ 'Type 2' }}
-                                        @endif
+                                    <td>{{ $row->category }}
                                     </td>
                                     <td>{{ $row->sale_price }}</td>
                                     <td>{{ $row->voltage_rating }}</td>
