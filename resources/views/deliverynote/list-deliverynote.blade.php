@@ -44,6 +44,12 @@
             <div id="kt_app_content" class="app-content flex-column-fluid">
                 <!--begin::Content container-->
                 <div id="kt_app_content_container" class="app-container container-xxl">
+                    @if(session('status'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ session('status') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
                     <!--begin::Card-->
                     <div class="card">
                         <!--begin::Card header-->
@@ -56,7 +62,7 @@
                                         <span class="path1"></span>
                                         <span class="path2"></span>
                                     </i>
-                                    <input type="text" data-kt-customer-table-filter="search" class="form-control form-control-solid w-250px ps-13" placeholder="Search Users" />
+                                    <input type="text" data-kt-customer-table-filter="search" class="form-control form-control-solid w-250px ps-13" placeholder="Search Delivery Note" />
                                 </div>
                                 <!--end::Search-->
                             </div>
@@ -97,13 +103,14 @@
                                 </tr>
                                 </thead>
                                 <tbody class="fw-semibold text-gray-600">
+                                @foreach($deliveryNotes as $row)
                                 <tr>
-                                    <td>Ahsan Zahid</td>
-                                    <td>+923165199698</td>
-                                    <td>IN-090</td>
-                                    <td>Test inverter</td>
-                                    <td>20</td>
-                                    <td>10 Mar 2024, 5:20 pm</td>
+                                    <td>{{$row->username}}</td>
+                                    <td>{{ $row->userphone }}</td>
+                                    <td>{{ $row->modal }}</td>
+                                    <td>{{ $row->invertername }}</td>
+                                    <td>{{ $row->qty }}</td>
+                                    <td>{{ date('d M, Y',strtotime($row->createdat)) }}</td>
                                     <td class="text-end">
                                         <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
                                             <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
@@ -111,47 +118,14 @@
                                         <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-3">
-                                                <a href="#" class="menu-link px-3">View</a>
-                                            </div>
-                                            <!--end::Menu item-->
-                                            <!--begin::Menu item-->
-                                            <div class="menu-item px-3">
-                                                <a href="#" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
+                                                <a href="{{route('viewdeiverynote',$row->recordid)}}" class="menu-link px-3">View</a>
                                             </div>
                                             <!--end::Menu item-->
                                         </div>
                                         <!--end::Menu-->
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>Hassan Shirazi</td>
-                                    <td>+923165159698</td>
-                                    <td>IN-0912</td>
-                                    <td>My inverter</td>
-                                    <td>20</td>
-                                    <td>10 Mar 2024, 5:20 pm</td>
-                                    <td class="text-end">
-                                        <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                            <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                        <!--begin::Menu-->
-                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                            <!--begin::Menu item-->
-                                            <div class="menu-item px-3">
-                                                <a href="#" class="menu-link px-3">View</a>
-                                            </div>
-                                            <!--end::Menu item-->
-                                            <!--begin::Menu item-->
-                                            <div class="menu-item px-3">
-                                                <a href="#" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
-                                            </div>
-                                            <!--end::Menu item-->
-                                        </div>
-                                        <!--end::Menu-->
-                                    </td>
-                                </tr>
-
-
-
+                                @endforeach
                                 </tbody>
                                 <!--end::Table body-->
                             </table>

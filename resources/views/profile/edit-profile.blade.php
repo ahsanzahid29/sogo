@@ -38,6 +38,12 @@
         <!-- end:Toolbar -->
         <div class="d-flex flex-column flex-column-fluid">
             <div id="kt_app_content_container" class="app-container container-xxl">
+                @if(session('status'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('status') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
                 <!--begin::Card-->
                 <div class="card">
                     <!--begin::Card header-->
@@ -47,32 +53,58 @@
 
                         </div>
                         <!--end::Card title-->
-                        <form class="form w-100" method="POST" action="{{ url('/update-profile') }}">
+                        <form class="form w-100" method="POST" action="{{ route('update-profile') }}" enctype="multipart/form-data">
                             @csrf
-
                         <!--begin::Card body-->
                         <div class="card-body pt-0">
                             <div class="mb-10">
                                 <label for="exampleFormControlInput1" class="required form-label">Name</label>
-                                <input type="text" class="form-control form-control-solid" placeholder="Name"/>
+                                <input type="text" class="form-control form-control-solid" placeholder="Name" name="name" value="{{$userProfile->name}}"/>
+                            </div>
+                            <div class="mb-10">
+                                <label for="exampleFormControlInput1" class="form-label">Email</label>
+                                <input type="email" class="form-control form-control-solid" placeholder="Email"  value="{{$userProfile->email}}" disabled/>
+                            </div>
+                            <div class="mb-10">
+                                <label for="exampleFormControlInput1" class="form-label">Phone No 1</label>
+                                <input type="text" class="form-control form-control-solid" placeholder="Phone No 1" name="phoneno_1" value="{{$userProfile->phoneno_1}}"/>
+                            </div>
+                            <div class="mb-10">
+                                <label for="exampleFormControlInput1" class="form-label">Phone No 2</label>
+                                <input type="text" class="form-control form-control-solid" placeholder="Phone No 2" name="phoneno_2" value="{{$userProfile->phoneno_2}}"/>
                             </div>
 
                             <div class="mb-10">
-                                <label for="exampleFormControlInput1" class="required form-label">Email</label>
-                                <input type="email" class="form-control form-control-solid" placeholder="User Email"/>
+                                <label for="exampleFormControlInput1" class="form-label">Address</label>
+                                <textarea class="form-control form-control-solid" placeholder="Address" name="address">{{$userProfile->address}}</textarea>
+                            </div>
+                            <div class="mb-10">
+                                <label for="exampleFormControlInput1" class="form-label">Billing Address</label>
+                                <textarea class="form-control form-control-solid" placeholder="Billing Address" name="billing_address">{{$userProfile->billing_address}}</textarea>
+                            </div>
+                            <div class="mb-10">
+                                <label for="exampleFormControlInput1" class="form-label">Shipping Address</label>
+                                <textarea class="form-control form-control-solid" placeholder="Shipping Address" name="shipping_address">{{$userProfile->shipping_address}}</textarea>
                             </div>
                             <div class="mb-10">
                                 <label for="exampleFormControlInput1" class="form-label">New Password</label>
-                                <input type="password" class="form-control form-control-solid" placeholder="New Password"/>
+                                <input type="password" name="password" class="form-control form-control-solid" placeholder="New Password"/>
+                                @error('password')
+                                <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="mb-10">
                                 <label for="exampleFormControlInput1" class="form-label">Confirm New Password</label>
-                                <input type="password" class="form-control form-control-solid" placeholder="Confirm New Password"/>
+                                <input type="password" name="password_confirmation" class="form-control form-control-solid" placeholder="Confirm New Password"/>
                             </div>
                             <div class="mb-10">
                                 <label for="exampleFormControlInput1" class="form-label">Change Avatar</label>
-                                <input type="file" class="form-control form-control-solid"/>
+                                <input type="file" class="form-control form-control-solid" name="user_image"/>
+                                @error('user_image')
+                                <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                @enderror
                             </div>
+                            <input type="hidden" name="old_image" value="{{$userProfile->profile_pic}}" />
                             <div class="mb-10">
                                 <button type="submit" class="btn btn-success">Save</button>
                                 <a href="{{ url('/dashboard') }}" class="btn btn-secondary">Cancel</a>
