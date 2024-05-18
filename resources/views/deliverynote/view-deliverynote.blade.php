@@ -25,7 +25,7 @@
                         </li>
                         <!--end::Item-->
                         <!--begin::Item-->
-                        <li class="breadcrumb-item text-muted">Add Delivery Note</li>
+                        <li class="breadcrumb-item text-muted">View Delivery Note</li>
                         <!--end::Item-->
                     </ul>
                     <!--end::Breadcrumb-->
@@ -49,57 +49,41 @@
                         <!--end::Card title-->
 
                         <!--begin::Card body-->
-                        <form class="form w-100" method="POST" action="{{ route('deliverynote-save') }}">
-                            @csrf
                         <div class="card-body pt-0">
                             <div class="mb-10">
-                                <label for="exampleFormControlInput1" class="required form-label">Select Dealer</label>
-                                <select id="dealer_user" name="dealer_id" class="form-select form-select-solid" aria-label="Select example" required>
-                                    <option value="">Select Dealer</option>
-                                    @foreach($dealers as $row)
-                                        <option value="{{ $row->id }}">{{ $row->name }}</option>
-                                    @endforeach
-                                </select>
-                                @error('dealer_id')
-                                <div class="alert alert-danger mt-2">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div id="dealer_detail">
+                                <label for="exampleFormControlInput1" class="form-label"> Dealer Name</label>
+                                <input type="text" class="form-control form-control-solid" placeholder="Dealer Name" value="{{$deliveryNote->username}}" readonly/>
                             </div>
                             <div class="mb-10">
-                                <label for="exampleFormControlInput1" class="required form-label">Product Model</label>
-                                <select id="product_model" name="inverter_id" class="form-select form-select-solid" aria-label="Select example" required>
-                                    <option value="">Select Product</option>
-                                    @foreach($inverters as $row)
-                                        <option value="{{ $row->id }}">{{ $row->modal_number }}</option>
-                                    @endforeach
-                                </select>
-                                @error('inverter_id')
-                                <div class="alert alert-danger mt-2">{{ $message }}</div>
-                                @enderror
+                                <label for="exampleFormControlInput1" class="form-label"> Dealer Email</label>
+                                <input type="text" class="form-control form-control-solid" placeholder="Dealer Name" value="{{$deliveryNote->useremail}}" readonly/>
+                            </div>
+                            <div class="mb-10">
+                                <label for="exampleFormControlInput1" class="form-label"> Dealer Phone</label>
+                                <input type="text" class="form-control form-control-solid" placeholder="Dealer Phone" value="{{$deliveryNote->userphone}}" readonly/>
+                            </div>
+                            <div class="mb-10">
+                                <label for="exampleFormControlInput1" class="form-label">Product Model</label>
+                                <input type="text" class="form-control form-control-solid" placeholder="Dealer Phone" value="{{$deliveryNote->modal}}" readonly/>
+                            </div>
+                            <div class="mb-10">
+                                <label for="exampleFormControlInput1" class="form-label">Product Name</label>
+                                <input type="text" class="form-control form-control-solid" placeholder="Dealer Phone" value="{{$deliveryNote->invertername}}" readonly/>
                             </div>
                             <div id="inverter_detail">
                             </div>
                             <div class="mb-10">
-                                <label for="exampleFormControlInput1" class="required form-label">Quantity</label>
-                                <input type="type" class="form-control form-control-solid" placeholder="Quantity" name="quantity"/>
-                                @error('quantity')
-                                <div class="alert alert-danger mt-2">{{ $message }}</div>
-                                @enderror
+                                <label for="exampleFormControlInput1" class="form-label">Quantity</label>
+                                <input type="type" class="form-control form-control-solid" placeholder="Quantity" name="quantity" value="{{$deliveryNote->qty}}" readonly />
                             </div>
                             <div class="mb-10">
-                                <label for="exampleFormControlInput1" class="required form-label">Delivery Notes</label>
-                                <textarea class="form-control form-control-solid" placeholder="Notes.." name="notes"></textarea>
-                                @error('notes')
-                                <div class="alert alert-danger mt-2">{{ $message }}</div>
-                                @enderror
+                                <label for="exampleFormControlInput1" class="form-label">Delivery Notes</label>
+                                <textarea class="form-control form-control-solid" placeholder="Notes.." name="notes" readonly>{{$deliveryNote->notes}}</textarea>
                             </div>
                             <div class="mb-10">
-                                <button type="submit" class="btn btn-success">Save</button>
                                 <a href="{{ url('/deliverynote-list') }}" class="btn btn-secondary">Cancel</a>
                             </div>
                         </div>
-                        </form>
                         <!--end::Card body-->
 
                     </div>

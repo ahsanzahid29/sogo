@@ -50,10 +50,6 @@ Route::get('/user-password/{id}', [UserController::class, 'changePassword'])->mi
 Route::get('/add-password/{uuid}', [GeneralController::class, 'addPassword'])->name('addPassword');
 Route::post('/save-password',[GeneralController::class,'savePassword'])->name('password.add');
 
-
-
-
-
 Route::get('/inverters-list',[InverterController::class,'index'])->middleware(['auth']);
 Route::get('/inverter-add', [InverterController::class,'add'])->middleware(['auth']);
 Route::post('/inverter-save',[InverterController::class,'save'])->middleware(['auth'])->name('inverter-add');
@@ -66,24 +62,15 @@ Route::get('/product-category-edit/{id}', [ProductCategoryController::class, 'ed
 Route::post('/product-category-update',[ProductCategoryController::class,'update'])->middleware(['auth'])->name('product-category-update');
 Route::get('/product-category-delete/{id}', [ProductCategoryController::class, 'delete'])->middleware(['auth'])->name('delete-product-category');
 
-
-
-
 Route::get('/inverters-inventory-list',[InverterInventoryController::class,'index'])->middleware(['auth'])->name('list-inverter-inventory');
 Route::get('/inverters-inventory-add', [InverterInventoryController::class,'add'])->middleware(['auth'])->name('add-inverter-inventory');
 Route::post('/inventory-save',[InverterInventoryController::class,'save'])->middleware(['auth'])->name('save-inverter-inventory');
-
-
 
 Route::get('/spareparts-category-list',[SparePartCategoryController::class,'index'])->middleware(['auth'])->name('list-category-spartpart');
 Route::post('/sparepart-category-save',[SparePartCategoryController::class,'save'])->middleware(['auth'])->name('sparepart-category-add');
 Route::get('/sparepart-category-edit/{id}', [SparePartCategoryController::class, 'edit'])->middleware(['auth'])->name('edit-sparepart-category');
 Route::post('/sparepart-category-update',[SparePartCategoryController::class,'update'])->middleware(['auth'])->name('sparepart-category-update');
 Route::get('/sparepart-category-delete/{id}', [SparePartCategoryController::class, 'delete'])->middleware(['auth'])->name('delete-sparepart-category');
-
-
-
-
 
 Route::get('/spareparts-list',[SparePartsController::class,'index'])->middleware(['auth'])->name('list-spartpart');
 Route::get('/sparepart-add', [SparePartsController::class,'add'])->middleware(['auth'])->name('add-spartpart');
@@ -92,17 +79,12 @@ Route::get('/sparepart-edit/{id}', [SparePartsController::class, 'edit'])->middl
 Route::get('/sparepartmodel-delete/{id}', [SparePartsController::class, 'deleteModel'])->middleware(['auth'])->name('delete-sparepart-model');
 Route::post('/sparepart-update',[SparePartsController::class,'update'])->middleware(['auth'])->name('update-spartpart');
 
-
-
-
 Route::get('/sparepart-inventory-list',[SparePartsInventoryController::class,'index'])->middleware(['auth'])->name('list-sparepart-inventory');
 Route::get('/sparepart-inventory-add', [SparePartsInventoryController::class,'add'])->middleware(['auth'])->name('add-sparepart-inventory');
 Route::post('/sparepart-inventory-save',[SparePartsInventoryController::class,'save'])->middleware(['auth'])->name('save-sparepart-inventory');
 
-
-Route::get('/edit-profile',[UserController::class,'editProfile']);
-Route::post('/update-profile',[UserController::class,'updateProfile']);
-
+Route::get('/edit-profile',[GeneralController::class,'editProfile']);
+Route::post('/update-profile',[GeneralController::class,'updateProfile'])->middleware(['auth'])->name('update-profile');
 
 Route::get('/invoice-list',[SparePartsInvoiceController::class,'index']);
 Route::get('/invoice-add',[SparePartsInvoiceController::class,'add']);
@@ -112,10 +94,13 @@ Route::post('/invoice-save',[SparePartsInvoiceController::class,'save']);
 Route::get('/sparepartinvoice-detail/{id}', [SparePartsInvoiceController::class, 'show'])->middleware(['auth'])->name('viewinvoice');
 Route::get('/invoice-status/{id}', [SparePartsInvoiceController::class, 'update'])->middleware(['auth'])->name('change-invoice');
 
+Route::get('/deliverynote-list',[DeliveryNoteController::class,'index'])->middleware(['auth'])->name('deliverynote-list');
+Route::get('/deliverynote-add',[DeliveryNoteController::class,'add'])->middleware(['auth'])->name('deliverynote-add');
+Route::get('/dealeruser-detail/{id}', [DeliveryNoteController::class, 'detailDealer'])->middleware(['auth'])->name('delaeruser-detail');
+Route::get('/product-detail-deliverynote/{id}', [DeliveryNoteController::class, 'detailInverter'])->middleware(['auth'])->name('inverter-detail-dnote');
+Route::post('/deliverynote-save',[DeliveryNoteController::class,'save'])->middleware(['auth'])->name('deliverynote-save');
+Route::get('/deliverynote-view/{id}', [DeliveryNoteController::class, 'show'])->middleware(['auth'])->name('viewdeiverynote');
 
-Route::get('/deliverynote-list',[DeliveryNoteController::class,'index']);
-Route::get('/deliverynote-add',[DeliveryNoteController::class,'add']);
-Route::post('/deliverynote-save',[DeliveryNoteController::class,'save']);
 Route::get('/repairticket-list',[RepairTicketController::class,'index']);
 Route::get('/all-repairtickets',[RepairTicketController::class,'allTickets']);
 

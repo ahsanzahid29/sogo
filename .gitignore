@@ -13,3 +13,7 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+/public/files/profilepics
+/public/files/inverters
+/public/files/productmanaual
+/public/files/invertercatalog
