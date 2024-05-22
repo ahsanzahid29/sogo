@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DealerProduct;
 use App\Models\Deliverynote;
 use App\Models\Inverter;
+use App\Models\InverterInventory;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -65,6 +67,7 @@ class DeliveryNoteController extends Controller
                 return back()->withErrors(['quantity' => 'Entered Quantity exceeds with current stock']);
 
             }
+            $insertData=[];
 
             DB::beginTransaction();
             try {
@@ -79,6 +82,32 @@ class DeliveryNoteController extends Controller
                     ]
                 );
                 if($deliverynote->id){
+                    // get inverters from inverter_product_table based on quantity entered
+                    $inverter_stock = InverterInventory::select('serial_number','id')->where('is_assigned',0)
+                        ->limit($request->quantity)
+                        ->get();
+                    foreach($inverter_stock as $row){
+                        $serialNo[] = $row->serial_number;
+                        $ids[] = $row->id;
+                    }
+                    if(count($serialNo)>0){
+                        for($a=0;$a<count($serialNo);$a++){
+                            $insertData[] = [
+                                'dealer_id' =>      $request->dealer_id,
+                                'inverter_id' =>    $request->inverter_id,
+                                'deliverynote_id'=> $deliverynote->id,
+                                'serial_number' =>  $serialNo[$a],
+                                'created_at'    =>  date('Y-m-d H:i')
+                            ];
+                        }
+                        DealerProduct::insert($insertData);
+                    }
+                    // update is_assigned column in inveeters_inventory table
+
+                    $is_assigned = 1;
+                    DB::table('inverter_inventories')
+                        ->whereIn('id', $ids)
+                        ->update(['is_assigned' => $is_assigned]);
                     // deduct inverter stock
                     $oldDetail = Inverter::select('total_quantity')->where('id',$request->inverter_id)->first();
                     $newTotalStock = ($oldDetail->total_quantity)-($request->quantity);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ScSparePartQty;
 use App\Models\SparePart;
 use App\Models\SparePartInvoice;
 use App\Models\SparePartInvoiceItem;
@@ -137,7 +138,7 @@ class SparePartsInvoiceController extends Controller
                            'sparepart_id'       => $request->sparepart[$i],
                            'quantity'           => $request->qty[$i],
                            'sale_price'         => $request->sale_price[$i],
-                           'service_center_id'  =>$request->service_user,
+                           'service_center_id'  => $request->service_user,
                            'item_tax'           => $request->item_tax[$i],
                            'item_discount'      => $request->item_discount[$i],
                            'item_total'         => $request->item_total[$i],
@@ -155,7 +156,27 @@ class SparePartsInvoiceController extends Controller
                        ->where(['id'=>$request->sparepart[$j]])
                        ->update(['total_quantity' =>$deductedCurrentQuantity,'sold_quantity' =>$addedSoldQuantity]);
                }
-
+               //insert or update in sc_spare_part_qties table
+               for($k=0;$k<count($request->sparepart);$k++){
+                   $checkexistingSp= ScSparePartQty::where([
+                       ['sparepart_id','=',$request->sparepart[$k]],
+                       ['service_center_id','=',$request->service_user]
+                   ])->first();
+                   if(!$checkexistingSp){
+                       DB::table('sc_spare_part_qties')->insert([
+                           'sparepart_id'      => $request->sparepart[$k],
+                           'service_center_id' => $request->service_user,
+                           'quantity'          => $request->qty[$k],
+                       ]);
+                   }
+                   else{
+                       $actualQty = $checkexistingSp->quantity;
+                       $newQty = ($checkexistingSp->quantity)+($request->qty[$k]);
+                       $affected= DB::table('sc_spare_part_qties')
+                           ->where(['id'=>$checkexistingSp->id])
+                           ->update(['quantity' =>$newQty]);
+                   }
+               }
            }
            DB::commit();
            return redirect('/invoice-list')->with('status', 'Invoice created successfully');

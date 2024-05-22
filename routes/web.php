@@ -103,5 +103,17 @@ Route::get('/deliverynote-view/{id}', [DeliveryNoteController::class, 'show'])->
 
 Route::get('/repairticket-list',[RepairTicketController::class,'index']);
 Route::get('/all-repairtickets',[RepairTicketController::class,'allTickets']);
+Route::get('/add-repairticket',[RepairTicketController::class,'add'])->middleware(['auth'])->name('create-repair-ticket');
+Route::post('/searchserialnoforrepair',[RepairTicketController::class,'serachSn'])->middleware(['auth'])->name('serialnumber-search');
+Route::get('/sp-detail-sc',[RepairTicketController::class,'partDetailForSc'])->middleware(['auth'])->name('sparepart-detail-sc');
+Route::post('/repairnote-save',[RepairTicketController::class,'save'])->middleware(['auth'])->name('save-repairticket');
+Route::get('/repair-ticket-detail/{id}', [RepairTicketController::class, 'show'])->middleware(['auth'])->name('view-repair-ticket');
+Route::get('/repair-ticket-complete/{id}', [RepairTicketController::class, 'markAsComplete'])->middleware(['auth'])->name('complete-repair-ticket');
+
+
+
+
+
+
 
 require __DIR__.'/auth.php';

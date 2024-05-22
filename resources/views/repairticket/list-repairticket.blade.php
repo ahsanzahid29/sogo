@@ -57,7 +57,7 @@
                                 <!--begin::Section-->
                                 <div class="d-flex flex-column my-7">
                                     <!--begin::Number-->
-                                    <span class="fw-semibold fs-3x text-gray-800 lh-1 ls-n2">327</span>
+                                    <span class="fw-semibold fs-3x text-gray-800 lh-1 ls-n2">{{ $openTickets }}</span>
                                     <!--end::Number-->
                                     <!--begin::Follower-->
                                     <div class="m-0">
@@ -89,7 +89,7 @@
                                 <!--begin::Section-->
                                 <div class="d-flex flex-column my-7">
                                     <!--begin::Number-->
-                                    <span class="fw-semibold fs-3x text-gray-800 lh-1 ls-n2">10</span>
+                                    <span class="fw-semibold fs-3x text-gray-800 lh-1 ls-n2">{{ $closedTickets }}</span>
                                     <!--end::Number-->
                                     <!--begin::Follower-->
                                     <div class="m-0">
@@ -121,7 +121,7 @@
                                 <!--begin::Section-->
                                 <div class="d-flex flex-column my-7">
                                     <!--begin::Number-->
-                                    <span class="fw-semibold fs-3x text-gray-800 lh-1 ls-n2">35</span>
+                                    <span class="fw-semibold fs-3x text-gray-800 lh-1 ls-n2">{{ $agentsCount }}</span>
                                     <!--end::Number-->
                                     <!--begin::Follower-->
                                     <div class="m-0">
@@ -185,86 +185,49 @@
                                 <thead>
                                 <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
                                     <th>Ticket ID</th>
-                                    <th>Name</th>
-                                    <th class="min-w-125px">Email</th>
-                                    <th class="min-w-125px">Category</th>
+                                    <th>Serial No</th>
+                                    <th class="min-w-125px">Inverter Modal</th>
+                                    <th class="min-w-125px">Inverter Name</th>
+                                    <th class="min-w-125px">Repair Date</th>
                                     <th class="min-w-125px">Status</th>
-                                    <th class="min-w-125px">Priority</th>
                                     <th class="text-end min-w-70px">Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody class="fw-semibold text-gray-600">
-                                <tr>
-                                    <td>1234</td>
-                                    <td>Ahsan Zahid</td>
-                                    <td>ahsanzahid29@hotmail.com</td>
-                                    <td>First Category</td>
-                                    <td>
-                                        <!--begin::Badges-->
-                                        <div class="badge badge-light-info">In Progress</div>
-                                        <!--end::Badges-->
-                                    </td>
-                                    <td>
-                                        <!--begin::Badges-->
-                                        <div class="badge badge-light-info">Urgent</div>
-                                        <!--end::Badges-->
-                                    </td>
-                                    <td class="text-end">
-                                        <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                            <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                        <!--begin::Menu-->
-                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                            <!--begin::Menu item-->
-                                            <div class="menu-item px-3">
-                                                <a href="#" class="menu-link px-3">Edit</a>
+                                @foreach($allRepairTickets as $row)
+                                    <tr>
+                                        <td>{{ $row->rp_ticket }}</td>
+                                        <td>{{ $row->rp_sn }}</td>
+                                        <td>{{ $row->rep_inv_model }}</td>
+                                        <td>{{ $row->rep_inv_name }}</td>
+                                        <td>{{ date('d M, Y',strtotime($row->rp_req_date)) }}</td>
+                                        <td>
+                                            @if($row->rp_status=='completed')
+                                                <!--begin::Badges-->
+                                                <div class="badge badge-light-success">{{ $row->rp_status }}</div>
+                                                <!--end::Badges-->
+                                            @elseif($row->rp_status=='pending')
+                                                <!--begin::Badges-->
+                                                <div class="badge badge-light-info">{{ $row->rp_status }}</div>
+                                                <!--end::Badges-->
+                                            @else
+                                            @endif
+                                        </td>
+                                        <td class="text-end">
+                                            <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
+                                                <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
+                                            <!--begin::Menu-->
+                                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
+                                                <!--begin::Menu item-->
+                                                <div class="menu-item px-3">
+                                                    <a href="{{route('view-repair-ticket',$row->rp_id)}}" class="menu-link px-3">View</a>
+                                                </div>
+                                                <!--end::Menu item-->
                                             </div>
-                                            <!--end::Menu item-->
-                                            <!--begin::Menu item-->
-                                            <div class="menu-item px-3">
-                                                <a href="#" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
-                                            </div>
-                                            <!--end::Menu item-->
-                                        </div>
-                                        <!--end::Menu-->
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>4567</td>
-                                    <td>Hassan Shirazi</td>
-                                    <td>hassanshirazi@yahoo.com</td>
-                                    <td>Second Category</td>
-                                    <td>
-                                        <!--begin::Badges-->
-                                        <div class="badge badge-light-danger">New Ticket</div>
-                                        <!--end::Badges-->
-                                    </td>
-                                    <td>
-                                        <!--begin::Badges-->
-                                        <div class="badge badge-light-success">Medium</div>
-                                        <!--end::Badges-->
-                                    </td>
-                                    <td class="text-end">
-                                        <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                            <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                        <!--begin::Menu-->
-                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                            <!--begin::Menu item-->
-                                            <div class="menu-item px-3">
-                                                <a href="#" class="menu-link px-3">Edit</a>
-                                            </div>
-                                            <!--end::Menu item-->
-                                            <!--begin::Menu item-->
-                                            <div class="menu-item px-3">
-                                                <a href="#" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
-                                            </div>
-                                            <!--end::Menu item-->
-                                        </div>
-                                        <!--end::Menu-->
-                                    </td>
-                                </tr>
-
-
-
+                                            <!--end::Menu-->
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                                 <!--end::Table body-->
                             </table>
