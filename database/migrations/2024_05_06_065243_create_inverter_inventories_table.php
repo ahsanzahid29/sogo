@@ -25,6 +25,7 @@ class CreateInverterInventoriesTable extends Migration
             $table->date('date_of_receipt')->nullable();
             $table->date('date_of_entry')->nullable();
             $table->string('csv_key')->nullable();
+            $table->unsignedBigInteger('is_assigned')->default(0);
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('inverter_id')->references('id')->on('inverters');
             $table->timestamps();
