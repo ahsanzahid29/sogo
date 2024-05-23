@@ -30,8 +30,15 @@
                 <div class="menu menu-column menu-rounded menu-sub-indention fw-semibold fs-6" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
                     <!--begin:Menu item-->
                     <div class="menu-item">
+                         @php
+            $dashboardActive = '';
+            if (Route::currentRouteName()=='dashboard'){
+                $dashboardActive='active';
+            }
+            @endphp
+
                         <!--begin:Menu link-->
-                        <a class="menu-link active" href="{{url('/dashboard')}}">
+                        <a class="menu-link {{ $dashboardActive }} " href="{{url('/dashboard')}}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-element-11 fs-2">
 														<span class="path1"></span>
@@ -49,6 +56,13 @@
                     <!--end:Menu item-->
                     <!-- begin: sidebar for super admin -->
                     @if(Auth::user()->role_id==1)
+                        @php
+                        $userActive = '';
+                        if (Route::currentRouteName()=='users-list'|| Route::currentRouteName()=='user-add'
+                        || Route::currentRouteName()=='edituser'){
+                        $userActive='active';
+                        }
+                        @endphp
                         <!--begin:Menu item-->
                         <div class="menu-item pt-5">
                             <!--begin:Menu content-->
@@ -61,7 +75,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link" href="{{ url('/users-list') }}">
+                            <a class="menu-link {{ $userActive }}" href="{{ url('/users-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-basket fs-2">
 														<span class="path1"></span>
@@ -77,6 +91,30 @@
                             <!--end:Menu link-->
                         </div>
                         <!--end:Menu item-->
+                        @php
+                            $productActive = '';
+                            $productCategoryActive = '';
+                            $productInventoryActive='';
+                            $spCategoryActive='';
+                            $spActive = '';
+                            if (Route::currentRouteName()=='list-inverter'|| Route::currentRouteName()=='add-inverter'
+                            || Route::currentRouteName()=='inverter-add' || Route::currentRouteName()=='edit-inverter'){
+                            $productActive='active';
+                            }
+                            if (Route::currentRouteName()=='list-inverter-category'|| Route::currentRouteName()=='edit-product-category'){
+                            $productCategoryActive='active';
+                            }
+                            if (Route::currentRouteName()=='list-inverter-inventory'|| Route::currentRouteName()=='add-inverter-inventory'){
+                            $productInventoryActive='active';
+                            }
+                            if (Route::currentRouteName()=='list-category-spartpart'|| Route::currentRouteName()=='edit-sparepart-category'){
+                            $spCategoryActive='active';
+                            }
+                             if (Route::currentRouteName()=='list-spartpart'|| Route::currentRouteName()=='add-spartpart'
+                             || Route::currentRouteName()=='edit-sparepart'){
+                            $spActive='active';
+                            }
+                        @endphp
                         <!--begin:Menu item-->
                         <div class="menu-item pt-5">
                             <!--begin:Menu content-->
@@ -89,7 +127,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link" href="{{ url('/product-category-list') }}">
+                            <a class="menu-link {{ $productCategoryActive }}" href="{{ url('/product-category-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-text-align-center fs-2">
 														<span class="path1"></span>
@@ -108,7 +146,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link" href="{{ url('/inverters-list') }}">
+                            <a class="menu-link {{ $productActive }}" href="{{ url('/inverters-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-text-align-center fs-2">
 														<span class="path1"></span>
@@ -127,7 +165,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link" href="{{ url('/inverters-inventory-list') }}">
+                            <a class="menu-link {{ $productInventoryActive }}" href="{{ url('/inverters-inventory-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-text-align-center fs-2">
 														<span class="path1"></span>
@@ -156,7 +194,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link" href="{{ url('/spareparts-category-list') }}">
+                            <a class="menu-link {{ $spCategoryActive }}" href="{{ url('/spareparts-category-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-abstract-28 fs-2">
 														<span class="path1"></span>
@@ -175,7 +213,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link" href="{{ url('/spareparts-list') }}">
+                            <a class="menu-link {{ $spActive }}" href="{{ url('/spareparts-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-abstract-28 fs-2">
 														<span class="path1"></span>
@@ -191,10 +229,23 @@
                             <!--end:Menu link-->
                         </div>
                         <!--end:Menu item-->
+                    @php
+                            $spInvActiveActive = '';
+                            $invoiceActive='';
+                            if (Route::currentRouteName()=='list-sparepart-inventory'|| Route::currentRouteName()=='add-sparepart-inventory'
+                            ){
+                            $spInvActiveActive='active';
+                            }
+                             if (Route::currentRouteName()=='list-sp-invoice'|| Route::currentRouteName()=='add-sp-invoice'
+                             || Route::currentRouteName()=='viewinvoice'
+                            ){
+                            $invoiceActive='active';
+                            }
+                            @endphp
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link" href="{{ url('/sparepart-inventory-list') }}">
+                            <a class="menu-link {{ $spInvActiveActive }}" href="{{ url('/sparepart-inventory-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-abstract-28 fs-2">
 														<span class="path1"></span>
@@ -223,7 +274,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link" href="{{ url('/invoice-list') }}">
+                            <a class="menu-link {{ $invoiceActive }}" href="{{ url('/invoice-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-abstract-38 fs-2">
 														<span class="path1"></span>
@@ -239,6 +290,15 @@
                             <!--end:Menu link-->
                         </div>
                         <!--end:Menu item-->
+                    @php
+                            $dNoteActive = '';
+                            if (Route::currentRouteName()=='deliverynote-list'|| Route::currentRouteName()=='deliverynote-add'
+                            || Route::currentRouteName()=='viewdeiverynote'
+                            ){
+                            $dNoteActive='active';
+                            }
+                            @endphp
+
                         <!--begin:Menu item-->
                         <div class="menu-item pt-5">
                             <!--begin:Menu content-->
@@ -252,7 +312,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link" href="{{ url('/deliverynote-list') }}">
+                            <a class="menu-link {{ $dNoteActive }}" href="{{ url('/deliverynote-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-credit-cart fs-2">
 														<span class="path1"></span>
@@ -268,6 +328,14 @@
                             <!--end:Menu link-->
                         </div>
                         <!--end:Menu item-->
+                        @php
+                            $repActive = '';
+                            if (Route::currentRouteName()=='lists-repair-ticket'|| Route::currentRouteName()=='all-repairs-ticket'
+                            || Route::currentRouteName()=='create-repair-ticket' || Route::currentRouteName()=='view-repair-ticket'
+                            ){
+                            $repActive='active';
+                            }
+                        @endphp
                         <!--begin:Menu item-->
                         <div class="menu-item pt-5">
                             <!--begin:Menu content-->
@@ -281,7 +349,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link" href="{{ url('/repairticket-list') }}">
+                            <a class="menu-link {{ $repActive }}" href="{{ url('/repairticket-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-abstract-26 fs-2">
 														<span class="path1"></span>
@@ -301,6 +369,27 @@
                     <!-- end: sidebar for super admin -->
                     <!-- begin: sidebar for  admin -->
                     @if(Auth::user()->role_id==2)
+                        @php
+                            $productActive = '';
+                            $productInventoryActive='';
+                            $spInvActiveActive = '';
+                            $spActive = '';
+                            if (Route::currentRouteName()=='list-inverter'|| Route::currentRouteName()=='add-inverter'
+                            || Route::currentRouteName()=='inverter-add' || Route::currentRouteName()=='edit-inverter'){
+                            $productActive='active';
+                            }
+                            if (Route::currentRouteName()=='list-inverter-inventory'|| Route::currentRouteName()=='add-inverter-inventory'){
+                            $productInventoryActive='active';
+                            }
+                            if (Route::currentRouteName()=='list-sparepart-inventory'|| Route::currentRouteName()=='add-sparepart-inventory'
+                            ){
+                            $spInvActiveActive='active';
+                            }
+                             if (Route::currentRouteName()=='list-spartpart'|| Route::currentRouteName()=='add-spartpart'
+                             || Route::currentRouteName()=='edit-sparepart'){
+                            $spActive='active';
+                            }
+                        @endphp
                         <!--begin:Menu item-->
                         <div class="menu-item pt-5">
                             <!--begin:Menu content-->
@@ -313,7 +402,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link" href="{{ url('/inverters-list') }}">
+                            <a class="menu-link {{ $productActive }}" href="{{ url('/inverters-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-text-align-center fs-2">
 														<span class="path1"></span>
@@ -332,7 +421,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link" href="{{ url('/inverters-inventory-list') }}">
+                            <a class="menu-link {{ $productInventoryActive }}" href="{{ url('/inverters-inventory-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-text-align-center fs-2">
 														<span class="path1"></span>
@@ -360,7 +449,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link" href="{{ url('/spareparts-list') }}">
+                            <a class="menu-link {{ $spActive }}" href="{{ url('/spareparts-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-abstract-28 fs-2">
 														<span class="path1"></span>
@@ -379,7 +468,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link" href="{{ url('/sparepart-inventory-list') }}">
+                            <a class="menu-link {{ $spInvActiveActive }}" href="{{ url('/sparepart-inventory-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-abstract-28 fs-2">
 														<span class="path1"></span>
@@ -395,6 +484,14 @@
                             <!--end:Menu link-->
                         </div>
                         <!--end:Menu item-->
+                        @php
+                            $invoiceActive='';
+                             if (Route::currentRouteName()=='list-sp-invoice'|| Route::currentRouteName()=='add-sp-invoice'
+                             || Route::currentRouteName()=='viewinvoice'
+                            ){
+                            $invoiceActive='active';
+                            }
+                        @endphp
                         <!--begin:Menu item-->
                         <div class="menu-item pt-5">
                             <!--begin:Menu content-->
@@ -408,7 +505,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link" href="{{ url('/invoice-list') }}">
+                            <a class="menu-link {{ $invoiceActive }}" href="{{ url('/invoice-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-abstract-38 fs-2">
 														<span class="path1"></span>
@@ -424,6 +521,14 @@
                             <!--end:Menu link-->
                         </div>
                         <!--end:Menu item-->
+                        @php
+                            $dNoteActive = '';
+                            if (Route::currentRouteName()=='deliverynote-list'|| Route::currentRouteName()=='deliverynote-add'
+                            || Route::currentRouteName()=='viewdeiverynote'
+                            ){
+                            $dNoteActive='active';
+                            }
+                        @endphp
 
                         <!--begin:Menu item-->
                         <div class="menu-item pt-5">
@@ -438,7 +543,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link" href="{{ url('/deliverynote-list') }}">
+                            <a class="menu-link {{ $dNoteActive }}" href="{{ url('/deliverynote-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-credit-cart fs-2">
 														<span class="path1"></span>
@@ -454,7 +559,15 @@
                             <!--end:Menu link-->
                         </div>
                         <!--end:Menu item-->
-                        <!--begin:Menu item-->
+                        @php
+                            $repActive = '';
+                            if (Route::currentRouteName()=='lists-repair-ticket'|| Route::currentRouteName()=='all-repairs-ticket'
+                            || Route::currentRouteName()=='create-repair-ticket' || Route::currentRouteName()=='view-repair-ticket'
+                            ){
+                            $repActive='active';
+                            }
+                        @endphp
+                            <!--begin:Menu item-->
                         <div class="menu-item pt-5">
                             <!--begin:Menu content-->
                             <div class="menu-content">
@@ -467,7 +580,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link" href="{{ url('/repairticket-list') }}">
+                            <a class="menu-link {{ $repActive }}" href="{{ url('/repairticket-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-abstract-26 fs-2">
 														<span class="path1"></span>
@@ -488,6 +601,17 @@
 
                     <!-- begin: sidebar for  dealer -->
                     @if(Auth::user()->role_id==3)
+                        @php
+                            $productActive = '';
+                            $productInventoryActive='';
+                            if (Route::currentRouteName()=='list-inverter'|| Route::currentRouteName()=='add-inverter'
+                            || Route::currentRouteName()=='inverter-add' || Route::currentRouteName()=='edit-inverter'){
+                            $productActive='active';
+                            }
+                            if (Route::currentRouteName()=='list-inverter-inventory'|| Route::currentRouteName()=='add-inverter-inventory'){
+                            $productInventoryActive='active';
+                            }
+                        @endphp
                         <!--begin:Menu item-->
                         <div class="menu-item pt-5">
                             <!--begin:Menu content-->
@@ -500,7 +624,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link" href="{{ url('/inverters-list') }}">
+                            <a class="menu-link {{ $productActive }}" href="{{ url('/inverters-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-text-align-center fs-2">
 														<span class="path1"></span>
@@ -519,7 +643,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link" href="{{ url('/inverters-inventory-list') }}">
+                            <a class="menu-link {{ $productInventoryActive  }}" href="{{ url('/inverters-inventory-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-text-align-center fs-2">
 														<span class="path1"></span>
@@ -535,6 +659,19 @@
                             <!--end:Menu link-->
                         </div>
                         <!--end:Menu item-->
+                        @php
+                            $dNoteActive = '';
+                            $spActive= '';
+                            if (Route::currentRouteName()=='deliverynote-list'|| Route::currentRouteName()=='deliverynote-add'
+                            || Route::currentRouteName()=='viewdeiverynote'
+                            ){
+                            $dNoteActive='active';
+                            }
+                             if (Route::currentRouteName()=='list-spartpart'|| Route::currentRouteName()=='add-spartpart'
+                             || Route::currentRouteName()=='edit-sparepart'){
+                            $spActive='active';
+                            }
+                        @endphp
                         <!--begin:Menu item-->
                         <div class="menu-item pt-5">
                             <!--begin:Menu content-->
@@ -548,7 +685,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link" href="{{ url('/deliverynote-list') }}">
+                            <a class="menu-link {{ $dNoteActive }}" href="{{ url('/deliverynote-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-credit-cart fs-2">
 														<span class="path1"></span>
@@ -576,7 +713,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link" href="{{ url('/spareparts-list') }}">
+                            <a class="menu-link {{ $spActive }}" href="{{ url('/spareparts-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-abstract-28 fs-2">
 														<span class="path1"></span>
@@ -597,6 +734,23 @@
 
                     <!-- begin: sidebar for  service center -->
                     @if(Auth::user()->role_id==4)
+                        @php
+                            $productActive = '';
+                            $spActive = '';
+                            $spInvActiveActive = '';
+                            if (Route::currentRouteName()=='list-inverter'|| Route::currentRouteName()=='add-inverter'
+                            || Route::currentRouteName()=='inverter-add' || Route::currentRouteName()=='edit-inverter'){
+                            $productActive='active';
+                            }
+                             if (Route::currentRouteName()=='list-spartpart'|| Route::currentRouteName()=='add-spartpart'
+                             || Route::currentRouteName()=='edit-sparepart'){
+                            $spActive='active';
+                            }
+                            if (Route::currentRouteName()=='list-sparepart-inventory'|| Route::currentRouteName()=='add-sparepart-inventory'
+                            ){
+                            $spInvActiveActive='active';
+                            }
+                        @endphp
 
                         <!--begin:Menu item-->
                         <div class="menu-item pt-5">
@@ -610,7 +764,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link" href="{{ url('/inverters-list') }}">
+                            <a class="menu-link {{ $productActive }}" href="{{ url('/inverters-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-text-align-center fs-2">
 														<span class="path1"></span>
@@ -638,7 +792,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link" href="{{ url('/spareparts-list') }}">
+                            <a class="menu-link {{ $spActive }}" href="{{ url('/spareparts-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-abstract-28 fs-2">
 														<span class="path1"></span>
@@ -657,7 +811,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link" href="{{ url('/sparepart-inventory-list') }}">
+                            <a class="menu-link {{ $spInvActiveActive }}" href="{{ url('/sparepart-inventory-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-abstract-28 fs-2">
 														<span class="path1"></span>
@@ -674,15 +828,14 @@
                         </div>
                         <!--end:Menu item-->
                         <!--begin:Menu item-->
-                        <div class="menu-item pt-5">
-                            <!--begin:Menu content-->
-                            <div class="menu-content">
-                                <span class="menu-heading fw-bold text-uppercase fs-7">Invoices</span>
-                            </div>
-                            <!--end:Menu content-->
-                        </div>
-                        <!--end:Menu item-->
-                        <!--begin:Menu item-->
+                    @php
+                        $invoiceActive='';
+                            if (Route::currentRouteName()=='list-sp-invoice'|| Route::currentRouteName()=='add-sp-invoice'
+                                     || Route::currentRouteName()=='viewinvoice'
+                                    ){
+                                    $invoiceActive='active';
+                                    }
+                    @endphp
                         <div class="menu-item pt-5">
                             <!--begin:Menu content-->
                             <div class="menu-content">
@@ -695,7 +848,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link" href="{{ url('/invoice-list') }}">
+                            <a class="menu-link {{ $invoiceActive }}" href="{{ url('/invoice-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-abstract-38 fs-2">
 														<span class="path1"></span>
@@ -711,7 +864,15 @@
                             <!--end:Menu link-->
                         </div>
                         <!--end:Menu item-->
-                        <!--begin:Menu item-->
+                        @php
+                            $repActive = '';
+                            if (Route::currentRouteName()=='lists-repair-ticket'|| Route::currentRouteName()=='all-repairs-ticket'
+                            || Route::currentRouteName()=='create-repair-ticket' || Route::currentRouteName()=='view-repair-ticket'
+                            ){
+                            $repActive='active';
+                            }
+                        @endphp
+                            <!--begin:Menu item-->
                         <div class="menu-item pt-5">
                             <!--begin:Menu content-->
                             <div class="menu-content">
@@ -724,7 +885,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link" href="{{ url('/repairticket-list') }}">
+                            <a class="menu-link {{ $repActive }}" href="{{ url('/repairticket-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-abstract-26 fs-2">
 														<span class="path1"></span>
@@ -755,10 +916,16 @@
                         <!--end:Menu content-->
                     </div>
                     <!--end:Menu item-->
-                    <!--begin:Menu item-->
+                    @php
+                        $profileActive = '';
+                        if (Route::currentRouteName()=='edit-my-profile'){
+                        $profileActive='active';
+                        }
+                    @endphp
+                        <!--begin:Menu item-->
                     <div class="menu-item">
                         <!--begin:Menu link-->
-                        <a class="menu-link" href="{{ url('edit-profile') }}">
+                        <a class="menu-link {{ $profileActive }}" href="{{ url('edit-profile') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-user fs-2">
 														<span class="path1"></span>
