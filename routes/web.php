@@ -12,6 +12,7 @@ use App\Http\Controllers\RepairTicketController;
 use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\SparePartCategoryController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,9 +38,9 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard.dashboard');
-})->middleware(['auth'])->name('dashboard');
+
+Route::get('/dashboard',[DashboardController::class,'index'])->middleware(['auth'])->name('dashboard');
+
 
 Route::get('/users-list',[UserController::class,'index'])->middleware(['auth'])->name('users-list');
 Route::get('/user-add',[UserController::class,'add'])->middleware(['auth'])->name('user-add');
@@ -50,13 +51,13 @@ Route::get('/user-password/{id}', [UserController::class, 'changePassword'])->mi
 Route::get('/add-password/{uuid}', [GeneralController::class, 'addPassword'])->name('addPassword');
 Route::post('/save-password',[GeneralController::class,'savePassword'])->name('password.add');
 
-Route::get('/inverters-list',[InverterController::class,'index'])->middleware(['auth']);
-Route::get('/inverter-add', [InverterController::class,'add'])->middleware(['auth']);
+Route::get('/inverters-list',[InverterController::class,'index'])->middleware(['auth'])->name('list-inverter');
+Route::get('/inverter-add', [InverterController::class,'add'])->middleware(['auth'])->name('add-inverter');
 Route::post('/inverter-save',[InverterController::class,'save'])->middleware(['auth'])->name('inverter-add');
 Route::get('/inverter-edit/{id}', [InverterController::class, 'edit'])->middleware(['auth'])->name('edit-inverter');
 Route::post('/inverter-update',[InverterController::class,'update'])->middleware(['auth'])->name('update-inverter');
 
-Route::get('/product-category-list',[ProductCategoryController::class,'index'])->middleware(['auth']);
+Route::get('/product-category-list',[ProductCategoryController::class,'index'])->middleware(['auth'])->name('list-inverter-category');
 Route::post('/product-category-save',[ProductCategoryController::class,'save'])->middleware(['auth'])->name('product-category-add');
 Route::get('/product-category-edit/{id}', [ProductCategoryController::class, 'edit'])->middleware(['auth'])->name('edit-product-category');
 Route::post('/product-category-update',[ProductCategoryController::class,'update'])->middleware(['auth'])->name('product-category-update');
@@ -83,11 +84,11 @@ Route::get('/sparepart-inventory-list',[SparePartsInventoryController::class,'in
 Route::get('/sparepart-inventory-add', [SparePartsInventoryController::class,'add'])->middleware(['auth'])->name('add-sparepart-inventory');
 Route::post('/sparepart-inventory-save',[SparePartsInventoryController::class,'save'])->middleware(['auth'])->name('save-sparepart-inventory');
 
-Route::get('/edit-profile',[GeneralController::class,'editProfile']);
+Route::get('/edit-profile',[GeneralController::class,'editProfile'])->name('edit-my-profile');
 Route::post('/update-profile',[GeneralController::class,'updateProfile'])->middleware(['auth'])->name('update-profile');
 
-Route::get('/invoice-list',[SparePartsInvoiceController::class,'index']);
-Route::get('/invoice-add',[SparePartsInvoiceController::class,'add']);
+Route::get('/invoice-list',[SparePartsInvoiceController::class,'index'])->name('list-sp-invoice');
+Route::get('/invoice-add',[SparePartsInvoiceController::class,'add'])->name('add-sp-invoice');
 Route::get('/serviceuser-detail/{id}', [SparePartsInvoiceController::class, 'detail'])->middleware(['auth'])->name('serviceuser-detail');
 Route::get('/part-detail',[SparePartsInvoiceController::class,'partDetail'])->middleware(['auth'])->name('sparepart-detail-invoice');
 Route::post('/invoice-save',[SparePartsInvoiceController::class,'save']);
@@ -101,8 +102,8 @@ Route::get('/product-detail-deliverynote/{id}', [DeliveryNoteController::class, 
 Route::post('/deliverynote-save',[DeliveryNoteController::class,'save'])->middleware(['auth'])->name('deliverynote-save');
 Route::get('/deliverynote-view/{id}', [DeliveryNoteController::class, 'show'])->middleware(['auth'])->name('viewdeiverynote');
 
-Route::get('/repairticket-list',[RepairTicketController::class,'index']);
-Route::get('/all-repairtickets',[RepairTicketController::class,'allTickets']);
+Route::get('/repairticket-list',[RepairTicketController::class,'index'])->name('lists-repair-ticket');
+Route::get('/all-repairtickets',[RepairTicketController::class,'allTickets'])->name('all-repairs-ticket');
 Route::get('/add-repairticket',[RepairTicketController::class,'add'])->middleware(['auth'])->name('create-repair-ticket');
 Route::post('/searchserialnoforrepair',[RepairTicketController::class,'serachSn'])->middleware(['auth'])->name('serialnumber-search');
 Route::get('/sp-detail-sc',[RepairTicketController::class,'partDetailForSc'])->middleware(['auth'])->name('sparepart-detail-sc');
