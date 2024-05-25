@@ -60,14 +60,14 @@
                         <div class="card-body pt-0">
                             <div class="form-group row mb-5">
                                 <div class="col-md-4 mb-5">
-                                    <label class="form-label">Spart Part Name:</label>
+                                    <label class=" required form-label">Spart Part Name:</label>
                                     <input type="text" class="form-control mb-2 mb-md-0" name="name" placeholder="Spart Part Name" />
                                     @error('name')
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="col-md-4 mb-5">
-                                    <label class="form-label">Factory Code:</label>
+                                    <label class=" required form-label">Factory Code:</label>
                                     <input type="text" class="form-control mb-2 mb-md-0" name="factory_code" placeholder="Factory Code" />
                                     @error('factory_code')
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>
@@ -91,7 +91,7 @@
 
                             <div class="form-group row mb-5">
                                 <div class="col-md-4 mb-5">
-                                    <label class="form-label">Voltage Rating :</label>
+                                    <label class="required form-label">Voltage Rating :</label>
                                     <input type="text" class="form-control mb-2 mb-md-0" name="voltage_rating" placeholder="Voltage Rating" />
                                     @error('voltage_rating')
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>
@@ -99,14 +99,14 @@
                                 </div>
 
                                 <div class="col-md-4 mb-5">
-                                    <label class="form-label">Ampere Rating :</label>
+                                    <label class=" required form-label">Ampere Rating :</label>
                                     <input type="text" class="form-control mb-2 mb-md-0" name="ampeare_rating" placeholder="Ampere Rating" />
                                     @error('ampeare_rating')
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="col-md-4 mb-5">
-                                    <label class="form-label">Sale Price :</label>
+                                    <label class="required form-label">Sale Price :</label>
                                     <input type="text" class="form-control mb-2 mb-md-0" name="sale_price" placeholder="Sale Price" />
                                     @error('sale_price')
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>
@@ -117,14 +117,14 @@
 
                             <div class="form-group row mb-5">
                                 <div class="col-md-4 mb-5">
-                                    <label class="form-label">Base Unit :</label>
+                                    <label class="required form-label">Base Unit :</label>
                                     <input type="text" class="form-control mb-2 mb-md-0" name="base_unit" placeholder="Base Unit" />
                                     @error('base_unit')
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="col-md-4 mb-5">
-                                    <label class="form-label">Pieces :</label>
+                                    <label class="required form-label">Pieces :</label>
                                     <input type="text" class="form-control mb-2 mb-md-0" name="pieces" placeholder="Pieces" />
                                     @error('pieces')
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>

@@ -91,66 +91,68 @@ class RepairTicketController extends Controller
             ['is_assigned',1]
         ])->first();
         if(!$serialNoExist){
-            $data['alertDiv']="1";   // Example condition
+            $data['alertDiv']="1";   // Serial No does not exist in table
+
         }
-        else{
-            $data['alertDiv']="2";   // Example condition
+        else {
+            $data['alertDiv'] = "2";   // Serial No exist in table
+
+            // check warranty exist
+            $inverters = Inverter::where('id', $serialNoExist->inverter_id)->first();
+
+            $createdDate = $inverters->created_at;
+            $productWarrantyMonths = $inverters->product_warranty * 12; // Convert years to months
+            $serviceWarrantyMonths = $inverters->service_warranty * 12; // Convert years to months
+            $warrantyLagMonths = $inverters->warranty_lag; // Already in months
+
+            // Total warranty period in months
+            $totalWarrantyMonths = $productWarrantyMonths + $serviceWarrantyMonths + $warrantyLagMonths;
+
+            // Convert the created_date to a Carbon instance
+            $createdDate = Carbon::parse($createdDate);
+
+            // Clone the createdDate to ensure it remains unchanged
+            $expiryDate = $createdDate->copy()->addMonths($totalWarrantyMonths);
+
+            // Check if today's date is within the range
+            $isInRange = Carbon::now()->between($createdDate, $expiryDate);
+
+            if ($isInRange) {
+                $data['warantyexpire'] = "0";
+            } else {
+                $data['warantyexpire'] = "1";
+            }
+
+            // For debugging, let's dd() the dates
+            //dd($createdDate->toDateTimeString(), $expiryDate->toDateTimeString());
+
+            // check repair record exist previously
+            $data['history'] = RepairTicket::select('repair_tickets.id as repairid', 'repair_tickets.repair_request_date as repair_date',
+                'repair_tickets.status as status', 'inverters.modal_number as inverter_modal',
+                'users.name as service_center_name', 'repair_tickets.fault_detail as faultdetail',
+                DB::raw('GROUP_CONCAT(spare_parts.name) as sp_name'))
+                ->join('inverters', 'repair_tickets.inverter_id', '=', 'inverters.id')
+                ->join('users', 'repair_tickets.service_center_id', '=', 'users.id')
+                ->join('repair_spare_parts', 'repair_spare_parts.repair_id', '=', 'repair_tickets.id')
+                ->join('spare_parts', 'repair_spare_parts.sparepart_id', '=', 'spare_parts.id')
+                ->groupBy('repair_tickets.id')
+                ->where('repair_tickets.serial_number', $value)
+                ->get();
+
+
         }
-        // check warranty exist
-        $inverters = Inverter::where('id', $serialNoExist->inverter_id)->first();
-
-        $createdDate = $inverters->created_at;
-        $productWarrantyMonths = $inverters->product_warranty * 12; // Convert years to months
-        $serviceWarrantyMonths = $inverters->service_warranty * 12; // Convert years to months
-        $warrantyLagMonths = $inverters->warranty_lag; // Already in months
-
-    // Total warranty period in months
-        $totalWarrantyMonths = $productWarrantyMonths + $serviceWarrantyMonths + $warrantyLagMonths;
-
-    // Convert the created_date to a Carbon instance
-        $createdDate = Carbon::parse($createdDate);
-
-    // Clone the createdDate to ensure it remains unchanged
-        $expiryDate = $createdDate->copy()->addMonths($totalWarrantyMonths);
-
-    // Check if today's date is within the range
-        $isInRange = Carbon::now()->between($createdDate, $expiryDate);
-
-        if ($isInRange) {
-            $data['warantyexpire'] = "0";
-        } else {
-            $data['warantyexpire'] = "1";
-        }
-
-        // For debugging, let's dd() the dates
-        //dd($createdDate->toDateTimeString(), $expiryDate->toDateTimeString());
-
-        // check repair record exist previously
-        $data['history'] = RepairTicket::select('repair_tickets.id as repairid','repair_tickets.repair_request_date as repair_date',
-            'repair_tickets.status as status', 'inverters.modal_number as inverter_modal',
-            'users.name as service_center_name','repair_tickets.fault_detail as faultdetail',
-            DB::raw('GROUP_CONCAT(spare_parts.name) as sp_name'))
-            ->join('inverters', 'repair_tickets.inverter_id', '=', 'inverters.id')
-            ->join('users', 'repair_tickets.service_center_id', '=', 'users.id')
-            ->join('repair_spare_parts', 'repair_spare_parts.repair_id', '=', 'repair_tickets.id')
-            ->join('spare_parts', 'repair_spare_parts.sparepart_id', '=', 'spare_parts.id')
-            ->groupBy('repair_tickets.id')
-            ->where('repair_tickets.serial_number',$value)
-            ->get();
-
-        $data['sparePartsForSc']= SparePartInvoiceItem::select(DB::raw('SUM(spare_part_invoice_items.quantity) as total_quantity'),
-            'spare_parts.name as partname','spare_part_categories.name as factorycode','spare_parts.part_type as parttype',
-            'spare_parts.voltage_rating as voltagerating','spare_parts.ampeare_rating as ampearrating',
-            'spare_parts.sale_price as saleprice','spare_parts.base_unit as baseunit','spare_parts.id as partid')
+        $data['sparePartsForSc'] = SparePartInvoiceItem::select(DB::raw('SUM(spare_part_invoice_items.quantity) as total_quantity'),
+            'spare_parts.name as partname', 'spare_part_categories.name as factorycode', 'spare_parts.part_type as parttype',
+            'spare_parts.voltage_rating as voltagerating', 'spare_parts.ampeare_rating as ampearrating',
+            'spare_parts.sale_price as saleprice', 'spare_parts.base_unit as baseunit', 'spare_parts.id as partid')
             ->join('spare_parts', 'spare_part_invoice_items.sparepart_id', '=', 'spare_parts.id')
             ->join('spare_part_categories', 'spare_parts.part_type', '=', 'spare_part_categories.id')
-            ->groupBy('spare_part_invoice_items.sparepart_id', 'spare_parts.name','spare_parts.factory_code',
-                'spare_parts.part_type','spare_parts.voltage_rating','spare_parts.ampeare_rating','spare_parts.sale_price',
+            ->groupBy('spare_part_invoice_items.sparepart_id', 'spare_parts.name', 'spare_parts.factory_code',
+                'spare_parts.part_type', 'spare_parts.voltage_rating', 'spare_parts.ampeare_rating', 'spare_parts.sale_price',
                 'spare_parts.base_unit')
-            ->where('spare_part_invoice_items.service_center_id','=',Auth::user()->id)
+            ->where('spare_part_invoice_items.service_center_id', '=', Auth::user()->id)
             ->get();
-        $data['selectedSn'] = $value;
-        //dd($data);
+            $data['selectedSn'] = $value;
         return view('repairticket.history-repair',$data);
 
     }

@@ -88,7 +88,7 @@
                                 @enderror
                             </div>
                             <div class="mb-10">
-                                <label for="exampleFormControlInput1" class="required form-label">Delivery Notes</label>
+                                <label for="exampleFormControlInput1" class="form-label">Delivery Notes</label>
                                 <textarea class="form-control form-control-solid" placeholder="Notes.." name="notes"></textarea>
                                 @error('notes')
                                 <div class="alert alert-danger mt-2">{{ $message }}</div>

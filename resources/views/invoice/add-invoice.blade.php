@@ -78,18 +78,18 @@
                                 <div id="sc_detail">
 
                                 </div>
-                                <div class="form-group row mb-5">
-                                    <div class="col-md-6 mb-5">
-                                <button id="addItemBtn" class="btn btn-light-success">Add</button>
-                                    </div>
-                                </div>
+{{--                                <div class="form-group row mb-5">--}}
+{{--                                    <div class="col-md-6 mb-5">--}}
+{{--                                <button id="addItemBtn" class="btn btn-light-success">Add</button>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
 
                                 <div class="row mb-5">
                                     <div class="col-12">
                                         <table class="table table-row-dashed table-row-gray-300 gy-7">
                                             <thead>
                                             <tr class="fw-bold fs-6 text-gray-800" >
-                                                <th>Product Name</th>
+                                                <th>Factory Code</th>
                                                 <th>Net Unit Price</th>
                                                 <th>Current Stock</th>
                                                 <th>Qty</th>
@@ -100,42 +100,24 @@
                                             </tr>
                                             </thead>
                                             <tbody id="inputRow">
-{{--                                            <tr>--}}
-{{--                                                <td> <input type="text" id="orderTax" class="form-control"></td>--}}
-{{--                                                <td> <input type="text" id="orderTax" class="form-control"></td>--}}
-{{--                                                <td> <input type="text" id="orderTax" class="form-control"></td>--}}
-{{--                                                <td> <input type="text" id="orderTax" class="form-control"></td>--}}
-{{--                                                <td> <input type="text" id="orderTax" class="form-control"></td>--}}
-{{--                                                <td> <input type="text" id="orderTax" class="form-control"></td>--}}
-{{--                                                <td> <input type="text" id="orderTax" class="form-control"></td>--}}
-{{--                                                <td><button type="button" class="btn btn-sm btn-icon btn-active-color-primary" data-kt-element="remove-item">--}}
-{{--                                                        <i class="ki-duotone ki-trash fs-3">--}}
-{{--                                                            <span class="path1"></span>--}}
-{{--                                                            <span class="path2"></span>--}}
-{{--                                                            <span class="path3"></span>--}}
-{{--                                                            <span class="path4"></span>--}}
-{{--                                                            <span class="path5"></span>--}}
-{{--                                                        </i>--}}
-{{--                                                    </button></td>--}}
-{{--                                            </tr>--}}
-{{--                                            <tr>--}}
-{{--                                                <td> <input type="text" id="orderTax" class="form-control"></td>--}}
-{{--                                                <td> <input type="text" id="orderTax" class="form-control"></td>--}}
-{{--                                                <td> <input type="text" id="orderTax" class="form-control"></td>--}}
-{{--                                                <td> <input type="text" id="orderTax" class="form-control"></td>--}}
-{{--                                                <td> <input type="text" id="orderTax" class="form-control"></td>--}}
-{{--                                                <td> <input type="text" id="orderTax" class="form-control"></td>--}}
-{{--                                                <td> <input type="text" id="orderTax" class="form-control"></td>--}}
-{{--                                                <td><button type="button" class="btn btn-sm btn-icon btn-active-color-primary" data-kt-element="remove-item">--}}
-{{--                                                        <i class="ki-duotone ki-trash fs-3">--}}
-{{--                                                            <span class="path1"></span>--}}
-{{--                                                            <span class="path2"></span>--}}
-{{--                                                            <span class="path3"></span>--}}
-{{--                                                            <span class="path4"></span>--}}
-{{--                                                            <span class="path5"></span>--}}
-{{--                                                        </i>--}}
-{{--                                                    </button></td>--}}
-{{--                                            </tr>--}}
+                                            <tr>
+                                                <td>
+                                                    <select name="sparepart[]" class="form-control part-dropdown" required>
+                                                        <option value="">Select Spare Part</option>
+                                                        @foreach($spareParts as $rowspp)
+                                                            <option value="{{$rowspp->id}}">{{ $rowspp->factory_code }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                                <td><input type="text" name="sale_price[]" placeholder="Net unit price" class="form-control unit-price" readonly></td>
+                                                <td><input type="text" placeholder="Current Stock" class="form-control current-stock " readonly></td>
+                                                <td><input type="number" name="qty[]" placeholder="Quantity" class="form-control qty" required></td>
+                                                <td><input type="text" name="item_tax[]" placeholder="Tax (%)" class="form-control tax-input" required></td>
+                                                <td><input type="text" name="item_discount[]" placeholder="Discount" class="form-control discount-input" required></td>
+                                                <td><input type="text" name="item_total[]" placeholder="Sub Total" class="form-control total-cost"></td>
+                                                <td><button id="addItemBtn" class="btn btn-light-success">Add</button></td>
+                                            </tr>
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -231,7 +213,7 @@
                 var selectHtml = '<select name="sparepart[]" class="form-control part-dropdown" required>';
                 selectHtml += '<option value="">Select Spare Part</option>';
                 parts.forEach(function(option) {
-                    selectHtml += '<option value="' + option.id + '">' + option.name + '</option>';
+                    selectHtml += '<option value="' + option.id + '">' + option.factory_code + '</option>';
                 });
                 selectHtml += '</select>';
                 var newRow = '<tr>' +

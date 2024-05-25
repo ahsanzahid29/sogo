@@ -39,9 +39,6 @@ class SparePartsInvoiceController extends Controller
                ->get();
 
        }
-
-
-
        $data['role'] = Auth::user()->role_id;
 
        return view('invoice.list-invoice',$data);

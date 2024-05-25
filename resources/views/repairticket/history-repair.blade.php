@@ -1,8 +1,9 @@
-@if($warantyexpire=="0")
 @if($alertDiv=="1")
-<p id="nosn" style="color:red">No Product Found</p>
+    <p id="nosn" style="color:red">No Product Found</p>
 @else
     <p id="nosn" style="color:green">Product Found</p>
+
+@if($warantyexpire=="0")
     @if(count($history)>0)
 <div class="form-group row mb-5">
     <h2 class="mb-5">Repair History</h2>
@@ -81,7 +82,6 @@
         </tbody>
     </table>
 </div>
-
 @endif
 
     <form class="form w-100" method="POST" action="{{ route('save-repairticket') }}" enctype="multipart/form-data">
@@ -142,10 +142,9 @@
         </div>
     </div>
     </form>
-@endif
 @else
     <p id="" style="color:red">Warranty expires</p>
-
+@endif
 @endif
 
 <script type="text/javascript">
