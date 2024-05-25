@@ -65,7 +65,7 @@
                                 @csrf
                             <div class="form-group row mb-5">
                                 <div class="col-md-8 mb-5">
-                                    <input type="text" name="name" class="form-control mb-2 mb-md-0" placeholder="Category Name" />
+                                    <input type="text" name="name" class="form-control mb-2 mb-md-0" placeholder="Category Name" required />
                                     @error('name')
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                                     @enderror

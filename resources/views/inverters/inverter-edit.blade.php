@@ -72,8 +72,8 @@
                                 </div>
                                 <div class="col-md-4 mb-5">
                                     <label for="exampleFormControlInput1" class="required form-label">Packaging</label>
-                                    <select name="inverter_packaging" class="form-select form-select-solid" aria-label="Select example">
-                                        <option>Select Packaging</option>
+                                    <select name="inverter_packaging" class="form-select form-select-solid" aria-label="Select example" required>
+                                        <option value="">Select Packaging</option>
                                         <option value="1" @if($inverter->inverter_packaging==1) selected @endif>Carton</option>
                                         <option value="2" @if($inverter->inverter_packaging==2) selected @endif>Pieces</option>
                                     </select>
@@ -91,7 +91,7 @@
                                 </div>
                                 <div class="col-md-4 mb-5">
                                     <label for="exampleFormControlInput1" class="required form-label">Product Category</label>
-                                    <select name="category" class="form-select form-select-solid" aria-label="Select example">
+                                    <select name="category" class="form-select form-select-solid" aria-label="Select example" required>
                                         <option value="0">Select Category</option>
                                         @foreach($productCategory as $row)
                                             <option value="{{ $row->id }}" @if($inverter->category==$row->id) selected @endif>{{ $row->name }}</option>

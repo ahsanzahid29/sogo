@@ -59,7 +59,6 @@ class DeliveryNoteController extends Controller
                 'dealer_id'    =>  'required|not_in:0',
                 'inverter_id'  => 'required|not_in:0',
                 'quantity'     => 'required',
-                'notes'        => 'required',
             ]);
             // check entered quantity is less than available quantity
             $inverter = Inverter::find($request->inverter_id);

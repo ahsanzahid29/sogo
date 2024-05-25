@@ -22,8 +22,8 @@ class SparePartsInventoryController extends Controller
         $voltageRating=[];
 
         $sparePartInventory = DB::table('spare_part_inventories')
-            ->select('factory_code','order_number', DB::raw('COUNT(*) as qty'))
-            ->groupBy('factory_code','order_number')
+            ->select('factory_code','serial_number', DB::raw('COUNT(*) as qty'))
+            ->groupBy('factory_code','serial_number')
             ->get()
             ->toArray();
 
@@ -31,11 +31,11 @@ class SparePartsInventoryController extends Controller
             $detail = DB::table('spare_parts')->select('*')
                 ->where('factory_code',$row->factory_code)->first();
             $repairDateDetail= DB::table('spare_part_inventories')->select('*')
-                ->where('order_number',$row->order_number)->first();
+                ->where('serial_number',$row->serial_number)->first();
             $factoryCode[]    = $row->factory_code;
             $partName[]       = $detail->name;
             $partType[]       = $detail->part_type;
-            $orderNumber[]    = $row->order_number;
+            $orderNumber[]    = $repairDateDetail->order_number;
             $receiptDate[]    = $repairDateDetail->repair_date;
             $voltageRating[]  = $detail->voltage_rating;
 

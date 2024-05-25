@@ -66,7 +66,7 @@ class DashboardController extends Controller
                 ->join('spare_part_categories', 'spare_parts.part_type', '=', 'spare_part_categories.id')
                 ->groupBy('spare_part_invoice_items.sparepart_id', 'spare_parts.name','spare_parts.factory_code',
                     'spare_parts.part_type','spare_parts.voltage_rating','spare_parts.ampeare_rating','spare_parts.sale_price',
-                    'spare_parts.base_unit')
+                    'spare_parts.base_unit','spare_part_categories.name')
                 ->where('spare_part_invoice_items.service_center_id','=',Auth::user()->id)
                 ->get();
             $data['sparePartCount'] = count($sparePartCount);

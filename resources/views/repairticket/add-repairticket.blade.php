@@ -53,8 +53,8 @@
                         <div class="card-body pt-0">
                             <div class="form-group row mb-5">
                                 <div class="col-md-10 mb-5">
-                                    <label class="form-label">Search via Serial Number:</label>
-                                    <input type="text" id="serial_number" class="form-control mb-2 mb-md-0" placeholder="Search via Serial Number" />
+                                    <label class="required form-label">Search via Serial Number:</label>
+                                    <input type="text" id="serial_number" class="form-control mb-2 mb-md-0" placeholder="Search via Serial Number" required />
                                 </div>
                                 <div class="col-md-2 mb-5">
                                     <label class="form-label"></label>
@@ -109,6 +109,10 @@
     $(document).ready(function() {
         $('#searchsn').click(function() {
             var serial_numberValue = $('#serial_number').val();
+            if(serial_numberValue==''){
+                alert('Please enter serial number');
+                return;
+            }
             $.ajax({
                 url: "{{ url('/searchserialnoforrepair') }}" ,
                 type: 'POST',
