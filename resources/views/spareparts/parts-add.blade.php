@@ -59,22 +59,14 @@
                         <!--begin::Card body-->
                         <div class="card-body pt-0">
                             <div class="form-group row mb-5">
-                                <div class="col-md-4 mb-5">
-                                    <label class=" required form-label">Spart Part Name:</label>
-                                    <input type="text" class="form-control mb-2 mb-md-0" name="name" placeholder="Spart Part Name" />
-                                    @error('name')
-                                    <div class="alert alert-danger mt-2">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="col-md-4 mb-5">
+                                <div class="col-md-6 mb-5">
                                     <label class=" required form-label">Factory Code:</label>
                                     <input type="text" class="form-control mb-2 mb-md-0" name="factory_code" placeholder="Factory Code" />
                                     @error('factory_code')
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                                     @enderror
-
                                 </div>
-                                <div class="col-md-4 mb-5">
+                                <div class="col-md-6 mb-5">
                                     <label for="exampleFormControlInput1" class="required form-label">Part Type</label>
                                     <select class="form-select form-select-solid" name="part_type" aria-label="Select example">
                                         <option value="0">Select Part Type</option>
@@ -155,6 +147,17 @@
 
                                     </div>
                             </div>
+
+                            <div class="form-group row mb-5">
+                            <div class="col-md-12 mb-5">
+                                <label class=" required form-label">Spart Part Description:</label>
+                                <textarea rows="7" cols="7" class="form-control mb-2 mb-md-0" name="name" placeholder="Spart Part Description" required></textarea>
+                                @error('name')
+                                <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            </div>
+
                             <div class="form-group row">
                                 <div class="col-md-12">
                                     <button type="submit" class="btn btn-success">Save</button>

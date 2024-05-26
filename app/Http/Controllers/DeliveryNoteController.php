@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use PDF;
 
 class DeliveryNoteController extends Controller
 {
@@ -146,8 +147,44 @@ class DeliveryNoteController extends Controller
         }
         return redirect('/deliverynote-list')->with('status', 'No record found');
 
+    }
+    public function printNote($id)
+    {
+        $deliveryNote = Deliverynote::select('deliverynotes.id as recordid','deliverynotes.quantity as qty',
+            'deliverynotes.notes as notes','inverters.inverter_name as invertername','inverters.modal_number as modal',
+            'users.name as username','users.phoneno_1 as userphone','deliverynotes.created_at as createdat',
+            'deliverynotes.notes as notes','users.email as useremail','users.billing_address as address')
+            ->join('inverters', 'deliverynotes.inverter_id', '=', 'inverters.id')
+            ->join('users', 'deliverynotes.dealer_id', '=', 'users.id')
+            ->where('deliverynotes.id',$id)
+            ->first();
+        //dd($deliveryNote);
+        if(!$deliveryNote){
+            return redirect('/deliverynote-list')->with('status', 'No record found');
+        }
+        return view('deliverynote.print-deliverynote', compact('deliveryNote'));
+
+    }
+
+    public function downloadNote($id){
+        $data['deliveryNote'] = Deliverynote::select('deliverynotes.id as recordid','deliverynotes.quantity as qty',
+            'deliverynotes.notes as notes','inverters.inverter_name as invertername','inverters.modal_number as modal',
+            'users.name as username','users.phoneno_1 as userphone','deliverynotes.created_at as createdat',
+            'deliverynotes.notes as notes','users.email as useremail','users.billing_address as address')
+            ->join('inverters', 'deliverynotes.inverter_id', '=', 'inverters.id')
+            ->join('users', 'deliverynotes.dealer_id', '=', 'users.id')
+            ->where('deliverynotes.id',$id)
+            ->first();
+        //dd($deliveryNote);
+        if(!$data['deliveryNote']){
+            return redirect('/deliverynote-list')->with('status', 'No record found');
+        }
+        $pdf = PDF::loadView('deliverynote.download-deliverynote', $data);
 
 
+        $rand = time().rand(10,1000);
+        $filename = 'delivery_note_' . $rand . '.pdf';
+        return $pdf->download($filename);
 
 
     }

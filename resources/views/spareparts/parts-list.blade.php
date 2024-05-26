@@ -93,7 +93,7 @@
                             <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_customers_table">
                                 <thead>
                                 <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
-                                    <th>Part Name</th>
+                                    <th>Part Description</th>
                                     <th class="min-w-125px">Factory Code</th>
                                     <th class="min-w-125px">Part Type</th>
                                     <th class="min-w-125px">Sale Price</th>
@@ -105,7 +105,7 @@
                                 <tbody class="fw-semibold text-gray-600">
                                 @foreach($spareParts as $row)
                                 <tr>
-                                    <td>{{ $row->name }}</td>
+                                    <td><a href="#" data-bs-toggle="modal" data-bs-target="#isp_description_{{$row->id}}">View</a></td>
                                     <td>{{ $row->factory_code }}</td>
                                     <td>{{ $row->category }}
                                     </td>
@@ -128,6 +128,23 @@
                                         @endif
                                     </td>
                                 </tr>
+                                <div class="modal fade" tabindex="-1" id="isp_description_{{$row->id}}">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h3 class="modal-title">Spare Part Description</h3>
+                                            </div>
+
+                                            <div class="modal-body">
+                                                <p>{{ $row->name }}</p>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 @endforeach
                                 </tbody>
                                 <!--end::Table body-->

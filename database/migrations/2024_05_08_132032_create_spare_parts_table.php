@@ -16,7 +16,7 @@ class CreateSparePartsTable extends Migration
         Schema::create('spare_parts', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('name')->nullable();
+            $table->text('name')->nullable();
             $table->string('factory_code')->nullable();
             $table->string('part_type')->nullable();
             $table->string('voltage_rating')->nullable();

@@ -107,7 +107,7 @@
                                 <tr>
                                     <td>{{ $count ++ }}</td>
                                     <td>{{$factoryCode[$i]}}</td>
-                                    <td>{{$partName[$i]}}</td>
+                                    <td><a href="#" data-bs-toggle="modal" data-bs-target="#spi_description_{{$i}}">View</a></td>
                                     <td>
 
                                         @if($partType[$i]==1)
@@ -120,6 +120,23 @@
                                     <td>{{ date('d M, Y',strtotime($receiptDate[$i])) }}</td>
                                     <td>{{ $voltageRating[$i] }}</td>
                                 </tr>
+                                <div class="modal fade" tabindex="-1" id="spi_description_{{$i}}">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h3 class="modal-title">Spare Part Description</h3>
+                                            </div>
+
+                                            <div class="modal-body">
+                                                <p>{{$partName[$i]}}</p>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                     @endfor
                                 @endif
 

@@ -121,8 +121,19 @@
                                                 <a href="{{route('viewdeiverynote',$row->recordid)}}" class="menu-link px-3">View</a>
                                             </div>
                                             <!--end::Menu item-->
+                                            <!--begin::Menu item-->
+                                            <div class="menu-item px-3">
+                                                <a target="_blank" href="{{route('printdeliverynote',$row->recordid)}}" class="menu-link px-3">Print</a>
+                                            </div>
+                                            <!--end::Menu item-->
+                                            <!--begin::Menu item-->
+                                            <div class="menu-item px-3">
+                                                <a target="_blank" href="{{ route('download-deliverynote', $row->recordid) }}" class="menu-link px-3">Download</a>
+                                            </div>
+                                            <!--end::Menu item-->
                                         </div>
                                         <!--end::Menu-->
+
                                     </td>
                                 </tr>
                                 @endforeach
