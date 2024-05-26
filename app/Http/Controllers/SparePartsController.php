@@ -21,11 +21,13 @@ class SparePartsController extends Controller
 
     public function index(){
         $data['role'] = Auth::user()->role_id;
+        $data['count'] = 1;
         if($data['role']==4){
             $data['sparePartsForSc']= SparePartInvoiceItem::select(DB::raw('SUM(spare_part_invoice_items.quantity) as total_quantity'),
                 'spare_parts.name as partname','spare_part_categories.name as factorycode','spare_parts.part_type as parttype',
                 'spare_parts.voltage_rating as voltagerating','spare_parts.ampeare_rating as ampearrating',
-            'spare_parts.sale_price as saleprice','spare_parts.base_unit as baseunit','spare_parts.id as recordid')
+            'spare_parts.sale_price as saleprice','spare_parts.base_unit as baseunit','spare_parts.id as recordid',
+                'spare_part_categories.name as category','spare_parts.pieces as pieces')
                 ->join('spare_parts', 'spare_part_invoice_items.sparepart_id', '=', 'spare_parts.id')
                 ->join('spare_part_categories', 'spare_parts.part_type', '=', 'spare_part_categories.id')
                 ->groupBy('spare_part_invoice_items.sparepart_id', 'spare_parts.name','spare_parts.factory_code',
@@ -39,6 +41,7 @@ class SparePartsController extends Controller
         $data['spareParts'] = SparePart::select('spare_parts.*','spare_part_categories.name as category')
             ->join('spare_part_categories', 'spare_parts.part_type', '=', 'spare_part_categories.id')
             ->get();
+
         return view('spareparts.parts-list', $data);
     }
 
@@ -54,29 +57,46 @@ class SparePartsController extends Controller
                 'name' => 'required',
                 'factory_code' => 'required',
                 'part_type' => 'required|not_in:0',
-                'voltage_rating' => 'required',
-                'ampeare_rating' => 'required',
+                //'voltage_rating' => 'required',
+                //'ampeare_rating' => 'required',
                 'sale_price' => 'required',
                 'base_unit' => 'required',
                 'pieces' => 'required',
+                'part_image' => 'nullable|mimes:jpeg,jpg,png,gif',
 
             ]);
+            $partImageName = "";
             DB::beginTransaction();
             try {
+                #----------- inverter image----------------------#
+                if ($request->file('part_image')) {
+                    $image = $request->file('part_image');
+                    // Get the original filename and replace spaces with underscores
+                    $originalName = $image->getClientOriginalName();
+                    $sanitizedImageName = str_replace(' ', '_', pathinfo($originalName, PATHINFO_FILENAME));
+                    $extension = $image->getClientOriginalExtension();
+
+                    // Combine the sanitized name with the current time and file extension for uniqueness
+                    $partImageName = $sanitizedImageName . '_' . time() . '.' . $extension;
+                    $image->move(public_path('files/sparepart'), $partImageName);
+
+                }
                 #------------------- insert in database--------------------------------#
                 $sparePart = SparePart::create(
                     [
                         'name'           => $request->name,
                         'factory_code'   => $request->factory_code,
                         'part_type'      => $request->part_type,
-                        'voltage_rating' => $request->voltage_rating,
-                        'ampeare_rating' => $request->ampeare_rating,
-                        'base_unit'      => $request->base_unit,
-                        'pieces'         => $request->pieces,
-                        'sale_price'     => $request->sale_price,
-                        'total_quantity' => 0,
-                        'sold_quantity'  => 0,
-                        'user_id'        => Auth::user()->id,
+                        //'voltage_rating' => $request->voltage_rating,
+                       // 'ampeare_rating' => $request->ampeare_rating,
+                        'base_unit'       => $request->base_unit,
+                        'pieces'          => $request->pieces,
+                        'sale_price'      => $request->sale_price,
+                        'total_quantity'  => 0,
+                        'sold_quantity'   => 0,
+                        'user_id'         => Auth::user()->id,
+                        'part_image'      => $partImageName,
+                        'technical_notes'  => $request->technical_notes
                     ]
                 );
                 $sparePartId = $sparePart->id;
@@ -139,24 +159,42 @@ class SparePartsController extends Controller
                 'name' => 'required',
                 'factory_code' => 'required',
                 'part_type' => 'required|not_in:0',
-                'voltage_rating' => 'required',
-                'ampeare_rating' => 'required',
+                //'voltage_rating' => 'required',
+               // 'ampeare_rating' => 'required',
                 'sale_price' => 'required',
                 'base_unit' => 'required',
                 'pieces' => 'required',
+                'part_image' => 'nullable|mimes:jpeg,jpg,png,gif',
 
             ]);
+            $spDetail = SparePart::find($request->recordid);
+            $partImageName = $spDetail->part_image;
             DB::beginTransaction();
             try {
+                #----------- inverter image----------------------#
+                if ($request->file('part_image')) {
+                    $image = $request->file('part_image');
+                    // Get the original filename and replace spaces with underscores
+                    $originalName = $image->getClientOriginalName();
+                    $sanitizedImageName = str_replace(' ', '_', pathinfo($originalName, PATHINFO_FILENAME));
+                    $extension = $image->getClientOriginalExtension();
+
+                    // Combine the sanitized name with the current time and file extension for uniqueness
+                    $partImageName = $sanitizedImageName . '_' . time() . '.' . $extension;
+                    $image->move(public_path('files/sparepart'), $partImageName);
+
+                }
                 $newdata = [
                     'name'           => $request->name,
                     'factory_code'   => $request->factory_code,
                     'part_type'      => $request->part_type,
-                    'voltage_rating' => $request->voltage_rating,
-                    'ampeare_rating' => $request->ampeare_rating,
+                    //'voltage_rating' => $request->voltage_rating,
+                    //'ampeare_rating' => $request->ampeare_rating,
                     'base_unit'      => $request->base_unit,
                     'pieces'         => $request->pieces,
                     'sale_price'     => $request->sale_price,
+                    'part_image'     => $partImageName,
+                    'technical_notes' => $request->technical_notes
 
                 ];
 

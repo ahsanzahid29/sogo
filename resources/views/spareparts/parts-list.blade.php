@@ -93,11 +93,11 @@
                             <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_customers_table">
                                 <thead>
                                 <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
+                                    <th>S .No</th>
                                     <th>Part Description</th>
                                     <th class="min-w-125px">Factory Code</th>
                                     <th class="min-w-125px">Part Type</th>
                                     <th class="min-w-125px">Sale Price</th>
-                                    <th class="min-w-125px">Voltage Rating</th>
                                     <th class="min-w-125px">Quantity</th>
                                     <th class="text-end min-w-70px">Action</th>
                                 </tr>
@@ -105,12 +105,12 @@
                                 <tbody class="fw-semibold text-gray-600">
                                 @foreach($spareParts as $row)
                                 <tr>
+                                    <td>{{ $count ++ }}</td>
                                     <td><a href="#" data-bs-toggle="modal" data-bs-target="#isp_description_{{$row->id}}">View</a></td>
                                     <td>{{ $row->factory_code }}</td>
                                     <td>{{ $row->category }}
                                     </td>
                                     <td>{{ $row->sale_price }}</td>
-                                    <td>{{ $row->voltage_rating }}</td>
                                     <td>{{ $row->total_quantity }}</td>
                                     <td class="text-end">
                                         @if($role==1)
