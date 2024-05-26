@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use PDF;
 
 class SparePartsInvoiceController extends Controller
 {
@@ -217,7 +218,53 @@ class SparePartsInvoiceController extends Controller
             ->update(['status' =>'completed']);
         return redirect('/invoice-list')->with('status', 'Invoice approved successfully');
 
+    }
+
+    public function printInvoice($id){
+        if(Auth::user()->role_id==3){
+            return redirect('/dashboard');
+        }
+        $invoiceDetail = SparePartInvoice::select('spare_part_invoices.foc as foc','spare_part_invoices.total_amount as total',
+            'spare_part_invoices.discount as discount','spare_part_invoices.status','users.name as name','users.email as email',
+            'users.phoneno_1 as phone','users.shipping_address','spare_part_invoices.id as recordid')
+            ->join('users', 'spare_part_invoices.service_center_id', '=', 'users.id')
+            ->where('spare_part_invoices.uuid',$id)
+            ->first();
+        $invoiceItems = SparePartInvoiceItem::select('spare_part_invoice_items.quantity as itemqty','spare_part_invoice_items.item_tax as itemtax',
+            'spare_part_invoice_items.item_discount as itemdiscount','spare_part_invoice_items.item_total as itemtotal','spare_parts.name as sparepart','spare_part_invoice_items.sale_price as itemunitprice')
+            ->join('spare_parts', 'spare_part_invoice_items.sparepart_id', '=', 'spare_parts.id')
+            ->where('invoice_id',$invoiceDetail->recordid)->get();
+        //dd($invoiceItems);
+        $invoiceId = $id;
 
 
+        return view('invoice.print-invoice',compact('invoiceDetail','invoiceItems','invoiceId'));
+
+    }
+
+    public function downloadInvoice($id){
+        if(Auth::user()->role_id==3){
+            return redirect('/dashboard');
+        }
+        $data['invoiceDetail'] = SparePartInvoice::select('spare_part_invoices.foc as foc','spare_part_invoices.total_amount as total',
+            'spare_part_invoices.discount as discount','spare_part_invoices.status','users.name as name','users.email as email',
+            'users.phoneno_1 as phone','users.shipping_address','spare_part_invoices.id as recordid')
+            ->join('users', 'spare_part_invoices.service_center_id', '=', 'users.id')
+            ->where('spare_part_invoices.uuid',$id)
+            ->first();
+        $data['invoiceItems'] = SparePartInvoiceItem::select('spare_part_invoice_items.quantity as itemqty','spare_part_invoice_items.item_tax as itemtax',
+            'spare_part_invoice_items.item_discount as itemdiscount','spare_part_invoice_items.item_total as itemtotal','spare_parts.name as sparepart','spare_part_invoice_items.sale_price as itemunitprice')
+            ->join('spare_parts', 'spare_part_invoice_items.sparepart_id', '=', 'spare_parts.id')
+            ->where('invoice_id',$data['invoiceDetail']->recordid)->get();
+        //dd($invoiceItems);
+        $data['invoiceId'] = $id;
+
+
+        $pdf = PDF::loadView('invoice.download-invoice', $data);
+
+
+        $rand = time().rand(10,1000);
+        $filename = 'invoice_' . $rand . '.pdf';
+        return $pdf->download($filename);
     }
 }

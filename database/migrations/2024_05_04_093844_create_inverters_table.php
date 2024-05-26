@@ -15,7 +15,8 @@ class CreateInvertersTable extends Migration
     {
         Schema::create('inverters', function (Blueprint $table) {
             $table->id();
-            $table->string('inverter_name');
+            $table->text('inverter_name')->nullable();
+            $table->text('technical_notes')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->string('inverter_packaging')->nullable();
             $table->string('no_of_pieces')->nullable();

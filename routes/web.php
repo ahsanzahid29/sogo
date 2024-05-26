@@ -94,6 +94,11 @@ Route::get('/part-detail',[SparePartsInvoiceController::class,'partDetail'])->mi
 Route::post('/invoice-save',[SparePartsInvoiceController::class,'save']);
 Route::get('/sparepartinvoice-detail/{id}', [SparePartsInvoiceController::class, 'show'])->middleware(['auth'])->name('viewinvoice');
 Route::get('/invoice-status/{id}', [SparePartsInvoiceController::class, 'update'])->middleware(['auth'])->name('change-invoice');
+Route::get('/invoice-print/{id}', [SparePartsInvoiceController::class, 'printInvoice'])->middleware(['auth'])->name('printinvoice');
+Route::get('/invoice-download/{id}', [SparePartsInvoiceController::class, 'downloadInvoice'])->middleware(['auth'])->name('downloadinvoice');
+
+
+
 
 Route::get('/deliverynote-list',[DeliveryNoteController::class,'index'])->middleware(['auth'])->name('deliverynote-list');
 Route::get('/deliverynote-add',[DeliveryNoteController::class,'add'])->middleware(['auth'])->name('deliverynote-add');
@@ -101,6 +106,10 @@ Route::get('/dealeruser-detail/{id}', [DeliveryNoteController::class, 'detailDea
 Route::get('/product-detail-deliverynote/{id}', [DeliveryNoteController::class, 'detailInverter'])->middleware(['auth'])->name('inverter-detail-dnote');
 Route::post('/deliverynote-save',[DeliveryNoteController::class,'save'])->middleware(['auth'])->name('deliverynote-save');
 Route::get('/deliverynote-view/{id}', [DeliveryNoteController::class, 'show'])->middleware(['auth'])->name('viewdeiverynote');
+Route::get('/deliverynote-print/{id}', [DeliveryNoteController::class, 'printNote'])->middleware(['auth'])->name('printdeliverynote');
+Route::get('/deliverynote-download/{id}', [DeliveryNoteController::class, 'downloadNote'])->middleware(['auth'])->name('download-deliverynote');
+
+
 
 Route::get('/repairticket-list',[RepairTicketController::class,'index'])->name('lists-repair-ticket');
 Route::get('/all-repairtickets',[RepairTicketController::class,'allTickets'])->name('all-repairs-ticket');

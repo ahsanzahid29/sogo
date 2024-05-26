@@ -136,6 +136,16 @@
                                                 <a href="{{route('viewinvoice',$row->uuid)}}" class="menu-link px-3">View</a>
                                             </div>
                                             <!--end::Menu item-->
+                                            <!--begin::Menu item-->
+                                            <div class="menu-item px-3">
+                                                <a target="_blank" href="{{route('printinvoice',$row->uuid)}}" class="menu-link px-3">Print</a>
+                                            </div>
+                                            <!--end::Menu item-->
+                                            <!--begin::Menu item-->
+                                            <div class="menu-item px-3">
+                                                <a target="_blank" href="{{route('downloadinvoice',$row->uuid)}}" class="menu-link px-3">Download</a>
+                                            </div>
+                                            <!--end::Menu item-->
                                         </div>
                                         <!--end::Menu-->
                                             @endif
@@ -147,6 +157,16 @@
                                                 <!--begin::Menu item-->
                                                 <div class="menu-item px-3">
                                                     <a href="{{route('viewinvoice',$row->uuid)}}" class="menu-link px-3">View</a>
+                                                </div>
+                                                <!--end::Menu item-->
+                                                <!--begin::Menu item-->
+                                                <div class="menu-item px-3">
+                                                    <a target="_blank" href="{{route('printinvoice',$row->uuid)}}" class="menu-link px-3">Print</a>
+                                                </div>
+                                                <!--end::Menu item-->
+                                                <!--begin::Menu item-->
+                                                <div class="menu-item px-3">
+                                                    <a target="_blank" href="{{route('downloadinvoice',$row->uuid)}}" class="menu-link px-3">Download</a>
                                                 </div>
                                                 <!--end::Menu item-->
                                             </div>

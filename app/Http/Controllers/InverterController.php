@@ -105,6 +105,7 @@ class InverterController extends Controller
                 $inverter = Inverter::create(
                     [
                         'inverter_name'      => $request->inverter_name,
+                        'technical_notes'    => $request->technical_notes,
                         'inverter_packaging' => $request->inverter_packaging,
                         'no_of_pieces' => $request->no_of_pieces ? $request->no_of_pieces: '' ,
                         'brand' => $request->brand,
@@ -223,6 +224,7 @@ class InverterController extends Controller
 
                 $newdata = [
                     'inverter_name'      => $request->inverter_name,
+                    'technical_notes'    => $request->technical_notes,
                     'inverter_packaging' => $request->inverter_packaging,
                     'no_of_pieces' => $request->no_of_pieces,
                     'brand' => $request->brand,

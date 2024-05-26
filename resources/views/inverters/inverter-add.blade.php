@@ -52,12 +52,6 @@
 
                         <!--begin::Card body-->
                         <div class="card-body pt-0">
-                            <div class="form-group row mb-5">
-                                <div class="col-md-12 mb-5">
-                                    <label class="required form-label">Product Name:</label>
-                                    <input type="text" name="inverter_name" class="form-control mb-2 mb-md-0" placeholder="Inverter Name" required />
-                                </div>
-                            </div>
                                 <div class="form-group row mb-5">
                                 <div class="col-md-4 mb-5">
                                     <label class="required form-label">Product Image:</label>
@@ -133,6 +127,18 @@
                                 <div class="col-md-4 mb-5">
                                     <label class="form-label">Troubleshhot Guide :</label>
                                     <input type="file" name="troubleshoot_guide" class="form-control mb-2 mb-md-0" />
+                                </div>
+                            </div>
+                            <div class="form-group row mb-5">
+                                <div class="col-md-12 mb-5">
+                                    <label class="required form-label">Product Description:</label>
+                                    <textarea name="inverter_name" class="form-control mb-2 mb-md-0" rows="7" cols="7" placeholder="Product Description" required></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-5">
+                                <div class="col-md-12 mb-5">
+                                    <label class="form-label">Technical Notes:</label>
+                                    <textarea name="technical_notes" class="form-control mb-2 mb-md-0" rows="7" cols="7" placeholder="Technical Notes"></textarea>
                                 </div>
                             </div>
 
