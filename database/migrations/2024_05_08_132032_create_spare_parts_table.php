@@ -24,6 +24,8 @@ class CreateSparePartsTable extends Migration
             $table->string('sale_price')->nullable();
             $table->string('base_unit')->nullable();
             $table->string('pieces')->nullable();
+            $table->string('part_image')->nullable();
+            $table->text('technical_notes')->nullable();
             $table->integer('total_quantity')->default(0);
             $table->integer('sold_quantity')->default(0);
             $table->foreign('user_id')->references('id')->on('users');

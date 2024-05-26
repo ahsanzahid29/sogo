@@ -87,30 +87,25 @@
                             <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_customers_table">
                                 <thead>
                                 <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
+                                    <th>S. No</th>
                                     <th>Part Description</th>
                                     <th class="min-w-125px">Factory Code</th>
                                     <th class="min-w-125px">Part Type</th>
                                     <th class="min-w-125px">Sale Price</th>
-                                    <th class="min-w-125px">Voltage Rating</th>
-                                    <th class="min-w-125px">Ampear Rating</th>
-                                    <th class="text-end min-w-70px">Base Unit</th>
+                                    <th class="min-w-125px">Pieces</th>
+                                    <th class="text-end min-w-70px">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody class="fw-semibold text-gray-600">
                                 @foreach($sparePartsForSc as $row)
                                 <tr>
+                                    <td>{{ $count ++ }}</td>
                                     <td><a href="#" data-bs-toggle="modal" data-bs-target="#isp_description_{{$row->recordid}}">View</a></td>
                                     <td>{{ $row->factorycode }}</td>
-                                    <td> @if($row->parttype==1)
-                                            {{ 'Type 1' }}
-                                        @elseif($row->parttype==2)
-                                            {{ 'Type 2' }}
-                                        @endif
-                                    </td>
+                                    <td>{{ $row->category }}</td>
                                     <td>{{ $row->saleprice }}</td>
-                                    <td>{{ $row->voltagerating }}</td>
-                                    <td>{{ $row->ampearrating }}</td>
-                                    <td>{{ $row->baseunit }}</td>
+                                    <td>{{ $row->pieces }}</td>
+                                    <td></td>
 
                                 </tr>
                                 <div class="modal fade" tabindex="-1" id="isp_description_{{$row->recordid}}">

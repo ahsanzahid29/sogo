@@ -54,19 +54,19 @@
 
                         </div>
                         <!--end::Card title-->
-                        <form class="form w-100" method="POST" action="{{ route('save-spartpart') }}">
+                        <form class="form w-100" method="POST" action="{{ route('save-spartpart') }}" enctype="multipart/form-data">
                             @csrf
                         <!--begin::Card body-->
                         <div class="card-body pt-0">
                             <div class="form-group row mb-5">
-                                <div class="col-md-6 mb-5">
+                                <div class="col-md-4 mb-5">
                                     <label class=" required form-label">Factory Code:</label>
                                     <input type="text" class="form-control mb-2 mb-md-0" name="factory_code" placeholder="Factory Code" />
                                     @error('factory_code')
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="col-md-6 mb-5">
+                                <div class="col-md-4 mb-5">
                                     <label for="exampleFormControlInput1" class="required form-label">Part Type</label>
                                     <select class="form-select form-select-solid" name="part_type" aria-label="Select example">
                                         <option value="0">Select Part Type</option>
@@ -78,25 +78,33 @@
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                                     @enderror
                                 </div>
+                                <div class="col-md-4 mb-5">
+                                    <label for="exampleFormControlInput1" class="form-label">Part Image</label>
+                                    <input type="file" name="part_image" class="form-control mb-2 mb-md-0" />
+                                    @error('part_image')
+                                    <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                    @enderror
+
+                                </div>
 
                             </div>
 
                             <div class="form-group row mb-5">
-                                <div class="col-md-4 mb-5">
-                                    <label class="required form-label">Voltage Rating :</label>
-                                    <input type="text" class="form-control mb-2 mb-md-0" name="voltage_rating" placeholder="Voltage Rating" />
-                                    @error('voltage_rating')
-                                    <div class="alert alert-danger mt-2">{{ $message }}</div>
-                                    @enderror
-                                </div>
+{{--                                <div class="col-md-4 mb-5">--}}
+{{--                                    <label class="required form-label">Voltage Rating :</label>--}}
+{{--                                    <input type="text" class="form-control mb-2 mb-md-0" name="voltage_rating" placeholder="Voltage Rating" />--}}
+{{--                                    @error('voltage_rating')--}}
+{{--                                    <div class="alert alert-danger mt-2">{{ $message }}</div>--}}
+{{--                                    @enderror--}}
+{{--                                </div>--}}
 
-                                <div class="col-md-4 mb-5">
-                                    <label class=" required form-label">Ampere Rating :</label>
-                                    <input type="text" class="form-control mb-2 mb-md-0" name="ampeare_rating" placeholder="Ampere Rating" />
-                                    @error('ampeare_rating')
-                                    <div class="alert alert-danger mt-2">{{ $message }}</div>
-                                    @enderror
-                                </div>
+{{--                                <div class="col-md-4 mb-5">--}}
+{{--                                    <label class=" required form-label">Ampere Rating :</label>--}}
+{{--                                    <input type="text" class="form-control mb-2 mb-md-0" name="ampeare_rating" placeholder="Ampere Rating" />--}}
+{{--                                    @error('ampeare_rating')--}}
+{{--                                    <div class="alert alert-danger mt-2">{{ $message }}</div>--}}
+{{--                                    @enderror--}}
+{{--                                </div>--}}
                                 <div class="col-md-4 mb-5">
                                     <label class="required form-label">Sale Price :</label>
                                     <input type="text" class="form-control mb-2 mb-md-0" name="sale_price" placeholder="Sale Price" />
@@ -104,10 +112,6 @@
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                                     @enderror
                                 </div>
-
-                            </div>
-
-                            <div class="form-group row mb-5">
                                 <div class="col-md-4 mb-5">
                                     <label class="required form-label">Base Unit :</label>
                                     <input type="text" class="form-control mb-2 mb-md-0" name="base_unit" placeholder="Base Unit" />
@@ -122,7 +126,21 @@
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="col-md-4 mb-5 mt-7">
+
+                            </div>
+                            <div class="form-group row mb-5">
+                                <div class="col-md-12 mb-5">
+                                    <label class="form-label">Technical Notes:</label>
+                                    <textarea rows="7" cols="7" class="form-control mb-2 mb-md-0" name="technical_notes" placeholder="Technical Notes"></textarea>
+                                    @error('technical_notes')
+                                    <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="form-group row mb-5">
+
+                                <div class="col-md-12 mb-5 mt-7">
                                     <button type="button" class="btn btn-success add-form">Add Product Modal</button>
 
                                 </div>
