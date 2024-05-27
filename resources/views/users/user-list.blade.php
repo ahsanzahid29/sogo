@@ -128,7 +128,7 @@
                                                 <div class="badge badge-light-danger">Inactive</div>
                                             @endif
                                         </td>
-                                        <td>{{ date('d M Y, h:i a', strtotime($user->created_at)) }}</td>
+                                        <td>{{ date('d/m/Y', strtotime($user->created_at)) }}</td>
                                         <td class="text-end">
                                             <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
                                                 <i class="ki-duotone ki-down fs-5 ms-1"></i></a>

@@ -110,7 +110,7 @@
                                     <td>{{ $row->rp_sn }}</td>
                                     <td>{{ $row->rep_inv_model }}</td>
                                     <td>{{ $row->rep_inv_name }}</td>
-                                    <td>{{ date('d M, Y',strtotime($row->rp_req_date)) }}</td>
+                                    <td>{{ date('d/m/Y',strtotime($row->rp_req_date)) }}</td>
                                     <td>
                                         @if($row->rp_status=='completed')
                                             <!--begin::Badges-->

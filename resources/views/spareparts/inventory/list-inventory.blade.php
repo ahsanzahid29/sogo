@@ -117,7 +117,7 @@
                                         @endif
                                     </td>
                                     <td>{{$orderNumber[$i]}}</td>
-                                    <td>{{ date('d M, Y',strtotime($receiptDate[$i])) }}</td>
+                                    <td>{{ date('d/m/Y',strtotime($receiptDate[$i])) }}</td>
                                     <td>{{ $voltageRating[$i] }}</td>
                                 </tr>
                                 <div class="modal fade" tabindex="-1" id="spi_description_{{$i}}">
