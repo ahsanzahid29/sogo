@@ -83,6 +83,7 @@ class SparePartsInventoryController extends Controller
             // get random number for single csv
             $key = Str::random(6);
             while (($row = fgetcsv($handle, 1000, ',')) !== false) {
+                $enteredSNo[]=  $row[$headerIndexes['Serialnumber']];
                 // get inverter id from model name
                 $sparePart = SparePart::select('id')->where('factory_code',$row[$headerIndexes['Factorycode']])->first();
                 if($sparePart){
@@ -100,8 +101,6 @@ class SparePartsInventoryController extends Controller
                 }
                 else{
                     return back()->withErrors(['inventory_file' => 'Invalid data']);
-
-
                 }
 
 
@@ -116,13 +115,19 @@ class SparePartsInventoryController extends Controller
                 if ($validator->fails()) {
                     continue; // Skip rows with validation errors
                 }
+                // check serial number length
+
+                foreach ($enteredSNo as $item) {
+                    if (strlen($item) === 17 && ctype_alnum($item)) {
+                    } else {
+                        return back()->withErrors(['inventory_file' => 'Please check serial numbers']);
+
+                    }
+                }
 
                 // Add validated data to the insertion array
                 $insertData[] = $data;
             }
-
-
-
 
             fclose($handle);
             //dd($insertData);

@@ -95,9 +95,9 @@
                                 <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
                                     <th>S.No</th>
                                     <th class="min-w-125px">Model Number</th>
+                                    <th class="min-w-125px">Product Description</th>
                                     <th class="min-w-125px">Serial Number</th>
                                     <th class="min-w-125px">Order Number</th>
-                                    <th class="min-w-125px">Container Number</th>
                                     <th class="min-w-125px">Date of Receipt</th>
                                     <th class="text-end min-w-70px">Date of Entry</th>
                                 </tr>
@@ -108,12 +108,29 @@
                                 <tr>
                                     <td>{{ $count ++ }}</td>
                                     <td>{{$model_number[$i]}}</td>
+                                    <td><a href="#" data-bs-toggle="modal" data-bs-target="#inverter_description_{{$i}}">View</a></td>
                                     <td>{{$serial_number[$i]}}</td>
                                     <td>{{ $order_no[$i] }}</td>
-                                    <td>{{$container_no[$i]}}</td>
                                     <td>{{ date('d/m/Y',strtotime($receipt_date[$i])) }}</td>
                                     <td>{{ date('d/m/Y',strtotime($entry_date[$i])) }}</td>
                                 </tr>
+                                <div class="modal fade" tabindex="-1" id="inverter_description_{{$i}}">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h3 class="modal-title">Product Description</h3>
+                                            </div>
+
+                                            <div class="modal-body">
+                                                <p>{{$container_no[$i]}}</p>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 @endfor
                                     @endif
 

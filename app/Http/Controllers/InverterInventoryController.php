@@ -32,7 +32,8 @@ class InverterInventoryController extends Controller
         foreach($inventory as $row){
             $detail = DB::table('inverter_inventories')->select('*')
                 ->where('serial_number',$row->serial_number)->first();
-            $container_no[]   = $detail->container;
+            $productName = Inverter::where('modal_number',$row->model_number)->first();
+            $container_no[]   = $productName->inverter_name;
             $order_no[]       = $detail->order_number;
             $model_number[]   = $row->model_number;
             $serial_number[]  = $row->serial_number;
@@ -67,7 +68,7 @@ class InverterInventoryController extends Controller
           // Now create an associative array with header names as keys and their indices as values
             $headerIndexes = array_flip($headers);
             // Check for required columns
-            $requiredColumns = ['ModelNumber', 'SerialNumber', 'OrderNumber', 'ContainerNumber','Dateofreceipt'];
+            $requiredColumns = ['ModelNumber', 'SerialNumber', 'OrderNumber','Dateofreceipt'];
             $headerIndexes = array_flip($headers);
             //dd($requiredColumns,$headerIndexes);
 
@@ -91,7 +92,7 @@ class InverterInventoryController extends Controller
                         'model_number' =>    $row[$headerIndexes['ModelNumber']] ?? '',
                         'serial_number' =>   $row[$headerIndexes['SerialNumber']] ?? '',
                         'order_number'=>     $row[$headerIndexes['OrderNumber']] ?? '',
-                        'container' =>       $row[$headerIndexes['ContainerNumber']] ?? '',
+                        //'container' =>       $row[$headerIndexes['ContainerNumber']] ?? '',
                         'date_of_receipt'=>  date('Y-m-d',strtotime($row[$headerIndexes['Dateofreceipt']])) ?? '',
                         'inverter_id'    =>  $inverter->id,
                         'unique_sku'     =>  $row[$headerIndexes['SerialNumber']] ?? '',
@@ -111,7 +112,7 @@ class InverterInventoryController extends Controller
                     'model_number' => 'required',
                     'serial_number' => 'required',
                     'order_number' => 'required',
-                    'container' =>    'required',
+                    //'container' =>    'required',
                     'date_of_receipt'=> 'required'
                 ]);
 
@@ -124,6 +125,7 @@ class InverterInventoryController extends Controller
             }
 
             fclose($handle);
+            dd($insertData);
 
 
             // Insert validated data into the database
