@@ -111,7 +111,7 @@
                                     <td>{{ $row->servicecentername }}</td>
                                     <td>{{ $row->phone }}</td>
                                     <td>{{ $row->totalamount }}</td>
-                                    <td>{{ date('d M, Y',strtotime($row->invoicedate)) }}</td>
+                                    <td>{{ date('d/m/Y',strtotime($row->invoicedate)) }}</td>
                                     <td>
                                         @if($row->status=='pending')
                                             <!--begin::Badges-->

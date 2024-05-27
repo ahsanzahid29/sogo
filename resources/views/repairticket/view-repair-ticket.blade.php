@@ -103,7 +103,7 @@
                                             <td>{{ $repairTicketDetail->serial_number }}</td>
                                             <td><a href="#" data-bs-toggle="modal" data-bs-target="#fault_detail_{{$row->repairid}}">View Details</a></td>
                                             <td>{{ $row->service_center_name }}</td>
-                                            <td>{{ date ('d M, Y',strtotime($row->repair_date)) }}</td>
+                                            <td>{{ date ('d/m/Y',strtotime($row->repair_date)) }}</td>
                                             <td><a href="#" data-bs-toggle="modal" data-bs-target="#part_detail_{{$row->repairid}}">View Parts</a></td>
                                             <td>
                                                 @if($row->status=='completed')

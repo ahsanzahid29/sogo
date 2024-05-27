@@ -105,23 +105,23 @@
 {{--                                    <div class="alert alert-danger mt-2">{{ $message }}</div>--}}
 {{--                                    @enderror--}}
 {{--                                </div>--}}
-                                <div class="col-md-4 mb-5">
+                                <div class="col-md-6 mb-5">
                                     <label class="required form-label">Sale Price :</label>
                                     <input type="text" class="form-control mb-2 mb-md-0" name="sale_price" placeholder="Sale Price" />
                                     @error('sale_price')
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="col-md-4 mb-5">
-                                    <label class="required form-label">Base Unit :</label>
-                                    <input type="text" class="form-control mb-2 mb-md-0" name="base_unit" placeholder="Base Unit" />
-                                    @error('base_unit')
-                                    <div class="alert alert-danger mt-2">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="col-md-4 mb-5">
+{{--                                <div class="col-md-4 mb-5">--}}
+{{--                                    <label class="required form-label">Base Unit :</label>--}}
+{{--                                    <input type="text" class="form-control mb-2 mb-md-0" name="base_unit" placeholder="Base Unit" />--}}
+{{--                                    @error('base_unit')--}}
+{{--                                    <div class="alert alert-danger mt-2">{{ $message }}</div>--}}
+{{--                                    @enderror--}}
+{{--                                </div>--}}
+                                <div class="col-md-6 mb-5">
                                     <label class="required form-label">Pieces :</label>
-                                    <input type="text" class="form-control mb-2 mb-md-0" name="pieces" placeholder="Pieces" />
+                                    <input type="number" value="1" class="form-control mb-2 mb-md-0" name="pieces" placeholder="Pieces" required />
                                     @error('pieces')
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                                     @enderror

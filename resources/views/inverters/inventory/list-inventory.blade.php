@@ -111,8 +111,8 @@
                                     <td>{{$serial_number[$i]}}</td>
                                     <td>{{ $order_no[$i] }}</td>
                                     <td>{{$container_no[$i]}}</td>
-                                    <td>{{ date('d M, Y',strtotime($receipt_date[$i])) }}</td>
-                                    <td>{{ date('d M, Y',strtotime($entry_date[$i])) }}</td>
+                                    <td>{{ date('d/m/Y',strtotime($receipt_date[$i])) }}</td>
+                                    <td>{{ date('d/m/Y',strtotime($entry_date[$i])) }}</td>
                                 </tr>
                                 @endfor
                                     @endif
