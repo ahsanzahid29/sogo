@@ -97,9 +97,9 @@
                                 <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
                                     <th>FOC</th>
                                     <th class="min-w-125px">Contact Name</th>
-                                    <th class="min-w-125px">Contact Number</th>
                                     <th class="min-w-125px">Total amount</th>
                                     <th class="min-w-125px">Date of Invoice</th>
+                                    <th class="min-w-125px">FOC Status</th>
                                     <th class="min-w-125px">Status</th>
                                     <th class="text-end min-w-70px">Actions</th>
                                 </tr>
@@ -108,25 +108,43 @@
                                 @foreach($invoices as $row)
                                 <tr>
                                     <td>{{ ucwords(strtolower($row->foc)) }}</td>
-                                    <td>{{ $row->servicecentername }}</td>
                                     <td>{{ $row->phone }}</td>
                                     <td>{{ $row->totalamount }}</td>
                                     <td>{{ date('d/m/Y',strtotime($row->invoicedate)) }}</td>
                                     <td>
-                                        @if($row->status=='pending')
+                                        @if($row->foc_status=='NON-FOC')
                                             <!--begin::Badges-->
-                                            <div class="badge badge-light-warning">Pending</div>
+                                            <div class="badge badge-light-info">NON FOC</div>
+                                            <!--end::Badges-->
+                                            @elseif($row->foc_status=='FOC Approval Pending')
+                                            <!--begin::Badges-->
+                                            <div class="badge badge-light-warning">FOC Approval Pending</div>
                                             <!--end::Badges-->
                                         @else
                                             <!--begin::Badges-->
-                                            <div class="badge badge-light-success">Completed</div>
+                                            <div class="badge badge-light-success">FOC Approved</div>
                                             <!--end::Badges-->
                                             @endif
 
                                     </td>
+                                    <td>
+                                        @if($row->status=='invoice issued')
+                                            <!--begin::Badges-->
+                                            <div class="badge badge-light-info">Invoice issued</div>
+                                            <!--end::Badges-->
+                                        @elseif($row->status=='out for delivery')
+                                            <!--begin::Badges-->
+                                            <div class="badge badge-light-warning">Out For Delivery</div>
+                                            <!--end::Badges-->
+                                        @else
+                                            <!--begin::Badges-->
+                                            <div class="badge badge-light-success">Delivered</div>
+                                            <!--end::Badges-->
+                                        @endif
+                                    </td>
                                     <td class="text-end">
                                         @if($role=='2' || $role=='4')
-                                            @if($row->status=='completed')
+                                            @if($row->foc_status=='NON-FOC' || $row->foc_status=='FOC Approved' )
                                         <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
                                             <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
                                         <!--begin::Menu-->

@@ -26,15 +26,16 @@ class SparePartsInvoiceController extends Controller
        }
        if(Auth::user()->role_id==4){
            $data['invoices'] = SparePartInvoice::select('spare_part_invoices.uuid as uuid','spare_part_invoices.foc as foc',
-               'spare_part_invoices.total_amount as totalamount','spare_part_invoices.created_at as invoicedate','spare_part_invoices.status as status',
-               'users.name as servicecentername','users.phoneno_1 as phone')
+               'spare_part_invoices.total_amount as totalamount','spare_part_invoices.created_at as invoicedate','spare_part_invoices.foc_status as foc_status',
+               'spare_part_invoices.status as status','users.name as servicecentername','users.phoneno_1 as phone')
                ->join('users', 'spare_part_invoices.service_center_id', '=', 'users.id')
                ->where('spare_part_invoices.service_center_id','=',Auth::user()->id)
                ->get();
        }
        else{
            $data['invoices'] = SparePartInvoice::select('spare_part_invoices.uuid as uuid','spare_part_invoices.foc as foc',
-               'spare_part_invoices.total_amount as totalamount','spare_part_invoices.created_at as invoicedate','spare_part_invoices.status as status',
+               'spare_part_invoices.total_amount as totalamount','spare_part_invoices.created_at as invoicedate',
+               'spare_part_invoices.foc_status as foc_status','spare_part_invoices.status as status',
                'users.name as servicecentername','users.phoneno_1 as phone')
                ->join('users', 'spare_part_invoices.service_center_id', '=', 'users.id')
                ->get();
@@ -95,21 +96,21 @@ class SparePartsInvoiceController extends Controller
            if($request->foc=='1'){
 
                if(Auth::user()->role_id==1){
-                   $status='completed';
+                   $focStatus='FOC Approved';
                }
                // if FOC=yes and  user who create invoice is  admin sent status pending
                elseif(Auth::user()->role_id==2){
-                   $status='pending';
+                   $focStatus='FOC Approval Pending';
                }
                // if FOC=yes and  user who create invoice is  service center sent status pending
                elseif(Auth::user()->role_id==3){
-                   $status='pending';
+                   $focStatus='FOC Approval Pending';
                }
 
 
            }
            else{
-               $status='completed';
+               $focStatus='NON-FOC';
            }
            //dd($status);
 
@@ -122,7 +123,8 @@ class SparePartsInvoiceController extends Controller
                    'total_amount'        => $request->total,
                    'discount'            => $request->discount,
                    'tax_adjustment'      => 0.00,
-                   'status'              => $status,
+                   'foc_status'          => $focStatus,
+                   'status'              => 'invoice issued',
                    'uuid'                => (string) Str::uuid(),
                    'user_id'             => Auth::user()->id,
                ]
@@ -192,22 +194,71 @@ class SparePartsInvoiceController extends Controller
             return redirect('/dashboard');
         }
         $invoiceDetail = SparePartInvoice::select('spare_part_invoices.foc as foc','spare_part_invoices.total_amount as total',
-        'spare_part_invoices.discount as discount','spare_part_invoices.status','users.name as name','users.email as email',
-        'users.phoneno_1 as phone','users.shipping_address','spare_part_invoices.id as recordid')
+        'spare_part_invoices.discount as discount','spare_part_invoices.status','spare_part_invoices.foc_status as focStatus',
+            'spare_part_invoices.status as status','users.name as name','users.email as email',
+        'users.phoneno_1 as phone','users.shipping_address','spare_part_invoices.id as recordid',
+        'spare_part_invoices.courier_service as courier_service','spare_part_invoices.invoice_receipt as invoice_receipt')
             ->join('users', 'spare_part_invoices.service_center_id', '=', 'users.id')
              ->where('spare_part_invoices.uuid',$id)
             ->first();
         $invoiceItems = SparePartInvoiceItem::select('spare_part_invoice_items.quantity as itemqty','spare_part_invoice_items.item_tax as itemtax',
-        'spare_part_invoice_items.item_discount as itemdiscount','spare_part_invoice_items.item_total as itemtotal','spare_parts.name as sparepart','spare_part_invoice_items.sale_price as itemunitprice')
+        'spare_part_invoice_items.item_discount as itemdiscount','spare_part_invoice_items.item_total as itemtotal','spare_parts.factory_code as sparepart','spare_part_invoice_items.sale_price as itemunitprice')
             ->join('spare_parts', 'spare_part_invoice_items.sparepart_id', '=', 'spare_parts.id')
             ->where('invoice_id',$invoiceDetail->recordid)->get();
         //dd($invoiceItems);
         $userRole = Auth::user()->role_id;
         $invoiceId = $id;
+        if($invoiceDetail->status=='out for delivery' || $invoiceDetail->status=='delivered'){
+            return view('invoice.view-delivery-invoice',compact('invoiceDetail','invoiceItems','userRole','invoiceId'));
+        }
 
-
+        else{
         return view('invoice.view-invoice',compact('invoiceDetail','invoiceItems','userRole','invoiceId'));
+        }
 
+    }
+
+    public function completeInvoice(Request $request){
+        if ($request->all()) {
+            $this->validate($request, [
+                'invoice_receipt' => 'nullable|mimes:pdf',
+            ]);
+        }
+        $invoiceReceiptName = "";
+        $oldDetail = SparePartInvoice::where('uuid',$request->recordid)->first();
+        DB::beginTransaction();
+        try {
+            // upload files first
+            #----------- inverter image----------------------#
+            if ($request->file('invoice_receipt')) {
+                $image = $request->file('invoice_receipt');
+                // Get the original filename and replace spaces with underscores
+                $originalName = $image->getClientOriginalName();
+                $sanitizedImageName = str_replace(' ', '_', pathinfo($originalName, PATHINFO_FILENAME));
+                $extension = $image->getClientOriginalExtension();
+
+                // Combine the sanitized name with the current time and file extension for uniqueness
+                $invoiceReceiptName = $sanitizedImageName . '_' . time() . '.' . $extension;
+                $image->move(public_path('files/invoicereceipts'), $invoiceReceiptName);
+
+            }
+            $newdata = [
+                'courier_service'      => $request->courier_service,
+                'invoice_receipt'      => $invoiceReceiptName ? $invoiceReceiptName : $oldDetail->invoice_receipt,
+                'status'               => 'delivered'
+
+            ];
+
+            SparePartInvoice::where('uuid', $request->recordid)->update($newdata);
+            DB::commit();
+
+            return redirect('/invoice-list')->with('status', 'Status updated successfully');
+        }
+        catch (\Exception $e) {
+            DB::rollback();
+            // Redirect to inverter page with an error message
+            return redirect('/invoice-list')->with('status', $e);
+        }
     }
     public function update($id){
         if(Auth::user()->role_id==3 || Auth::user()->role_id==2 || Auth::user()->role_id==4){
@@ -215,8 +266,19 @@ class SparePartsInvoiceController extends Controller
         }
         $affected= DB::table('spare_part_invoices')
             ->where(['uuid'=>$id])
-            ->update(['status' =>'completed']);
+            ->update(['foc_status' =>'FOC Approved']);
         return redirect('/invoice-list')->with('status', 'Invoice approved successfully');
+
+    }
+
+    public function statusOutToDeliver($id){
+        if(Auth::user()->role_id==3 || Auth::user()->role_id==2){
+            return redirect('/dashboard');
+        }
+        $affected= DB::table('spare_part_invoices')
+            ->where(['uuid'=>$id])
+            ->update(['status' =>'out for delivery']);
+        return redirect('/invoice-list')->with('status', 'Status changed successfully');
 
     }
 
