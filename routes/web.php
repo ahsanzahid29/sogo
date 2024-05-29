@@ -91,11 +91,14 @@ Route::get('/invoice-list',[SparePartsInvoiceController::class,'index'])->name('
 Route::get('/invoice-add',[SparePartsInvoiceController::class,'add'])->name('add-sp-invoice');
 Route::get('/serviceuser-detail/{id}', [SparePartsInvoiceController::class, 'detail'])->middleware(['auth'])->name('serviceuser-detail');
 Route::get('/part-detail',[SparePartsInvoiceController::class,'partDetail'])->middleware(['auth'])->name('sparepart-detail-invoice');
-Route::post('/invoice-save',[SparePartsInvoiceController::class,'save']);
+Route::post('/invoice-save',[SparePartsInvoiceController::class,'save'])->middleware(['auth'])->name('saveinvoice');
 Route::get('/sparepartinvoice-detail/{id}', [SparePartsInvoiceController::class, 'show'])->middleware(['auth'])->name('viewinvoice');
 Route::get('/invoice-status/{id}', [SparePartsInvoiceController::class, 'update'])->middleware(['auth'])->name('change-invoice');
 Route::get('/invoice-print/{id}', [SparePartsInvoiceController::class, 'printInvoice'])->middleware(['auth'])->name('printinvoice');
 Route::get('/invoice-download/{id}', [SparePartsInvoiceController::class, 'downloadInvoice'])->middleware(['auth'])->name('downloadinvoice');
+Route::get('/invoice-status-out-deliver/{id}', [SparePartsInvoiceController::class, 'statusOutToDeliver'])->middleware(['auth'])->name('out-deliver-order');
+Route::post('/invoice-deliver',[SparePartsInvoiceController::class,'completeInvoice'])->middleware(['auth'])->name('deliver-invoice');
+
 
 
 

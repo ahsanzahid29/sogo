@@ -22,7 +22,10 @@ class CreateSparePartInvoicesTable extends Migration
             $table->double('total_amount')->nullable();
             $table->double('discount')->nullable();
             $table->double('tax_adjustment')->nullable();
-            $table->enum('status', ['pending', 'completed'])->nullable();
+            $table->enum('foc_status', ['NON-FOC', 'FOC Approval Pending', 'FOC Approved'])->nullable();
+            $table->enum('status',['invoice issued','out for delivery', 'delivered'])->nullable();
+            $table->string('courier_service')->nullable();
+            $table->string('invoice_receipt')->nullable();
             $table->foreign('service_center_id')->references('id')->on('users');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();

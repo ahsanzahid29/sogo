@@ -47,6 +47,9 @@
                         <div class="card">
 
                             <!--begin::Card body-->
+                            <form class="form w-100" method="POST" action="{{ route('deliver-invoice') }}" enctype="multipart/form-data">
+                                @csrf
+                                <input type="hidden" name="recordid" value="{{$invoiceId}}" />
                             <div class="card-body p-12">
                                 <div class="form-group row mb-5">
                                     <div class="col-md-6 mb-5">
@@ -122,21 +125,41 @@
                                     </div>
                                 </div>
                                 <input type="hidden" name="total" id="invoice_total" />
+
+                                <div class="form-group row mb-5">
+                                    <div class="col-md-6 mb-5">
+                                        <label class="form-label">Courier Service:</label>
+                                        <input type="text" name="courier_service"  class="form-control mb-2 mb-md-0" value="{{$invoiceDetail->courier_service}}" placeholder="Courier Service" />
+                                    </div>
+                                    <div class="col-md-6 mb-5">
+                                        <label class="form-label">Attach Reciept:</label>
+                                        <input type="file" name="invoice_receipt" class="form-control mb-2 mb-md-0" />
+                                        @if($invoiceDetail->invoice_receipt!=null)
+                                            <a target="_blank" href="{{asset('public/files/invoicereceipts/'.$invoiceDetail->invoice_receipt)}}">View</a>
+                                        @endif
+                                        @error('invoice_receipt')
+                                        <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
                                 <!-- Submit button -->
                                 <div class="row">
                                     <div class="col-12 text-right">
                                         @if($invoiceDetail->focStatus=='FOC Approval Pending' && $userRole==1)
                                         <a href="{{ route('change-invoice',$invoiceId) }}" class="btn btn-success">Change FOC Status</a>
                                         @endif
-                                            @if($invoiceDetail->status=='invoice issued')
-                                                <a href="{{ route('out-deliver-order',$invoiceId) }}" class="btn btn-light-primary">Out For Delivery</a>
+                                            @if($invoiceDetail->status=='out for delivery')
+                                                <button type="submit" class="btn btn-light-success">Mark as Delivered</button>
                                             @endif
-
+                                            @if($invoiceDetail->status=='delivered')
+                                                <button type="submit" class="btn btn-light-info">Update Invoice</button>
+                                            @endif
 
                                         <a href="{{ url('/invoice-list') }}" class="btn btn-secondary">Go Back</a>
                                     </div>
                                 </div>
                             </div>
+                            </form>
 
                             <!--end::Card body-->
                         </div>
