@@ -53,6 +53,13 @@
                         <!--begin::Card body-->
                         <div class="card-body pt-0">
                                 <div class="form-group row mb-5">
+                                    <div class="col-md-4 mb-5">
+                                        <label class=" required form-label">Model Number :</label>
+                                        <input type="text" name="modal_number" class="form-control mb-2 mb-md-0" placeholder="Model Number" required />
+                                        @error('modal_number')
+                                        <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                        @enderror
+                                    </div>
                                 <div class="col-md-4 mb-5">
                                     <label class="required form-label">Product Image:</label>
                                     <input type="file" name="inverter_image" class="form-control mb-2 mb-md-0" />
@@ -68,13 +75,14 @@
                                         <option value="2">Pieces</option>
                                     </select>
                                 </div>
+
+                            </div>
+
+                            <div class="form-group row mb-5">
                                 <div class="col-md-4 mb-5" id="pieces" style="display: none;">
                                     <label class="form-label">Pieces:</label>
                                     <input type="text" name="no_of_pieces" class="form-control mb-2 mb-md-0" placeholder="Number of pieces" />
                                 </div>
-                            </div>
-
-                            <div class="form-group row mb-5">
                                 <div class="col-md-4 mb-5">
                                     <label class="form-label">Brand:</label>
                                     <input type="text" name="brand" class="form-control mb-2 mb-md-0" placeholder="Enter Inverter Brand" />
@@ -88,10 +96,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-md-4 mb-5">
-                                    <label class="form-label">Model Number :</label>
-                                    <input type="text" name="modal_number" class="form-control mb-2 mb-md-0" placeholder="Model Number" />
-                                </div>
+
                             </div>
 
                             <div class="form-group row mb-5">

@@ -38,6 +38,7 @@ class InverterController extends Controller
                'inverter_image' => 'required|mimes:jpeg,jpg,png,gif',
                'product_catalog' => 'required|mimes:pdf',
                'product_manual' => 'required|mimes:pdf',
+               'modal_number'  => 'required'
 
             ]);
             $productCatalogName='';
@@ -154,6 +155,7 @@ class InverterController extends Controller
                 'inverter_image' => 'nullable|mimes:jpeg,jpg,png,gif',
                 'product_catalog' => 'nullable|mimes:pdf',
                 'product_manual' => 'nullable|mimes:pdf',
+                'modal_number'  => 'required'
 
             ]);
             // get previous detail in case of image and files

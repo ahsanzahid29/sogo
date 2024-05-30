@@ -81,6 +81,9 @@
                             <!--end::Card toolbar-->
                         </div>
                         <!--end::Card header-->
+                        @php
+                            use Illuminate\Support\Str;
+                        @endphp
                         <!--begin::Card body-->
                         <div class="card-body pt-0">
                             <!--begin::Table-->
@@ -100,7 +103,7 @@
                                 @foreach($sparePartsForSc as $row)
                                 <tr>
                                     <td>{{ $count ++ }}</td>
-                                    <td><a href="#" data-bs-toggle="modal" data-bs-target="#isp_description_{{$row->recordid}}">View</a></td>
+                                    <td><a href="javascript:void(0);" title="{{ $row->partname }}" style="text-decoration: none;color:#99a1b7">{{ Str::limit($row->partname, 20, '...') }}</a></td>
                                     <td>{{ $row->factorycode }}</td>
                                     <td>{{ $row->category }}</td>
                                     <td>{{ $row->saleprice }}</td>
@@ -108,23 +111,6 @@
                                     <td></td>
 
                                 </tr>
-                                <div class="modal fade" tabindex="-1" id="isp_description_{{$row->recordid}}">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h3 class="modal-title">Spare Part Description</h3>
-                                            </div>
-
-                                            <div class="modal-body">
-                                                <p>{{ $row->partname }}</p>
-                                            </div>
-
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                                 @endforeach
                                 </tbody>
                                 <!--end::Table body-->

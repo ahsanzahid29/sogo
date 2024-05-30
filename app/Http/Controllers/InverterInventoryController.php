@@ -84,6 +84,7 @@ class InverterInventoryController extends Controller
             // get random number for single csv
             $key = Str::random(6);
             while (($row = fgetcsv($handle, 1000, ',')) !== false) {
+                $enteredSNo[]=  $row[$headerIndexes['SerialNumber']];
                 // get inverter id from model name
                 $inverter = Inverter::select('id')->where('modal_number',$row[$headerIndexes['ModelNumber']])->first();
                 if($inverter){
@@ -125,7 +126,30 @@ class InverterInventoryController extends Controller
             }
 
             fclose($handle);
-            dd($insertData);
+            // check serial number duplicates within an array
+            $valueCounts = array_count_values($enteredSNo);
+
+            $hasRepetitions = false;
+            foreach ($valueCounts as $count) {
+                if ($count > 1) {
+                    $hasRepetitions = true;
+                    break;
+                }
+            }
+            if ($hasRepetitions) {
+                return back()->withErrors(['inventory_file' => 'Duplicate Serial Number Found']);
+            } else {}
+            // check serial number already exist in database
+            $repeatedSerialNumbers = DB::table('inverter_inventories')
+                ->whereIn('serial_number', $enteredSNo)
+                ->pluck('serial_number')
+                ->toArray();
+            if (!empty($repeatedSerialNumbers)) {
+                return back()->withErrors(['inventory_file' => 'Serial Number already exist in database ']);
+            }
+
+
+
 
 
             // Insert validated data into the database

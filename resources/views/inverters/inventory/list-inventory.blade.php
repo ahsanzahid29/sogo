@@ -108,29 +108,12 @@
                                 <tr>
                                     <td>{{ $count ++ }}</td>
                                     <td>{{$model_number[$i]}}</td>
-                                    <td><a href="#" data-bs-toggle="modal" data-bs-target="#inverter_description_{{$i}}">View</a></td>
+                                    <td><a href="javascript:void(0);" title="{{ $container_no[$i] }}" style="text-decoration: none;color:#99a1b7">{{ Str::limit($container_no[$i], 20, '...') }}</a></td>
                                     <td>{{$serial_number[$i]}}</td>
                                     <td>{{ $order_no[$i] }}</td>
                                     <td>{{ date('d/m/Y',strtotime($receipt_date[$i])) }}</td>
                                     <td>{{ date('d/m/Y',strtotime($entry_date[$i])) }}</td>
                                 </tr>
-                                <div class="modal fade" tabindex="-1" id="inverter_description_{{$i}}">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h3 class="modal-title">Product Description</h3>
-                                            </div>
-
-                                            <div class="modal-body">
-                                                <p>{{$container_no[$i]}}</p>
-                                            </div>
-
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                                 @endfor
                                     @endif
 

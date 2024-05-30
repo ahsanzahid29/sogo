@@ -130,12 +130,13 @@
                             </div>
                             <div class="form-group row mb-5">
                                 <div class="col-md-12 mb-5">
-                                    <label class="form-label">Technical Notes:</label>
-                                    <textarea rows="7" cols="7" class="form-control mb-2 mb-md-0" name="technical_notes" placeholder="Technical Notes"></textarea>
-                                    @error('technical_notes')
+                                    <label class=" required form-label">Spart Part Description:</label>
+                                    <textarea rows="7" cols="7" class="form-control mb-2 mb-md-0" name="name" placeholder="Spart Part Description" required></textarea>
+                                    @error('name')
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                                     @enderror
                                 </div>
+
                             </div>
 
                             <div class="form-group row mb-5">
@@ -167,13 +168,13 @@
                             </div>
 
                             <div class="form-group row mb-5">
-                            <div class="col-md-12 mb-5">
-                                <label class=" required form-label">Spart Part Description:</label>
-                                <textarea rows="7" cols="7" class="form-control mb-2 mb-md-0" name="name" placeholder="Spart Part Description" required></textarea>
-                                @error('name')
-                                <div class="alert alert-danger mt-2">{{ $message }}</div>
-                                @enderror
-                            </div>
+                                <div class="col-md-12 mb-5">
+                                    <label class="form-label">Technical Notes:</label>
+                                    <textarea rows="7" cols="7" class="form-control mb-2 mb-md-0" name="technical_notes" placeholder="Technical Notes"></textarea>
+                                    @error('technical_notes')
+                                    <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                    @enderror
+                                </div>
                             </div>
 
                             <div class="form-group row">

@@ -54,6 +54,10 @@
                         <!--begin::Card body-->
                         <div class="card-body pt-0">
                                 <div class="form-group row mb-5">
+                                    <div class="col-md-4 mb-5">
+                                        <label class="required form-label">Model Number :</label>
+                                        <input type="text" name="modal_number" class="form-control mb-2 mb-md-0" value="{{$inverter->modal_number}}" placeholder="Model Number" required />
+                                    </div>
                                 <div class="col-md-4 mb-5">
                                     <label class="required form-label">Product Image:</label>
                                     <input type="file" name="inverter_image" class="form-control mb-2 mb-md-0" />
@@ -72,13 +76,14 @@
                                         <option value="2" @if($inverter->inverter_packaging==2) selected @endif>Pieces</option>
                                     </select>
                                 </div>
+
+                            </div>
+
+                            <div class="form-group row mb-5">
                                 <div class="col-md-4 mb-5">
                                     <label class="form-label">Pieces:</label>
                                     <input type="text" name="no_of_pieces" class="form-control mb-2 mb-md-0" value="{{$inverter->no_of_pieces}}" placeholder="Number of pieces" />
                                 </div>
-                            </div>
-
-                            <div class="form-group row mb-5">
                                 <div class="col-md-4 mb-5">
                                     <label class="form-label">Brand:</label>
                                     <input type="text" name="brand" class="form-control mb-2 mb-md-0" value="{{$inverter->brand}}" placeholder="Enter Inverter Brand" />
@@ -92,10 +97,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-md-4 mb-5">
-                                    <label class="form-label">Model Number :</label>
-                                    <input type="text" name="modal_number" class="form-control mb-2 mb-md-0" value="{{$inverter->modal_number}}" placeholder="Model Number" />
-                                </div>
+
                             </div>
 
                             <div class="form-group row mb-5">
