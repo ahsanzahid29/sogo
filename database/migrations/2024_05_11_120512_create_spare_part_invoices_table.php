@@ -26,6 +26,7 @@ class CreateSparePartInvoicesTable extends Migration
             $table->enum('status',['invoice issued','out for delivery', 'delivered'])->nullable();
             $table->string('courier_service')->nullable();
             $table->string('invoice_receipt')->nullable();
+            $table->string('tracking_id')->nullable();
             $table->foreign('service_center_id')->references('id')->on('users');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();

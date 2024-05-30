@@ -127,11 +127,11 @@
                                 <input type="hidden" name="total" id="invoice_total" />
 
                                 <div class="form-group row mb-5">
-                                    <div class="col-md-6 mb-5">
+                                    <div class="col-md-4 mb-5">
                                         <label class="form-label">Courier Service:</label>
                                         <input type="text" name="courier_service"  class="form-control mb-2 mb-md-0" value="{{$invoiceDetail->courier_service}}" placeholder="Courier Service" />
                                     </div>
-                                    <div class="col-md-6 mb-5">
+                                    <div class="col-md-4 mb-5">
                                         <label class="form-label">Attach Reciept:</label>
                                         <input type="file" name="invoice_receipt" class="form-control mb-2 mb-md-0" />
                                         @if($invoiceDetail->invoice_receipt!=null)
@@ -140,6 +140,10 @@
                                         @error('invoice_receipt')
                                         <div class="alert alert-danger mt-2">{{ $message }}</div>
                                         @enderror
+                                    </div>
+                                    <div class="col-md-4 mb-5">
+                                        <label class="form-label">Tracking ID:</label>
+                                        <input type="text" name="tracking_id"  class="form-control mb-2 mb-md-0" value="{{$invoiceDetail->tracking_id}}" placeholder="Invoice Tracking ID" />
                                     </div>
                                 </div>
                                 <!-- Submit button -->

@@ -96,7 +96,7 @@
                                 <thead>
                                 <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
                                     <th>FOC</th>
-                                    <th class="min-w-125px">Contact Name</th>
+                                    <th class="min-w-125px">Trackind ID</th>
                                     <th class="min-w-125px">Total amount</th>
                                     <th class="min-w-125px">Date of Invoice</th>
                                     <th class="min-w-125px">FOC Status</th>
@@ -108,7 +108,7 @@
                                 @foreach($invoices as $row)
                                 <tr>
                                     <td>{{ ucwords(strtolower($row->foc)) }}</td>
-                                    <td>{{ $row->phone }}</td>
+                                    <td>{{ $row->trackingid }}</td>
                                     <td>{{ $row->totalamount }}</td>
                                     <td>{{ date('d/m/Y',strtotime($row->invoicedate)) }}</td>
                                     <td>

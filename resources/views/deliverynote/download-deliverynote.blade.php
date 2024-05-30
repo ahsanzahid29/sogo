@@ -55,6 +55,7 @@
         <li><span class="label">Dealer Name:</span><span class="value">{{ $deliveryNote->username }}</span></li>
         <li><span class="label">Dealer Phone:</span><span class="value">{{ $deliveryNote->userphone }}</span></li>
         <li><span class="label">Dealer Address:</span><span class="value">{{ $deliveryNote->address }}</span></li>
+        <li><span class="label">DO Number:</span><span class="value">{{ $deliveryNote->do_no }}</span></li>
         <li><span class="label">Product Name:</span><span class="value">{{ $deliveryNote->invertername }}</span></li>
         <li><span class="label">Quantity:</span><span class="value">{{ $deliveryNote->qty }}</span></li>
         <li><span class="label">Date:</span><span class="value">{{ date('d M, Y', strtotime($deliveryNote->createdat)) }}</span></li>

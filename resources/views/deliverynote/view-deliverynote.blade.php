@@ -63,6 +63,10 @@
                                 <input type="text" class="form-control form-control-solid" placeholder="Dealer Phone" value="{{$deliveryNote->userphone}}" readonly/>
                             </div>
                             <div class="mb-10">
+                                <label for="exampleFormControlInput1" class="form-label">DO Number</label>
+                                <input type="text" class="form-control form-control-solid" placeholder="DO Number" value="{{$deliveryNote->do_no}}" readonly/>
+                            </div>
+                            <div class="mb-10">
                                 <label for="exampleFormControlInput1" class="form-label">Product Model</label>
                                 <input type="text" class="form-control form-control-solid" placeholder="Dealer Phone" value="{{$deliveryNote->modal}}" readonly/>
                             </div>
