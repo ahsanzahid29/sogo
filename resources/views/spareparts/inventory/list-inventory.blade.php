@@ -87,6 +87,9 @@
                         </div>
                         <!--end::Card header-->
                         <!--begin::Card body-->
+                        @php
+                            use Illuminate\Support\Str;
+                        @endphp
                         <div class="card-body pt-0">
                             <!--begin::Table-->
                             <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_customers_table">
@@ -95,10 +98,10 @@
                                     <th>S No</th>
                                     <th class="min-w-125px">Factory Code</th>
                                     <th class="min-w-125px">Part Name</th>
-                                    <th class="min-w-125px">Part Type</th>
+                                    <th class="min-w-125px">Part Description</th>
+                                    <th class="min-w-125px">Serial Number</th>
                                     <th class="min-w-125px">Order Number</th>
                                     <th class="min-w-125px">Date of Receipt</th>
-                                    <th class="text-end min-w-70px">Voltage Rating</th>
                                 </tr>
                                 </thead>
                                 <tbody class="fw-semibold text-gray-600">
@@ -107,36 +110,13 @@
                                 <tr>
                                     <td>{{ $count ++ }}</td>
                                     <td>{{$factoryCode[$i]}}</td>
-                                    <td><a href="#" data-bs-toggle="modal" data-bs-target="#spi_description_{{$i}}">View</a></td>
-                                    <td>
-
-                                        @if($partType[$i]==1)
-                                            {{ 'Type 1' }}
-                                        @elseif( $partType[$i]==2)
-                                            {{ 'Type 2' }}
-                                        @endif
-                                    </td>
+                                    <td><a href="javascript:void(0);" title="{{ $partName[$i] }}" style="text-decoration: none;color:#99a1b7">{{ Str::limit($partName[$i], 20, '...') }}</a></td>
+                                    <td>{{ $partType[$i] }}</td>
+                                    <td>{{ $serialNo[$i] }}</td>
                                     <td>{{$orderNumber[$i]}}</td>
                                     <td>{{ date('d/m/Y',strtotime($receiptDate[$i])) }}</td>
-                                    <td>{{ $voltageRating[$i] }}</td>
+
                                 </tr>
-                                <div class="modal fade" tabindex="-1" id="spi_description_{{$i}}">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h3 class="modal-title">Spare Part Description</h3>
-                                            </div>
-
-                                            <div class="modal-body">
-                                                <p>{{$partName[$i]}}</p>
-                                            </div>
-
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                                     @endfor
                                 @endif
 

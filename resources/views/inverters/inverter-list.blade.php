@@ -107,7 +107,7 @@
                                 <tr>
                                     <td>{{ $count++ }}</td>
                                     <td>{{ $row->modal_number }}</td>
-                                    <td><a href="#" data-bs-toggle="modal" data-bs-target="#inverter_description_{{$row->id}}">View</a></td>
+                                    <td><a href="javascript:void(0);" title="{{ $row->inverter_name }}" style="text-decoration: none;color:#99a1b7">{{ Str::limit($row->inverter_name, 20, '...') }}</a></td>
                                     <td>{{ $row->category_name }}</td>
                                     <td>{{ $row->brand }}</td>
                                     <td>{{ $row->total_quantity }}</td>
@@ -127,23 +127,6 @@
                                         @endif
                                     </td>
                                 </tr>
-                                <div class="modal fade" tabindex="-1" id="inverter_description_{{$row->id}}">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h3 class="modal-title">Product Description</h3>
-                                            </div>
-
-                                            <div class="modal-body">
-                                                <p>{{ $row->inverter_name }}</p>
-                                            </div>
-
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                                 @endforeach
                                 </tbody>
                                 <!--end::Table body-->

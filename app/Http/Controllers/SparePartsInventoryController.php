@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Models\SparePart;
+use App\Models\SparePartCategory;
 use App\Models\SparePartInventory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +20,7 @@ class SparePartsInventoryController extends Controller
         $partType=[];
         $orderNumber=[];
         $receiptDate=[];
-        $voltageRating=[];
+        $serialNo=[];
 
         $sparePartInventory = DB::table('spare_part_inventories')
             ->select('factory_code','serial_number', DB::raw('COUNT(*) as qty'))
@@ -30,18 +31,19 @@ class SparePartsInventoryController extends Controller
         foreach($sparePartInventory as $row){
             $detail = DB::table('spare_parts')->select('*')
                 ->where('factory_code',$row->factory_code)->first();
+            $spCategory = SparePartCategory::where('id',$detail->part_type)->first();
             $repairDateDetail= DB::table('spare_part_inventories')->select('*')
                 ->where('serial_number',$row->serial_number)->first();
             $factoryCode[]    = $row->factory_code;
             $partName[]       = $detail->name;
-            $partType[]       = $detail->part_type;
+            $partType[]       = $spCategory->name;
             $orderNumber[]    = $repairDateDetail->order_number;
             $receiptDate[]    = $repairDateDetail->repair_date;
-            $voltageRating[]  = $detail->voltage_rating;
+            $serialNo[]  = $row->serial_number;
 
         }
         $count=1;
-        return view('spareparts.inventory.list-inventory',compact('factoryCode','partName','partType','orderNumber','receiptDate','count','voltageRating'));
+        return view('spareparts.inventory.list-inventory',compact('factoryCode','partName','partType','orderNumber','receiptDate','count','serialNo'));
     }
     public function add(){
         return view('spareparts.inventory.add-inventory');
@@ -118,11 +120,35 @@ class SparePartsInventoryController extends Controller
                 // check serial number length
 
                 foreach ($enteredSNo as $item) {
-                    if (strlen($item) === 17 && ctype_alnum($item)) {
+                    if (strlen($item) === 5 && ctype_alnum($item)) {
                     } else {
                         return back()->withErrors(['inventory_file' => 'Please check serial numbers']);
 
                     }
+                }
+                // check serial number duplicates within an array
+                $valueCounts = array_count_values($enteredSNo);
+
+                $hasRepetitions = false;
+                foreach ($valueCounts as $count) {
+                    if ($count > 1) {
+                        $hasRepetitions = true;
+                        break;
+                    }
+                }
+
+
+                if ($hasRepetitions) {
+                    return back()->withErrors(['inventory_file' => 'Duplicate Serial Number Found']);
+                } else {}
+
+                // check serial number already exist in database
+                $repeatedSerialNumbers = DB::table('spare_part_inventories')
+                    ->whereIn('serial_number', $enteredSNo)
+                    ->pluck('serial_number')
+                    ->toArray();
+                if (!empty($repeatedSerialNumbers)) {
+                    return back()->withErrors(['inventory_file' => 'Serial Number already exist in database ']);
                 }
 
                 // Add validated data to the insertion array

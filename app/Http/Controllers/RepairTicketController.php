@@ -135,21 +135,34 @@ class RepairTicketController extends Controller
                 ->join('users', 'repair_tickets.service_center_id', '=', 'users.id')
                 ->join('repair_spare_parts', 'repair_spare_parts.repair_id', '=', 'repair_tickets.id')
                 ->join('spare_parts', 'repair_spare_parts.sparepart_id', '=', 'spare_parts.id')
-                ->groupBy('repair_tickets.id')
+                ->groupBy('repair_tickets.id','repair_tickets.repair_request_date',
+                    'repair_tickets.status', 'inverters.modal_number',
+                    'users.name', 'repair_tickets.fault_detail')
                 ->where('repair_tickets.serial_number', $value)
                 ->get();
 
 
         }
         $data['sparePartsForSc'] = SparePartInvoiceItem::select(DB::raw('SUM(spare_part_invoice_items.quantity) as total_quantity'),
-            'spare_parts.name as partname', 'spare_part_categories.name as factorycode', 'spare_parts.part_type as parttype',
-            'spare_parts.voltage_rating as voltagerating', 'spare_parts.ampeare_rating as ampearrating',
-            'spare_parts.sale_price as saleprice', 'spare_parts.base_unit as baseunit', 'spare_parts.id as partid')
+            'spare_parts.name as partname', 'spare_part_categories.name as factorycode',
+            'spare_parts.part_type as parttype','spare_parts.voltage_rating as voltagerating',
+            'spare_parts.ampeare_rating as ampearrating','spare_parts.sale_price as saleprice',
+            'spare_parts.base_unit as baseunit',
+            'spare_parts.id as partid'
+        )
             ->join('spare_parts', 'spare_part_invoice_items.sparepart_id', '=', 'spare_parts.id')
             ->join('spare_part_categories', 'spare_parts.part_type', '=', 'spare_part_categories.id')
-            ->groupBy('spare_part_invoice_items.sparepart_id', 'spare_parts.name', 'spare_parts.factory_code',
-                'spare_parts.part_type', 'spare_parts.voltage_rating', 'spare_parts.ampeare_rating', 'spare_parts.sale_price',
-                'spare_parts.base_unit')
+            ->groupBy('spare_part_invoice_items.sparepart_id',
+                'spare_parts.name',
+                'spare_parts.factory_code',
+                'spare_parts.part_type',
+                'spare_parts.voltage_rating',
+                'spare_parts.ampeare_rating',
+                'spare_parts.sale_price',
+                'spare_parts.base_unit',
+                'spare_part_categories.name',
+                'spare_parts.id'
+            )
             ->where('spare_part_invoice_items.service_center_id', '=', Auth::user()->id)
             ->get();
             $data['selectedSn'] = $value;
