@@ -26,7 +26,7 @@ class DeliveryNoteController extends Controller
         }
        $data['deliveryNotes'] = Deliverynote::select('deliverynotes.id as recordid','deliverynotes.quantity as qty',
        'deliverynotes.notes as notes','inverters.inverter_name as invertername','inverters.modal_number as modal',
-       'users.name as username','users.phoneno_1 as userphone','deliverynotes.created_at as createdat')
+       'users.name as username','users.phoneno_1 as userphone','deliverynotes.created_at as createdat','deliverynotes.do_no as do_no')
            ->join('inverters', 'deliverynotes.inverter_id', '=', 'inverters.id')
            ->join('users', 'deliverynotes.dealer_id', '=', 'users.id')
            ->get();
@@ -60,6 +60,7 @@ class DeliveryNoteController extends Controller
                 'dealer_id'    =>  'required|not_in:0',
                 'inverter_id'  => 'required|not_in:0',
                 'quantity'     => 'required',
+                'do_no'        => 'required'
             ]);
             // check entered quantity is less than available quantity
             $inverter = Inverter::find($request->inverter_id);
@@ -78,6 +79,7 @@ class DeliveryNoteController extends Controller
                         'inverter_id'   => $request->inverter_id,
                         'quantity'      => $request->quantity,
                         'notes'         => $request->notes,
+                        'do_no'         => $request->do_no,
                         'user_id'        => Auth::user()->id,
                     ]
                 );
@@ -137,7 +139,7 @@ class DeliveryNoteController extends Controller
         $data['deliveryNote'] = Deliverynote::select('deliverynotes.id as recordid','deliverynotes.quantity as qty',
             'deliverynotes.notes as notes','inverters.inverter_name as invertername','inverters.modal_number as modal',
             'users.name as username','users.phoneno_1 as userphone','deliverynotes.created_at as createdat',
-            'deliverynotes.notes as notes','users.email as useremail')
+            'deliverynotes.notes as notes','users.email as useremail','deliverynotes.do_no as do_no')
             ->join('inverters', 'deliverynotes.inverter_id', '=', 'inverters.id')
             ->join('users', 'deliverynotes.dealer_id', '=', 'users.id')
             ->where('deliverynotes.id',$id)
@@ -153,7 +155,8 @@ class DeliveryNoteController extends Controller
         $deliveryNote = Deliverynote::select('deliverynotes.id as recordid','deliverynotes.quantity as qty',
             'deliverynotes.notes as notes','inverters.inverter_name as invertername','inverters.modal_number as modal',
             'users.name as username','users.phoneno_1 as userphone','deliverynotes.created_at as createdat',
-            'deliverynotes.notes as notes','users.email as useremail','users.billing_address as address')
+            'deliverynotes.notes as notes','users.email as useremail','users.billing_address as address',
+            'deliverynotes.do_no as do_no')
             ->join('inverters', 'deliverynotes.inverter_id', '=', 'inverters.id')
             ->join('users', 'deliverynotes.dealer_id', '=', 'users.id')
             ->where('deliverynotes.id',$id)
@@ -170,7 +173,8 @@ class DeliveryNoteController extends Controller
         $data['deliveryNote'] = Deliverynote::select('deliverynotes.id as recordid','deliverynotes.quantity as qty',
             'deliverynotes.notes as notes','inverters.inverter_name as invertername','inverters.modal_number as modal',
             'users.name as username','users.phoneno_1 as userphone','deliverynotes.created_at as createdat',
-            'deliverynotes.notes as notes','users.email as useremail','users.billing_address as address')
+            'deliverynotes.notes as notes','users.email as useremail','users.billing_address as address',
+            'deliverynotes.do_no as do_no')
             ->join('inverters', 'deliverynotes.inverter_id', '=', 'inverters.id')
             ->join('users', 'deliverynotes.dealer_id', '=', 'users.id')
             ->where('deliverynotes.id',$id)

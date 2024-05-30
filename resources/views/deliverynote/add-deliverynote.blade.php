@@ -67,6 +67,13 @@
                             <div id="dealer_detail">
                             </div>
                             <div class="mb-10">
+                                <label for="exampleFormControlInput1" class="required form-label">DO Number</label>
+                                <input type="type" class="form-control form-control-solid" placeholder="DO Number" name="do_no" required/>
+                                @error('quantity')
+                                <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="mb-10">
                                 <label for="exampleFormControlInput1" class="required form-label">Product Model</label>
                                 <select id="product_model" name="inverter_id" class="form-select form-select-solid" aria-label="Select example" required>
                                     <option value="">Select Product</option>

@@ -27,7 +27,7 @@ class SparePartsInvoiceController extends Controller
        if(Auth::user()->role_id==4){
            $data['invoices'] = SparePartInvoice::select('spare_part_invoices.uuid as uuid','spare_part_invoices.foc as foc',
                'spare_part_invoices.total_amount as totalamount','spare_part_invoices.created_at as invoicedate','spare_part_invoices.foc_status as foc_status',
-               'spare_part_invoices.status as status','users.name as servicecentername','users.phoneno_1 as phone')
+               'spare_part_invoices.status as status','users.name as servicecentername','users.phoneno_1 as phone','spare_part_invoices.tracking_id as trackingid')
                ->join('users', 'spare_part_invoices.service_center_id', '=', 'users.id')
                ->where('spare_part_invoices.service_center_id','=',Auth::user()->id)
                ->get();
@@ -36,7 +36,7 @@ class SparePartsInvoiceController extends Controller
            $data['invoices'] = SparePartInvoice::select('spare_part_invoices.uuid as uuid','spare_part_invoices.foc as foc',
                'spare_part_invoices.total_amount as totalamount','spare_part_invoices.created_at as invoicedate',
                'spare_part_invoices.foc_status as foc_status','spare_part_invoices.status as status',
-               'users.name as servicecentername','users.phoneno_1 as phone')
+               'users.name as servicecentername','users.phoneno_1 as phone','spare_part_invoices.tracking_id as trackingid')
                ->join('users', 'spare_part_invoices.service_center_id', '=', 'users.id')
                ->get();
 
@@ -197,7 +197,8 @@ class SparePartsInvoiceController extends Controller
         'spare_part_invoices.discount as discount','spare_part_invoices.status','spare_part_invoices.foc_status as focStatus',
             'spare_part_invoices.status as status','users.name as name','users.email as email',
         'users.phoneno_1 as phone','users.shipping_address','spare_part_invoices.id as recordid',
-        'spare_part_invoices.courier_service as courier_service','spare_part_invoices.invoice_receipt as invoice_receipt')
+        'spare_part_invoices.courier_service as courier_service','spare_part_invoices.invoice_receipt as invoice_receipt',
+        'spare_part_invoices.tracking_id as tracking_id')
             ->join('users', 'spare_part_invoices.service_center_id', '=', 'users.id')
              ->where('spare_part_invoices.uuid',$id)
             ->first();
@@ -243,8 +244,9 @@ class SparePartsInvoiceController extends Controller
 
             }
             $newdata = [
-                'courier_service'      => $request->courier_service,
+                'courier_service'      => $request->courier_service ? $request->courier_service : $oldDetail->courier_service ,
                 'invoice_receipt'      => $invoiceReceiptName ? $invoiceReceiptName : $oldDetail->invoice_receipt,
+                'tracking_id'          => $request->tracking_id ? $request->tracking_id : $oldDetail->tracking_id,
                 'status'               => 'delivered'
 
             ];

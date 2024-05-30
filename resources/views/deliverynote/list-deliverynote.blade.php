@@ -87,16 +87,19 @@
                             <!--end::Card toolbar-->
                         </div>
                         <!--end::Card header-->
+                        @php
+                            use Illuminate\Support\Str;
+                        @endphp
                         <!--begin::Card body-->
                         <div class="card-body pt-0">
                             <!--begin::Table-->
                             <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_customers_table">
                                 <thead>
                                 <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
+                                    <th>DO Number</th>
                                     <th>Dealer Name</th>
-                                    <th>Dealer Phone</th>
-                                    <th class="min-w-125px">Inverter model</th>
-                                    <th class="min-w-125px">Inverter Name</th>
+                                    <th class="min-w-125px">Product model</th>
+                                    <th class="min-w-125px">Product Name</th>
                                     <th class="min-w-125px">Quantity</th>
                                     <th class="min-w-125px">Created Date</th>
                                     <th class="text-end min-w-70px">Actions</th>
@@ -105,10 +108,10 @@
                                 <tbody class="fw-semibold text-gray-600">
                                 @foreach($deliveryNotes as $row)
                                 <tr>
-                                    <td>{{$row->username}}</td>
-                                    <td>{{ $row->userphone }}</td>
+                                    <td>{{$row->do_no}}</td>
+                                    <td>{{ $row->username }}</td>
                                     <td>{{ $row->modal }}</td>
-                                    <td>{{ $row->invertername }}</td>
+                                    <td><a href="javascript:void(0);" title="{{ $row->invertername }}" style="text-decoration: none;color:#99a1b7">{{ Str::limit($row->invertername, 20, '...') }}</a></td>
                                     <td>{{ $row->qty }}</td>
                                     <td>{{ date('d/m/Y',strtotime($row->createdat)) }}</td>
                                     <td class="text-end">
