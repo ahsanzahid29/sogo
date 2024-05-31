@@ -91,14 +91,14 @@
             <h2 class="mb-5">Fault Details</h2>
             <hr/>
             <div class="col-md-6 mb-5">
-                <label class="form-label">Fault Detail:</label>
-                <textarea class="form-control mb-2 mb-md-0" placeholder="What is the fault..." name="fault_detail"></textarea>
+                <label class="required form-label">Fault Detail:</label>
+                <textarea class="form-control mb-2 mb-md-0" placeholder="What is the fault..." name="fault_detail" required></textarea>
                 @error('fault_detail')
                 <div class="alert alert-danger mt-2">{{ $message }}</div>
                 @enderror
             </div>
             <div class="col-md-6 mb-5">
-                <label class="form-label">Fault video:</label>
+                <label class=" required form-label">Fault video:</label>
                 <input type="file" onchange="previewvideo();" id='uploadfile' name="fault_video" class="form-control mb-2 mb-md-0" accept=".mp4, .webm" required />
                 @error('fault_video')
                 <div class="alert alert-danger mt-2">{{ $message }}</div>
@@ -111,7 +111,7 @@
             </div>
         </div>
     <div class="form-group row mb-5">
-        <h2 class="mb-5">Spare Part to need</h2>
+        <h2 class="mb-5">Spare Part to be used</h2>
         <hr/>
         <table class="table table-row-dashed table-row-gray-300 gy-7">
             <thead>
@@ -125,14 +125,6 @@
             <tbody id="inputRow">
             </tbody>
         </table>
-    </div>
-    <div class="form-group row mb-5">
-        <h2 class="mb-5">Didn't Find the part. Tell us more</h2>
-        <hr/>
-        <div class="col-md-12 mb-5">
-            <label class="form-label">Explain more:</label>
-            <textarea class="form-control mb-2 mb-md-0" name="explain_more"></textarea>
-        </div>
     </div>
 
     <div class="form-group row">

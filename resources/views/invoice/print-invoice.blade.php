@@ -78,10 +78,6 @@
 <div class="container">
     <div class="header">
         <div>
-            <label for="foc">FOC:</label>
-            <input type="text" id="foc" value="{{ ucwords(strtolower($invoiceDetail->foc)) }}" readonly>
-        </div>
-        <div>
             <label for="service-center-name">Service Center Contact Name:</label>
             <input type="text" id="service-center-name" value="{{$invoiceDetail->name}}" readonly>
         </div>

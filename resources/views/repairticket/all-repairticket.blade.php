@@ -88,6 +88,9 @@
                             <!--end::Card toolbar-->
                         </div>
                         <!--end::Card header-->
+                        @php
+                            use Illuminate\Support\Str;
+                        @endphp
                         <!--begin::Card body-->
                         <div class="card-body pt-0">
                             <!--begin::Table-->
@@ -96,8 +99,8 @@
                                 <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
                                     <th>Ticket ID</th>
                                     <th>Serial No</th>
-                                    <th class="min-w-125px">Inverter Modal</th>
-                                    <th class="min-w-125px">Inverter Name</th>
+                                    <th class="min-w-125px">Product Modal</th>
+                                    <th class="min-w-125px">Product Name</th>
                                     <th class="min-w-125px">Repair Date</th>
                                     <th class="min-w-125px">Status</th>
                                     <th class="text-end min-w-70px">Actions</th>
@@ -109,7 +112,7 @@
                                     <td>{{ $row->rp_ticket }}</td>
                                     <td>{{ $row->rp_sn }}</td>
                                     <td>{{ $row->rep_inv_model }}</td>
-                                    <td>{{ $row->rep_inv_name }}</td>
+                                    <td><a href="javascript:void(0);" title="{{ $row->rep_inv_name }}" style="text-decoration: none;color:#99a1b7">{{ Str::limit($row->rep_inv_name, 20, '...') }}</a></td>
                                     <td>{{ date('d/m/Y',strtotime($row->rp_req_date)) }}</td>
                                     <td>
                                         @if($row->rp_status=='completed')
@@ -128,11 +131,19 @@
                                             <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
                                         <!--begin::Menu-->
                                         <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
+                                            @if($row->rp_status=='pending' && $role_id==4)
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-3">
-                                                <a href="{{route('view-repair-ticket',$row->rp_id)}}" class="menu-link px-3">View</a>
+                                                <a href="{{route('edit-repair-ticket',$row->rp_id)}}" class="menu-link px-3">Edit</a>
                                             </div>
                                             <!--end::Menu item-->
+                                            @else
+                                                <!--begin::Menu item-->
+                                                <div class="menu-item px-3">
+                                                    <a href="{{route('view-repair-ticket',$row->rp_id)}}" class="menu-link px-3">View</a>
+                                                </div>
+                                                <!--end::Menu item-->
+                                            @endif
                                         </div>
                                         <!--end::Menu-->
                                     </td>
