@@ -37,6 +37,12 @@
         <!-- end:Toolbar -->
         <div class="d-flex flex-column flex-column-fluid">
             <div id="kt_app_content_container" class="app-container container-xxl">
+                @if(session('status'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ session('status') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
                 <!--begin::Card-->
                 <div class="card">
                     <!--begin::Card header-->
@@ -62,20 +68,12 @@
                             <div class="form-group row mb-5">
                             </div>
                             <div class="form-group row mb-5">
-                                <div class="col-md-2 mb-5">
-                                    <label class="form-label">Repair Status:</label>
-                                    @if($repairTicketDetail->status=='pending')
-                                        <a href="javascript:void(0);" target="_blank" class=" form-control mb-2 mb-md-0 btn btn-light-warning">Pending</a>
-                                    @else
-                                        <a href="javascript:void(0);" target="_blank" class=" form-control mb-2 mb-md-0 btn btn-light-success">Completed</a>
-                                    @endif
-                                </div>
-                                <div class="col-md-10 mb-5">
+                                <div class="col-md-12 mb-5">
                                     <label class="form-label">Serial Number:</label>
                                     <input type="text" class="form-control mb-2 mb-md-0" disabled value="{{$repairTicketDetail->serial_number}}" placeholder="Search via Serial Number" />
                                 </div>
                             </div>
-                            @if(!empty($history))
+                            @if(!empty($history) && count($history)>0)
                                 <div class="form-group row mb-5">
                                     <h2 class="mb-5">Repair History</h2>
                                     <hr/>
@@ -153,42 +151,44 @@
                                 <hr/>
                                 <div class="col-md-6 mb-5">
                                     <label class="form-label">Fault Detail:</label>
-                                    <textarea class="form-control mb-2 mb-md-0" disabled placeholder="What is the fault...">{{ $repairTicketDetail->fault_detail }}</textarea>
+                                    <textarea cols="7" rows="7" class="form-control mb-2 mb-md-0" disabled placeholder="What is the fault...">{{ $repairTicketDetail->fault_detail }}</textarea>
                                 </div>
                                 <div class="col-md-6 mb-5">
                                     <label class="form-label">Fault video:</label>
                                     <a href="{{ asset('public/files/repairvideos/'.$repairTicketDetail->fault_video) }}" target="_blank" class=" form-control mb-2 mb-md-0 btn btn-light-primary">View</a>
                                 </div>
                             </div>
-                            <div class="form-group row mb-5">
-                                <h2 class="mb-5">Spare Part to need</h2>
-                                <hr/>
-                                <table class="table table-row-dashed table-row-gray-300 gy-7">
-                                    <thead>
-                                    <tr class="fw-bold fs-6 text-gray-800" >
-                                        <th>Part Code</th>
-                                        <th>Current Stock</th>
-                                        <th>Stock Needed</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @if(count($neededSpareParts)>0)
-                                        @foreach($neededSpareParts as $rownsp)
-                                            <tr>
-                                                <td> <input type="text" disabled class="form-control" placeholder="Part Code" value="{{ $rownsp->fcode }}"></td>
-                                                <td> <input type="text" disabled class="form-control" placeholder="Part Name" value="{{ $rownsp->current_qty }}"></td>
-                                                <td> <input type="text" disabled class="form-control" placeholder="Part Name" value="{{ $rownsp->need_qty }}"></td>
-                                            </tr>
-                                        @endforeach
-                                    @endif
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-md-12">
-                                    <a href="{{ url('/all-repairtickets') }}" class="btn btn-secondary">Cancel</a>
+                            <div class="form-group row mb-5" >
+                                <div class="col-md-6 mb-5">
+                                    <button id="addSpartBtn" class="btn btn-light-success">Add</button>
                                 </div>
                             </div>
+                            <form class="form w-100" method="POST" action="{{ url('/repairticket-update') }}">
+                                @csrf
+                                <input type="hidden" name="recordid" value="{{ $id }}" />
+                                <div class="form-group row mb-5">
+                                    <h2 class="mb-5">Spare Part to be used</h2>
+                                    <hr/>
+                                    <table class="table table-row-dashed table-row-gray-300 gy-7">
+                                        <thead>
+                                        <tr class="fw-bold fs-6 text-gray-800" >
+                                            <th>Part Name</th>
+                                            <th>Total Quantity</th>
+                                            <th>Quantity</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="inputRow">
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-12">
+                                        <button type="submit" class="btn btn-warning">Update</button>
+                                        <a href="{{ url('/all-repairtickets') }}" class="btn btn-secondary">Cancel</a>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                         <!--end::Card body-->
                     </div>
@@ -221,3 +221,55 @@
     </div>
     <!--end:::Main-->
 @endsection
+@push('scripts_bottom')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var parts = @json($sparePartsForSc);
+
+            $('#addSpartBtn').click(function(e) {
+                e.preventDefault();  // This stops the default form submission action
+                var selectHtml = '<select name="sparepart[]" class="form-control part-dropdown" required>';
+                selectHtml += '<option value="">Select Spare Part</option>';
+                parts.forEach(function(option) {
+                    selectHtml += '<option value="' + option.partid + '">' + option.fcode + '</option>';
+                });
+                selectHtml += '</select>';
+                var newRow = '<tr>' +
+                    '<td>' + selectHtml + '</td>' +
+                    '<td><input type="text" placeholder="Current Stock" name="current_stock[]" class="form-control current-stock" readonly ></td>' +
+                    '<td><input type="text" placeholder="Required Stock" name="needed_stock[]" class="form-control need-stock" required></td>' +
+                    '<td><button class="btn btn-light-danger btn-xs removeBtn">Remove</button></td>' +
+                    '</tr>';
+                $('#inputRow').append(newRow);
+                // updateGrandTotal();
+            });
+            // Event delegation to handle click on dynamically created remove buttons
+            $('#inputRow').on('click', '.removeBtn', function() {
+                $(this).closest('tr').empty(); // This empties the content of the td that contains the clicked button
+            });
+            $('#inputRow').on('change', '.part-dropdown', function() {
+                var selectedPartId = $(this).val();
+                var $currentstockField = $(this).closest('tr').find('.current-stock');
+
+                if (selectedPartId) {
+                    $.ajax({
+                        url: "{{ url('/sp-detail-sc') }}",
+                        type: 'GET',
+                        data: { partId: selectedPartId },
+                        success: function(response) {
+                            $currentstockField.val(response.currentStock);
+                        },
+                        error: function(xhr) {
+                            console.error('Error fetching tax data:', xhr.responseText);
+                        }
+                    });
+                } else {
+                    $currentstockField.val(''); // Clear tax output if no part is selected
+                }
+            });
+
+
+
+        });
+    </script>
+@endpush

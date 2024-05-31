@@ -162,6 +162,9 @@
                             <div class="card-toolbar">
                                 <!--begin::Toolbar-->
                                 <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
+                                    @if(Auth::user()->role_id==4)
+                                        <a href="{{ route('create-repair-ticket') }}" class="btn btn-success" style="margin-right:2px">Create Ticket</a>
+                                    @endif
                                     <!--begin::Add customer-->
                                     <a href="{{ url('/all-repairtickets') }}" class="btn btn-primary">View all</a>
                                     <!--end::Add customer-->
@@ -216,15 +219,25 @@
                                         <td class="text-end">
                                             <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
                                                 <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
+
                                             <!--begin::Menu-->
                                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
+                                                @if($row->rp_status=='pending' && $role_id==4)
+                                                    <!--begin::Menu item-->
+                                                    <div class="menu-item px-3">
+                                                        <a href="{{route('edit-repair-ticket',$row->rp_id)}}" class="menu-link px-3">Edit</a>
+                                                    </div>
+                                                    <!--end::Menu item-->
+                                                @else
                                                 <!--begin::Menu item-->
                                                 <div class="menu-item px-3">
                                                     <a href="{{route('view-repair-ticket',$row->rp_id)}}" class="menu-link px-3">View</a>
                                                 </div>
                                                 <!--end::Menu item-->
+                                                @endif
                                             </div>
                                             <!--end::Menu-->
+
                                         </td>
                                     </tr>
                                 @endforeach

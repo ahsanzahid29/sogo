@@ -87,6 +87,9 @@
                             <!--end::Card toolbar-->
                         </div>
                         <!--end::Card header-->
+                        @php
+                            use Illuminate\Support\Str;
+                        @endphp
                         <!--begin::Card body-->
                         <div class="card-body pt-0">
                             <!--begin::Table-->

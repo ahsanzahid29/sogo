@@ -25,12 +25,13 @@
                         </li>
                         <!--end::Item-->
                         <!--begin::Item-->
-                        <li class="breadcrumb-item text-muted">View Repair Ticket</li>
+                        <li class="breadcrumb-item text-muted">View Spare Part Request</li>
                         <!--end::Item-->
                     </ul>
                     <!--end::Breadcrumb-->
                 </div>
                 <!--end::Page title-->
+
             </div>
             <!--end::Toolbar container-->
         </div>
@@ -43,11 +44,13 @@
                     <div class="card-header border-0 pt-6">
                         <!--begin::Card title-->
                         <div class="card-title">
+
                         </div>
                         <!--end::Card title-->
+
                         <!--begin::Card body-->
                         <div class="card-body pt-0">
-                            @if($userRole!=4)
+
                                 <div class="form-group row mb-5">
                                     <div class="col-md-6 mb-5">
                                         <label class="form-label">Service Center Name:</label>
@@ -58,24 +61,18 @@
                                         <input type="text" class="form-control mb-2 mb-md-0" disabled value="{{$detailSc->shipping_address}}" placeholder="Service Center Address" />
                                     </div>
                                 </div>
-                            @endif
+
+
                             <div class="form-group row mb-5">
                             </div>
                             <div class="form-group row mb-5">
-                                <div class="col-md-2 mb-5">
-                                    <label class="form-label">Repair Status:</label>
-                                    @if($repairTicketDetail->status=='pending')
-                                        <a href="javascript:void(0);" target="_blank" class=" form-control mb-2 mb-md-0 btn btn-light-warning">Pending</a>
-                                    @else
-                                        <a href="javascript:void(0);" target="_blank" class=" form-control mb-2 mb-md-0 btn btn-light-success">Completed</a>
-                                    @endif
-                                </div>
-                                <div class="col-md-10 mb-5">
+                                <div class="col-md-12 mb-5">
                                     <label class="form-label">Serial Number:</label>
                                     <input type="text" class="form-control mb-2 mb-md-0" disabled value="{{$repairTicketDetail->serial_number}}" placeholder="Search via Serial Number" />
                                 </div>
                             </div>
-                            @if(!empty($history))
+                            @if(!empty($history)&& count($history)>0)
+
                                 <div class="form-group row mb-5">
                                     <h2 class="mb-5">Repair History</h2>
                                     <hr/>
@@ -111,6 +108,7 @@
                                                         <!--end::Badges-->
                                                     @else
                                                     @endif
+
                                                 </td>
                                             </tr>
                                             <div class="modal fade" tabindex="-1" id="fault_detail_{{$row->repairid}}">
@@ -119,9 +117,11 @@
                                                         <div class="modal-header">
                                                             <h3 class="modal-title">Fault Detail</h3>
                                                         </div>
+
                                                         <div class="modal-body">
                                                             <p>{{ $row->faultdetail }}</p>
                                                         </div>
+
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                                                         </div>
@@ -134,9 +134,11 @@
                                                         <div class="modal-header">
                                                             <h3 class="modal-title">Spare Part Used</h3>
                                                         </div>
+
                                                         <div class="modal-body">
                                                             <p>{{ $row->sp_name }}</p>
                                                         </div>
+
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                                                         </div>
@@ -144,6 +146,7 @@
                                                 </div>
                                             </div>
                                         @endforeach
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -153,20 +156,21 @@
                                 <hr/>
                                 <div class="col-md-6 mb-5">
                                     <label class="form-label">Fault Detail:</label>
-                                    <textarea class="form-control mb-2 mb-md-0" disabled placeholder="What is the fault...">{{ $repairTicketDetail->fault_detail }}</textarea>
+                                    <textarea rows="7" cols="7" class="form-control mb-2 mb-md-0" disabled placeholder="What is the fault...">{{ $repairTicketDetail->fault_detail }}</textarea>
                                 </div>
                                 <div class="col-md-6 mb-5">
                                     <label class="form-label">Fault video:</label>
                                     <a href="{{ asset('public/files/repairvideos/'.$repairTicketDetail->fault_video) }}" target="_blank" class=" form-control mb-2 mb-md-0 btn btn-light-primary">View</a>
                                 </div>
                             </div>
+                            @if(count($neededSpareParts)>0)
                             <div class="form-group row mb-5">
-                                <h2 class="mb-5">Spare Part to need</h2>
+                                <h2 class="mb-5">Spare Part to be required</h2>
                                 <hr/>
                                 <table class="table table-row-dashed table-row-gray-300 gy-7">
                                     <thead>
                                     <tr class="fw-bold fs-6 text-gray-800" >
-                                        <th>Part Code</th>
+                                        <th>Part Name</th>
                                         <th>Current Stock</th>
                                         <th>Stock Needed</th>
                                     </tr>
@@ -175,7 +179,7 @@
                                     @if(count($neededSpareParts)>0)
                                         @foreach($neededSpareParts as $rownsp)
                                             <tr>
-                                                <td> <input type="text" disabled class="form-control" placeholder="Part Code" value="{{ $rownsp->fcode }}"></td>
+                                                <td> <input type="text" disabled class="form-control" placeholder="Part Name" value="{{ $rownsp->sp_name }}"></td>
                                                 <td> <input type="text" disabled class="form-control" placeholder="Part Name" value="{{ $rownsp->current_qty }}"></td>
                                                 <td> <input type="text" disabled class="form-control" placeholder="Part Name" value="{{ $rownsp->need_qty }}"></td>
                                             </tr>
@@ -184,24 +188,39 @@
                                     </tbody>
                                 </table>
                             </div>
+                            @endif
+
                             <div class="form-group row">
+
                                 <div class="col-md-12">
-                                    <a href="{{ url('/all-repairtickets') }}" class="btn btn-secondary">Cancel</a>
+                                    @if(count($neededSpareParts)>0)
+                                        @if($repairTicketDetail->status=='pending')
+                                            <a href="{{ route('complete-repair-ticket',$repairTicketDetail->id) }}" class="btn btn-success">Mark as completed</a>
+                                        @else
+                                        @endif
+                                    @endif
+                                    <a href="{{ url('/sparepart-request-list') }}" class="btn btn-secondary">Cancel</a>
                                 </div>
                             </div>
+
                         </div>
                         <!--end::Card body-->
+
                     </div>
                     <!--end::Card header-->
                     <!--begin::Card body-->
                     <div class="card-body pt-0">
                         <!--begin::Table-->
+
                     </div>
                     <!--end::Card body-->
                 </div>
                 <!--end::Card-->
+
+
             </div>
             <!--end::Content wrapper-->
+
         </div>
         <!--end::Content wrapper-->
         <!--begin::Footer-->
@@ -220,4 +239,5 @@
         <!--end::Footer-->
     </div>
     <!--end:::Main-->
+
 @endsection
