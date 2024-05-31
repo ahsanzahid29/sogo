@@ -8,7 +8,9 @@ use App\Models\InverterInventory;
 use App\Models\RepairSparePart;
 use App\Models\RepairTicket;
 use App\Models\ScSparePartQty;
+use App\Models\SparePart;
 use App\Models\SparePartInvoiceItem;
+use App\Models\SparePartRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -42,7 +44,8 @@ class RepairTicketController extends Controller
                 "repair_tickets.status as rp_status",
                 "repair_tickets.repair_request_date as rp_req_date",
                 "inverters.inverter_name as rep_inv_name",
-                "inverters.modal_number as rep_inv_model"
+                "inverters.modal_number as rep_inv_model",
+                "repair_tickets.is_request as rp_isrequest",
             )
                 ->join(
                     "inverters",
@@ -92,7 +95,8 @@ class RepairTicketController extends Controller
                 "repair_tickets.status as rp_status",
                 "repair_tickets.repair_request_date as rp_req_date",
                 "inverters.inverter_name as rep_inv_name",
-                "inverters.modal_number as rep_inv_model"
+                "inverters.modal_number as rep_inv_model",
+                "repair_tickets.is_request as rp_isrequest",
             )
                 ->join(
                     "inverters",
@@ -320,8 +324,10 @@ class RepairTicketController extends Controller
 
             if (!$request->sparepart) {
                 $status = "pending";
+                $requestSparePart= 'yes';
             } else {
                 $status = "completed";
+                $requestSparePart= 'no';
             }
             $randomString = Str::random(4);
             $inverterDetail = DealerProduct::where(
@@ -363,6 +369,7 @@ class RepairTicketController extends Controller
                     "fault_detail" => $request->fault_detail,
                     "fault_video" => $faultVideo,
                     "status" => $status,
+                    "is_request" => $requestSparePart,
                     //'explain_more'         => $request->explain_more,
                     "repair_request_date" => date("Y-m-d H:i"),
                     "created_at" => date("Y-m-d H:i"),
@@ -707,6 +714,60 @@ class RepairTicketController extends Controller
                 DB::rollback();
                 // Redirect to users page with an error message
                 return redirect("/spareparts-list")->with("status", $e);
+            }
+        }
+    }
+
+    public function requestSpareParts($id){
+
+        $data['allSpareParts'] = SparePart::all();
+        $data['repairTicketDetail'] = RepairTicket::find($id);
+        $data['userRole'] = Auth::user()->id;
+        $data['id'] = $id;
+        if($data['repairTicketDetail']->service_center_id == Auth::user()->id && $data['repairTicketDetail']->is_request=='yes' ){
+            return view('repairticket.sparepart-request', $data);
+        }
+        else{
+            return redirect("/dashboard");
+        }
+
+    }
+    public function saverequestSparePart(Request $request){
+
+        if ($request->all()) {
+
+            DB::beginTransaction();
+            try {
+                if ($request->sparepart) {
+                    for($i=0;$i<count($request->sparepart);$i++){
+                        $requestedParts[] = [
+                            'ticket_id'           => $request->recordid,
+                            'sparepart_id'        => $request->sparepart[$i],
+                            'service_center_id'   => Auth::user()->id,
+                            'required_quantity'   => $request->needed_stock[$i],
+                            'created_at'          => date('Y-m-d H:i')
+                        ];
+                    }
+                    SparePartRequest::insert($requestedParts);
+
+                    $newdata = [
+                        "is_request" => "no",
+                    ];
+                    RepairTicket::where("id", $request->recordid)->update($newdata);
+                    return redirect("/all-repairtickets")->with(
+                        "status",
+                        "Spare Item Request sent"
+                    );
+                } else {
+                    return redirect()->route('request-repair-ticket-spareparts', ['id' => $request->recordid])->with(
+                        'status',
+                        'Please select spare Part'
+                    );
+                }
+            } catch (\Exception $e) {
+                DB::rollback();
+                // Redirect to users page with an error message
+                return redirect("/all-repairtickets")->with("status", $e);
             }
         }
     }

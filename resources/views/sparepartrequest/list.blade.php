@@ -90,35 +90,24 @@
                             <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_customers_table">
                                 <thead>
                                 <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
-                                    <th>Ticket ID</th>
+                                    <th>S.No</th>
+                                    <th>Ticket No</th>
                                     <th>Serial No</th>
-                                    <th class="min-w-125px">Product Modal</th>
-                                    <th class="min-w-125px">Product Name</th>
-                                    <th class="min-w-125px">Repair Date</th>
-                                    <th class="min-w-125px">Status</th>
+                                    <th class="min-w-125px">Service Center Name</th>
+                                    <th class="min-w-125px">Service Center Email</th>
+                                    <th class="min-w-125px">Service Center Contact</th>
                                     <th class="text-end min-w-70px">Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody class="fw-semibold text-gray-600">
-                                @foreach($allRepairTickets as $row)
+                                @foreach($allSparePartRequests as $row)
                                     <tr>
-                                        <td>{{ $row->rp_ticket }}</td>
-                                        <td>{{ $row->rp_sn }}</td>
-                                        <td>{{ $row->rep_inv_model }}</td>
-                                        <td><a href="javascript:void(0);" title="{{ $row->rep_inv_name }}" style="text-decoration: none;color:#99a1b7">{{ Str::limit($row->rep_inv_name, 20, '...') }}</a></td>
-                                        <td>{{ date('d/m/Y',strtotime($row->rp_req_date)) }}</td>
-                                        <td>
-                                            @if($row->rp_status=='completed')
-                                                <!--begin::Badges-->
-                                                <div class="badge badge-light-success">{{ $row->rp_status }}</div>
-                                                <!--end::Badges-->
-                                            @elseif($row->rp_status=='pending')
-                                                <!--begin::Badges-->
-                                                <div class="badge badge-light-info">{{ $row->rp_status }}</div>
-                                                <!--end::Badges-->
-                                            @else
-                                            @endif
-                                        </td>
+                                        <td>{{ $count++ }}</td>
+                                        <td>{{ $row->rptn }}</td>
+                                        <td>{{ $row->rpsn }}</td>
+                                        <td>{{ $row->scname }}</a></td>
+                                        <td>{{ $row->scemail }}</td>
+                                        <td>{{ $row->scphone }}</td>
                                         <td class="text-end">
                                             <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
                                                 <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
@@ -126,7 +115,7 @@
                                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
                                                     <!--begin::Menu item-->
                                                     <div class="menu-item px-3">
-                                                        <a href="{{route('view-sparepart-request',$row->rp_id)}}" class="menu-link px-3">View</a>
+                                                        <a href="{{route('view-sparepart-request',$row->ticket_id)}}" class="menu-link px-3">View</a>
                                                     </div>
                                                     <!--end::Menu item-->
                                             </div>

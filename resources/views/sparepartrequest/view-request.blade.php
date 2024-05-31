@@ -170,9 +170,8 @@
                                 <table class="table table-row-dashed table-row-gray-300 gy-7">
                                     <thead>
                                     <tr class="fw-bold fs-6 text-gray-800" >
-                                        <th>Part Name</th>
-                                        <th>Current Stock</th>
-                                        <th>Stock Needed</th>
+                                        <th>Spare Part Code</th>
+                                        <th>Quantity Needed</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -180,7 +179,6 @@
                                         @foreach($neededSpareParts as $rownsp)
                                             <tr>
                                                 <td> <input type="text" disabled class="form-control" placeholder="Part Name" value="{{ $rownsp->sp_name }}"></td>
-                                                <td> <input type="text" disabled class="form-control" placeholder="Part Name" value="{{ $rownsp->current_qty }}"></td>
                                                 <td> <input type="text" disabled class="form-control" placeholder="Part Name" value="{{ $rownsp->need_qty }}"></td>
                                             </tr>
                                         @endforeach
@@ -193,12 +191,6 @@
                             <div class="form-group row">
 
                                 <div class="col-md-12">
-                                    @if(count($neededSpareParts)>0)
-                                        @if($repairTicketDetail->status=='pending')
-                                            <a href="{{ route('complete-repair-ticket',$repairTicketDetail->id) }}" class="btn btn-success">Mark as completed</a>
-                                        @else
-                                        @endif
-                                    @endif
                                     <a href="{{ url('/sparepart-request-list') }}" class="btn btn-secondary">Cancel</a>
                                 </div>
                             </div>
