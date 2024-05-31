@@ -892,6 +892,7 @@
                             $repActive = '';
                             if (Route::currentRouteName()=='lists-repair-ticket'|| Route::currentRouteName()=='all-repairs-ticket'
                             || Route::currentRouteName()=='create-repair-ticket' || Route::currentRouteName()=='view-repair-ticket'
+                            || Route::currentRouteName()=='request-repair-ticket-spareparts' || Route::currentRouteName()=='edit-repair-ticket'
                             ){
                             $repActive='active';
                             }

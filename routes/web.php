@@ -128,6 +128,10 @@ Route::get('/repair-ticket-detail/{id}', [RepairTicketController::class, 'show']
 Route::get('/repair-ticket-complete/{id}', [RepairTicketController::class, 'markAsComplete'])->middleware(['auth'])->name('complete-repair-ticket');
 Route::get('/repair-ticket-edit/{id}', [RepairTicketController::class, 'editRepairTicket'])->middleware(['auth'])->name('edit-repair-ticket');
 Route::post('/repairticket-update',[RepairTicketController::class,'update'])->middleware(['auth'])->name('update-repairticket');
+Route::get('/repair-ticket-parts-request/{id}', [RepairTicketController::class, 'requestSpareParts'])->middleware(['auth'])->name('request-repair-ticket-spareparts');
+Route::post('/repairticket-request-items',[RepairTicketController::class,'saverequestSparePart'])->middleware(['auth'])->name('repairticket-request-items');
+
+
 
 
 

@@ -24,6 +24,7 @@ class CreateRepairTicketsTable extends Migration
             $table->text('fault_detail')->nullable();
             $table->string('fault_video')->nullable();
             $table->enum('status', ['pending', 'completed','cancelled']);
+            $table->enum('is_request', ['yes', 'no'])->default('no');
             $table->text('explain_more')->nullable();
             $table->date('repair_request_date')->nullable();
             $table->date('repair_complete_date')->nullable();
