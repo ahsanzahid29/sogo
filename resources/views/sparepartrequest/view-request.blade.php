@@ -10,7 +10,7 @@
                 <!--begin::Page title-->
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <!--begin::Title-->
-                    <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">Repair Ticket</h1>
+                    <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">Spare Part Request</h1>
                     <!--end::Title-->
                     <!--begin::Breadcrumb-->
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
@@ -31,7 +31,6 @@
                     <!--end::Breadcrumb-->
                 </div>
                 <!--end::Page title-->
-
             </div>
             <!--end::Toolbar container-->
         </div>
@@ -44,175 +43,62 @@
                     <div class="card-header border-0 pt-6">
                         <!--begin::Card title-->
                         <div class="card-title">
-
                         </div>
                         <!--end::Card title-->
-
                         <!--begin::Card body-->
                         <div class="card-body pt-0">
-
-                                <div class="form-group row mb-5">
-                                    <div class="col-md-6 mb-5">
-                                        <label class="form-label">Service Center Name:</label>
-                                        <input type="text" class="form-control mb-2 mb-md-0" disabled value="{{$detailSc->name}}" placeholder="Service Center Name" />
-                                    </div>
-                                    <div class="col-md-6 mb-5">
-                                        <label class="form-label">Service Center Address:</label>
-                                        <input type="text" class="form-control mb-2 mb-md-0" disabled value="{{$detailSc->shipping_address}}" placeholder="Service Center Address" />
-                                    </div>
+                            <div class="form-group row mb-5">
+                                <div class="col-md-6 mb-5">
+                                    <label class="form-label">Request Number:</label>
+                                    <input type="text" class="form-control mb-2 mb-md-0" disabled value="{{ $detail->ticket_number }}" placeholder="Request Number" />
                                 </div>
-
-
-                            <div class="form-group row mb-5">
-                            </div>
-                            <div class="form-group row mb-5">
-                                <div class="col-md-12 mb-5">
-                                    <label class="form-label">Serial Number:</label>
-                                    <input type="text" class="form-control mb-2 mb-md-0" disabled value="{{$repairTicketDetail->serial_number}}" placeholder="Search via Serial Number" />
+                                <div class="col-md-6 mb-5">
+                                    <label class="form-label">Request Date:</label>
+                                    <input type="text" class="form-control mb-2 mb-md-0" disabled value="{{ date('d/m/Y',strtotime($detail->created_at)) }}" placeholder="Request Date" />
                                 </div>
                             </div>
-                            @if(!empty($history)&& count($history)>0)
-
+                            @if(count($neededSpareParts)>0)
                                 <div class="form-group row mb-5">
-                                    <h2 class="mb-5">Repair History</h2>
+                                    <h2 class="mb-5">Requested Spare Parts</h2>
                                     <hr/>
                                     <table class="table table-row-dashed table-row-gray-300 gy-7">
                                         <thead>
                                         <tr class="fw-bold fs-6 text-gray-800" >
-                                            <th>Model No</th>
-                                            <th>Serial No</th>
-                                            <th>Fault Details</th>
-                                            <th>Service Center</th>
-                                            <th>Repair Date</th>
-                                            <th>Used Parts</th>
-                                            <th>Status</th>
+                                            <th>Spare Part Code</th>
+                                            <th>Quantity Needed</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($history as $row)
-                                            <tr>
-                                                <td>{{ $row->inverter_modal }}</td>
-                                                <td>{{ $repairTicketDetail->serial_number }}</td>
-                                                <td><a href="#" data-bs-toggle="modal" data-bs-target="#fault_detail_{{$row->repairid}}">View Details</a></td>
-                                                <td>{{ $row->service_center_name }}</td>
-                                                <td>{{ date ('d/m/Y',strtotime($row->repair_date)) }}</td>
-                                                <td><a href="#" data-bs-toggle="modal" data-bs-target="#part_detail_{{$row->repairid}}">View Parts</a></td>
-                                                <td>
-                                                    @if($row->status=='completed')
-                                                        <!--begin::Badges-->
-                                                        <div class="badge badge-light-success">{{ $row->status }}</div>
-                                                        <!--end::Badges-->
-                                                    @elseif($row->status=='pending')
-                                                        <!--begin::Badges-->
-                                                        <div class="badge badge-light-info">{{ $row->status }}</div>
-                                                        <!--end::Badges-->
-                                                    @else
-                                                    @endif
-
-                                                </td>
-                                            </tr>
-                                            <div class="modal fade" tabindex="-1" id="fault_detail_{{$row->repairid}}">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h3 class="modal-title">Fault Detail</h3>
-                                                        </div>
-
-                                                        <div class="modal-body">
-                                                            <p>{{ $row->faultdetail }}</p>
-                                                        </div>
-
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="modal fade" tabindex="-1" id="part_detail_{{$row->repairid}}">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h3 class="modal-title">Spare Part Used</h3>
-                                                        </div>
-
-                                                        <div class="modal-body">
-                                                            <p>{{ $row->sp_name }}</p>
-                                                        </div>
-
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endforeach
-
+                                        @if(count($neededSpareParts)>0)
+                                            @foreach($neededSpareParts as $rownsp)
+                                                <tr>
+                                                    <td> <input type="text" disabled class="form-control" placeholder="Part Name" value="{{ $rownsp->sp_name }}"></td>
+                                                    <td> <input type="text" disabled class="form-control" placeholder="Part Name" value="{{ $rownsp->need_qty }}"></td>
+                                                </tr>
+                                            @endforeach
+                                        @endif
                                         </tbody>
                                     </table>
                                 </div>
                             @endif
-                            <div class="form-group row mb-5">
-                                <h2 class="mb-5">Fault Details</h2>
-                                <hr/>
-                                <div class="col-md-6 mb-5">
-                                    <label class="form-label">Fault Detail:</label>
-                                    <textarea rows="7" cols="7" class="form-control mb-2 mb-md-0" disabled placeholder="What is the fault...">{{ $repairTicketDetail->fault_detail }}</textarea>
-                                </div>
-                                <div class="col-md-6 mb-5">
-                                    <label class="form-label">Fault video:</label>
-                                    <a href="{{ asset('public/files/repairvideos/'.$repairTicketDetail->fault_video) }}" target="_blank" class=" form-control mb-2 mb-md-0 btn btn-light-primary">View</a>
-                                </div>
-                            </div>
-                            @if(count($neededSpareParts)>0)
-                            <div class="form-group row mb-5">
-                                <h2 class="mb-5">Spare Part to be required</h2>
-                                <hr/>
-                                <table class="table table-row-dashed table-row-gray-300 gy-7">
-                                    <thead>
-                                    <tr class="fw-bold fs-6 text-gray-800" >
-                                        <th>Spare Part Code</th>
-                                        <th>Quantity Needed</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @if(count($neededSpareParts)>0)
-                                        @foreach($neededSpareParts as $rownsp)
-                                            <tr>
-                                                <td> <input type="text" disabled class="form-control" placeholder="Part Name" value="{{ $rownsp->sp_name }}"></td>
-                                                <td> <input type="text" disabled class="form-control" placeholder="Part Name" value="{{ $rownsp->need_qty }}"></td>
-                                            </tr>
-                                        @endforeach
-                                    @endif
-                                    </tbody>
-                                </table>
-                            </div>
-                            @endif
-
                             <div class="form-group row">
-
                                 <div class="col-md-12">
                                     <a href="{{ url('/sparepart-request-list') }}" class="btn btn-secondary">Cancel</a>
                                 </div>
                             </div>
-
                         </div>
                         <!--end::Card body-->
-
                     </div>
                     <!--end::Card header-->
                     <!--begin::Card body-->
                     <div class="card-body pt-0">
                         <!--begin::Table-->
-
                     </div>
                     <!--end::Card body-->
                 </div>
                 <!--end::Card-->
-
-
             </div>
             <!--end::Content wrapper-->
-
         </div>
         <!--end::Content wrapper-->
         <!--begin::Footer-->
@@ -231,5 +117,4 @@
         <!--end::Footer-->
     </div>
     <!--end:::Main-->
-
 @endsection

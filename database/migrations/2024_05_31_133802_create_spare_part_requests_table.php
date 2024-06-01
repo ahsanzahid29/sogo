@@ -15,11 +15,10 @@ class CreateSparePartRequestsTable extends Migration
     {
         Schema::create('spare_part_requests', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('ticket_id');
+            $table->string('ticket_number');
             $table->unsignedBigInteger('sparepart_id');
             $table->unsignedBigInteger('service_center_id');
             $table->string('required_quantity')->default(0);
-            $table->foreign('ticket_id')->references('id')->on(' repair_tickets');
             $table->foreign('sparepart_id')->references('id')->on('spare_parts');
             $table->foreign('service_center_id')->references('id')->on('users');
 

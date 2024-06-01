@@ -68,7 +68,15 @@
                             <!--begin::Card title-->
                             <!--begin::Card toolbar-->
                             <div class="card-toolbar">
+                                @if($roleId==4)
+                                <!--begin::Toolbar-->
+                                <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
+                                    <!--begin::Add customer-->
+                                    <a href="{{ url('/spare-part-request-add') }}" class="btn btn-primary">Add Request</a>
+                                    <!--end::Add customer-->
+                                </div>
                                 <!--end::Toolbar-->
+                                @endif
                                 <!--begin::Group actions-->
                                 <div class="d-flex justify-content-end align-items-center d-none" data-kt-customer-table-toolbar="selected">
                                     <div class="fw-bold me-5">
@@ -92,10 +100,10 @@
                                 <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
                                     <th>S.No</th>
                                     <th>Ticket No</th>
-                                    <th>Serial No</th>
                                     <th class="min-w-125px">Service Center Name</th>
                                     <th class="min-w-125px">Service Center Email</th>
                                     <th class="min-w-125px">Service Center Contact</th>
+                                    <th class="min-w-125px">Request Date</th>
                                     <th class="text-end min-w-70px">Actions</th>
                                 </tr>
                                 </thead>
@@ -103,11 +111,11 @@
                                 @foreach($allSparePartRequests as $row)
                                     <tr>
                                         <td>{{ $count++ }}</td>
-                                        <td>{{ $row->rptn }}</td>
-                                        <td>{{ $row->rpsn }}</td>
+                                        <td>{{ $row->ticket_number }}</td>
                                         <td>{{ $row->scname }}</a></td>
                                         <td>{{ $row->scemail }}</td>
                                         <td>{{ $row->scphone }}</td>
+                                        <td>{{ date('d/m/Y',strtotime($row->created_at)) }}</td>
                                         <td class="text-end">
                                             <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
                                                 <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
@@ -115,7 +123,7 @@
                                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
                                                     <!--begin::Menu item-->
                                                     <div class="menu-item px-3">
-                                                        <a href="{{route('view-sparepart-request',$row->ticket_id)}}" class="menu-link px-3">View</a>
+                                                        <a href="{{route('view-sparepart-request',$row->ticket_number)}}" class="menu-link px-3">View</a>
                                                     </div>
                                                     <!--end::Menu item-->
                                             </div>

@@ -103,6 +103,10 @@ Route::post('/invoice-deliver',[SparePartsInvoiceController::class,'completeInvo
 
 Route::get('/sparepart-request-list',[SparePartRequestController::class,'index'])->middleware(['auth'])->name('list-sp-request');
 Route::get('/sparepart-request-detail/{id}', [SparePartRequestController::class, 'show'])->middleware(['auth'])->name('view-sparepart-request');
+Route::get('/spare-part-request-add', [SparePartRequestController::class, 'add'])->middleware(['auth'])->name('add-sparepart-request');
+Route::post('/spare-part-request-items',[SparePartRequestController::class,'save'])->middleware(['auth'])->name('save-sparepart-request');
+
+
 
 
 
@@ -128,8 +132,6 @@ Route::get('/repair-ticket-detail/{id}', [RepairTicketController::class, 'show']
 Route::get('/repair-ticket-complete/{id}', [RepairTicketController::class, 'markAsComplete'])->middleware(['auth'])->name('complete-repair-ticket');
 Route::get('/repair-ticket-edit/{id}', [RepairTicketController::class, 'editRepairTicket'])->middleware(['auth'])->name('edit-repair-ticket');
 Route::post('/repairticket-update',[RepairTicketController::class,'update'])->middleware(['auth'])->name('update-repairticket');
-Route::get('/repair-ticket-parts-request/{id}', [RepairTicketController::class, 'requestSpareParts'])->middleware(['auth'])->name('request-repair-ticket-spareparts');
-Route::post('/repairticket-request-items',[RepairTicketController::class,'saverequestSparePart'])->middleware(['auth'])->name('repairticket-request-items');
 
 
 
