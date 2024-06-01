@@ -132,15 +132,7 @@
                                         <!--begin::Menu-->
                                         <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
                                             @if($row->rp_status=='pending' && $role_id==4)
-                                                @if($row->rp_isrequest=='yes')
-                                                    <!--begin::Menu item-->
-                                                    <div class="menu-item px-3">
-                                                        <a href="{{route('request-repair-ticket-spareparts',$row->rp_id)}}" class="menu-link px-3">Request Items</a>
-                                                    </div>
-                                                    <!--end::Menu item-->
-                                                @else
 
-                                                @endif
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-3">
                                                 <a href="{{route('edit-repair-ticket',$row->rp_id)}}" class="menu-link px-3">Edit</a>

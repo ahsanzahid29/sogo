@@ -267,6 +267,25 @@
                         </div>
                         <!--end:Menu item-->
                         <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link {{ $spRequestActive }}" href="{{ url('/sparepart-request-list') }}">
+												<span class="menu-icon">
+													<i class="ki-duotone ki-abstract-28 fs-2">
+														<span class="path1"></span>
+														<span class="path2"></span>
+														<span class="path3"></span>
+														<span class="path4"></span>
+														<span class="path5"></span>
+														<span class="path6"></span>
+													</i>
+												</span>
+                                <span class="menu-title">Spare Part Request</span>
+                            </a>
+                            <!--end:Menu link-->
+                        </div>
+                        <!--end:Menu item-->
+                        <!--begin:Menu item-->
                         <div class="menu-item pt-5">
                             <!--begin:Menu content-->
                             <div class="menu-content">
@@ -295,25 +314,7 @@
                             <!--end:Menu link-->
                         </div>
                         <!--end:Menu item-->
-                        <!--begin:Menu item-->
-                        <div class="menu-item">
-                            <!--begin:Menu link-->
-                            <a class="menu-link {{ $spRequestActive }}" href="{{ url('/sparepart-request-list') }}">
-												<span class="menu-icon">
-													<i class="ki-duotone ki-abstract-38 fs-2">
-														<span class="path1"></span>
-														<span class="path2"></span>
-														<span class="path3"></span>
-														<span class="path4"></span>
-														<span class="path5"></span>
-														<span class="path6"></span>
-													</i>
-												</span>
-                                <span class="menu-title">Request Spare Part</span>
-                            </a>
-                            <!--end:Menu link-->
-                        </div>
-                        <!--end:Menu item-->
+
                     @php
                             $dNoteActive = '';
                             if (Route::currentRouteName()=='deliverynote-list'|| Route::currentRouteName()=='deliverynote-add'
@@ -762,6 +763,7 @@
                             $productActive = '';
                             $spActive = '';
                             $spInvActiveActive = '';
+                            $spRequestActive = '';
                             if (Route::currentRouteName()=='list-inverter'|| Route::currentRouteName()=='add-inverter'
                             || Route::currentRouteName()=='inverter-add' || Route::currentRouteName()=='edit-inverter'){
                             $productActive='active';
@@ -773,6 +775,11 @@
                             if (Route::currentRouteName()=='list-sparepart-inventory'|| Route::currentRouteName()=='add-sparepart-inventory'
                             ){
                             $spInvActiveActive='active';
+                            }
+                            if (Route::currentRouteName()=='list-sp-request'|| Route::currentRouteName()=='view-sparepart-request'
+                            || Route::currentRouteName()=='add-sparepart-request'
+                            ){
+                            $spRequestActive='active';
                             }
                         @endphp
 
@@ -847,6 +854,25 @@
 													</i>
 												</span>
                                 <span class="menu-title">Spare Parts Invertory</span>
+                            </a>
+                            <!--end:Menu link-->
+                        </div>
+                        <!--end:Menu item-->
+                        <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link {{ $spRequestActive }}" href="{{ url('/sparepart-request-list') }}">
+												<span class="menu-icon">
+													<i class="ki-duotone ki-abstract-28 fs-2">
+														<span class="path1"></span>
+														<span class="path2"></span>
+														<span class="path3"></span>
+														<span class="path4"></span>
+														<span class="path5"></span>
+														<span class="path6"></span>
+													</i>
+												</span>
+                                <span class="menu-title">Spare Part Request</span>
                             </a>
                             <!--end:Menu link-->
                         </div>

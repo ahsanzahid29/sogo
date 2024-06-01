@@ -10,7 +10,7 @@
                 <!--begin::Page title-->
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <!--begin::Title-->
-                    <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">Request Spare Part</h1>
+                    <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">Spare Part Request</h1>
                     <!--end::Title-->
                     <!--begin::Breadcrumb-->
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
@@ -25,7 +25,7 @@
                         </li>
                         <!--end::Item-->
                         <!--begin::Item-->
-                        <li class="breadcrumb-item text-muted">Request Spare Part</li>
+                        <li class="breadcrumb-item text-muted">Spare Part Request</li>
                         <!--end::Item-->
                     </ul>
                     <!--end::Breadcrumb-->
@@ -53,37 +53,14 @@
                         <!--end::Card title-->
                         <!--begin::Card body-->
                         <div class="card-body pt-0">
-                            @if($userRole!=4)
-                                <div class="form-group row mb-5">
-                                    <div class="col-md-6 mb-5">
-                                        <label class="form-label">Service Center Name:</label>
-                                        <input type="text" class="form-control mb-2 mb-md-0" disabled value="{{$detailSc->name}}" placeholder="Service Center Name" />
-                                    </div>
-                                    <div class="col-md-6 mb-5">
-                                        <label class="form-label">Service Center Address:</label>
-                                        <input type="text" class="form-control mb-2 mb-md-0" disabled value="{{$detailSc->shipping_address}}" placeholder="Service Center Address" />
-                                    </div>
-                                </div>
-                            @endif
                             <div class="form-group row mb-5">
-                            </div>
-                            <div class="form-group row mb-5">
-                                <div class="col-md-12 mb-5">
-                                    <label class="form-label">Serial Number:</label>
-                                    <input type="text" class="form-control mb-2 mb-md-0" disabled value="{{$repairTicketDetail->serial_number}}" placeholder="Search via Serial Number" />
-                                </div>
-                            </div>
-
-                            <div class="form-group row mb-5">
-                                <h2 class="mb-5">Fault Details</h2>
-                                <hr/>
                                 <div class="col-md-6 mb-5">
-                                    <label class="form-label">Fault Detail:</label>
-                                    <textarea cols="7" rows="7" class="form-control mb-2 mb-md-0" disabled placeholder="What is the fault...">{{ $repairTicketDetail->fault_detail }}</textarea>
+                                    <label class="form-label">Request Number:</label>
+                                    <input type="text" class="form-control mb-2 mb-md-0" disabled value="{{ $randomString }}" placeholder="Request Number" />
                                 </div>
                                 <div class="col-md-6 mb-5">
-                                    <label class="form-label">Fault video:</label>
-                                    <a href="{{ asset('public/files/repairvideos/'.$repairTicketDetail->fault_video) }}" target="_blank" class=" form-control mb-2 mb-md-0 btn btn-light-primary">View</a>
+                                    <label class="form-label">Request Date:</label>
+                                    <input type="text" class="form-control mb-2 mb-md-0" disabled value="{{ date('d/m/Y') }}" placeholder="Request Date" />
                                 </div>
                             </div>
                             <div class="form-group row mb-5" >
@@ -91,16 +68,16 @@
                                     <button id="addSpartBtn" class="btn btn-light-success">Add</button>
                                 </div>
                             </div>
-                            <form class="form w-100" method="POST" action="{{ url('/repairticket-request-items') }}">
+                            <form class="form w-100" method="POST" action="{{ url('/spare-part-request-items') }}">
                                 @csrf
-                                <input type="hidden" name="recordid" value="{{ $id }}" />
+                                <input type="hidden" name="request_number" value="{{ $randomString }}" />
                                 <div class="form-group row mb-5">
-                                    <h2 class="mb-5">Spare Part to be used</h2>
+                                    <h2 class="mb-5">Request Spare Parts</h2>
                                     <hr/>
                                     <table class="table table-row-dashed table-row-gray-300 gy-7">
                                         <thead>
                                         <tr class="fw-bold fs-6 text-gray-800" >
-                                            <th>Part Name</th>
+                                            <th>Spare Part Code</th>
                                             <th>Quantity Required</th>
                                             <th>Action</th>
                                         </tr>
@@ -112,7 +89,7 @@
                                 <div class="form-group row">
                                     <div class="col-md-12">
                                         <button type="submit" class="btn btn-dark">Request Items</button>
-                                        <a href="{{ url('/all-repairtickets') }}" class="btn btn-secondary">Cancel</a>
+                                        <a href="{{ url('/sparepart-request-list') }}" class="btn btn-secondary">Cancel</a>
                                     </div>
                                 </div>
                             </form>

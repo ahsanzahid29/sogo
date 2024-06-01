@@ -116,7 +116,7 @@
         <table class="table table-row-dashed table-row-gray-300 gy-7">
             <thead>
             <tr class="fw-bold fs-6 text-gray-800" >
-                <th>Part Name</th>
+                <th>Part Code</th>
                 <th>Total Quantity</th>
                 <th>Quantity</th>
                 <th>Action</th>
