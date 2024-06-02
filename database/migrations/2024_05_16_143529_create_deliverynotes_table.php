@@ -17,13 +17,10 @@ class CreateDeliverynotesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('dealer_id');
-            $table->unsignedBigInteger('inverter_id');
-            $table->integer('quantity')->default(0);
             $table->string('do_no')->nullable();
             $table->text('notes')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('dealer_id')->references('id')->on('users');
-            $table->foreign('inverter_id')->references('id')->on('inverters');
             $table->timestamps();
         });
     }

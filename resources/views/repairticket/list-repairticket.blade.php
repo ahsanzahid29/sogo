@@ -1,4 +1,7 @@
 @extends('layouts.dashboard')
+@push('scripts_top')
+    <link href="{{asset('public/assets/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
+@endpush
 @section('content')
     <!--begin::Main-->
     <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
@@ -37,6 +40,7 @@
                 <!--end::Toolbar container-->
             </div>
             <!-- end:Toolbar -->
+
             <div id="kt_app_content_container" class="app-container container-xxl">
                 <!--begin::Row-->
                 <div class="row gy-5 gx-xl-10">
@@ -139,6 +143,7 @@
 
                 </div>
                 <!--end::Row-->
+
                 <!--begin::Table-->
                 <div class="row gy-5 gx-xl-10">
                     <!--begin::Card-->
@@ -230,11 +235,11 @@
                                                     </div>
                                                     <!--end::Menu item-->
                                                 @else
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                    <a href="{{route('view-repair-ticket',$row->rp_id)}}" class="menu-link px-3">View</a>
-                                                </div>
-                                                <!--end::Menu item-->
+                                                    <!--begin::Menu item-->
+                                                    <div class="menu-item px-3">
+                                                        <a href="{{route('view-repair-ticket',$row->rp_id)}}" class="menu-link px-3">View</a>
+                                                    </div>
+                                                    <!--end::Menu item-->
                                                 @endif
                                             </div>
                                             <!--end::Menu-->
@@ -255,7 +260,9 @@
 
                 <!--end::Table-->
 
+
             </div>
+
         </div>
         <!--end::Content wrapper-->
         <!--begin::Footer-->
@@ -275,3 +282,12 @@
     </div>
     <!--end:::Main-->
 @endsection
+@push('scripts_bottom')
+    <script type="text/javascript">
+        $("#kt_customers_table").DataTable();
+    </script>
+    <script src="{{asset('public/assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
+    <script src="{{asset('public/assets/js/custom/apps/ecommerce/customers/listing/listing.js')}}"></script>
+
+
+@endpush

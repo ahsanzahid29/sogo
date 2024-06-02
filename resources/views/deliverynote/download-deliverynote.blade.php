@@ -46,6 +46,23 @@
             margin-left: 10px;
             color: #000;
         }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #eee;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f5f5f5;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -56,10 +73,25 @@
         <li><span class="label">Dealer Phone:</span><span class="value">{{ $deliveryNote->userphone }}</span></li>
         <li><span class="label">Dealer Address:</span><span class="value">{{ $deliveryNote->address }}</span></li>
         <li><span class="label">DO Number:</span><span class="value">{{ $deliveryNote->do_no }}</span></li>
-        <li><span class="label">Product Name:</span><span class="value">{{ $deliveryNote->invertername }}</span></li>
-        <li><span class="label">Quantity:</span><span class="value">{{ $deliveryNote->qty }}</span></li>
-        <li><span class="label">Date:</span><span class="value">{{ date('d M, Y', strtotime($deliveryNote->createdat)) }}</span></li>
     </ul>
+    <table>
+        <thead>
+        <tr>
+            <th>Modal No</th>
+            <th>Serial No</th>
+            <th>Delivery Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($deliveryItems as $row)
+            <tr>
+                <td>{{ $row->modalNo }}</td>
+                <td>{{ $row->sno }}</td>
+                <td>{{ date('d/m/Y',strtotime($row->delivery_date)) }}</td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
 </div>
 </body>
 </html>

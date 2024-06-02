@@ -16,181 +16,320 @@ class DeliveryNoteController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware("auth");
         //$this->middleware('checkrole');
     }
-    public function index(){
-
-        if(Auth::user()->role_id==4){
-            return redirect('/dashboard');
+    public function index()
+    {
+        if (Auth::user()->role_id == 4) {
+            return redirect("/dashboard");
         }
-       $data['deliveryNotes'] = Deliverynote::select('deliverynotes.id as recordid','deliverynotes.quantity as qty',
-       'deliverynotes.notes as notes','inverters.inverter_name as invertername','inverters.modal_number as modal',
-       'users.name as username','users.phoneno_1 as userphone','deliverynotes.created_at as createdat','deliverynotes.do_no as do_no')
-           ->join('inverters', 'deliverynotes.inverter_id', '=', 'inverters.id')
-           ->join('users', 'deliverynotes.dealer_id', '=', 'users.id')
-           ->get();
+        $data["deliveryNotes"] = DB::table("dealer_products")
+            ->join(
+                "deliverynotes",
+                "dealer_products.deliverynote_id",
+                "=",
+                "deliverynotes.id"
+            )
+            ->select(
+                "deliverynotes.id as recordid",
+                "deliverynotes.do_no",
+                "deliverynotes.notes as notes",
+                "deliverynotes.created_at as created_at",
+                "deliverynotes.notes as notes",
+                DB::raw("count(dealer_products.id) as total"),
+                "deliverynotes.created_at"
+            )
+            ->groupBy(
+                "dealer_products.deliverynote_id",
+                "deliverynotes.do_no",
+                "deliverynotes.notes",
+                "deliverynotes.created_at",
+                "deliverynotes.id",
+                "deliverynotes.notes",
+                "deliverynotes.id"
+            ) // Group by delivery_id and any column you select
+            ->get();
 
+        $data["count"] = 1;
 
-        return view('deliverynote.list-deliverynote', $data);
+        return view("deliverynote.list-deliverynote", $data);
     }
 
-    public function add(){
-        if(Auth::user()->role_id==4){
-            return redirect('/dashboard');
+    public function add()
+    {
+        if (Auth::user()->role_id == 4) {
+            return redirect("/dashboard");
         }
-        $data['dealers'] = User::where('role_id',3)->get();
-        $data['inverters'] = Inverter::where('total_quantity','>',0)->get();
-        return view('deliverynote.add-deliverynote',$data);
-
+        $data["dealers"] = User::where("role_id", 3)->get();
+        $data["inverters"] = Inverter::where("total_quantity", ">", 0)->get();
+        return view("deliverynote.add-deliverynote", $data);
     }
-    public function detailDealer($id){
-        $data['user'] = User::find($id);
-        return view('deliverynote.user-detail',$data);
+    public function detailDealer($id)
+    {
+        $data["user"] = User::find($id);
+        return view("deliverynote.user-detail", $data);
     }
-    public function detailInverter($id){
-        $data['inverter'] = Inverter::find($id);
-        return view('deliverynote.inverter-detail',$data);
-
+    public function detailInverter(Request $request)
+    {
+        $id = $request->input("partId");
+        $inverterDetail = Inverter::find($id);
+        if ($inverterDetail) {
+            return response()->json([
+                "currentStock" => $inverterDetail->total_quantity,
+            ]);
+        } else {
+            return response()->json(
+                ["taxValue" => "No tax info available"],
+                404
+            );
+        }
     }
     public function save(Request $request)
     {
         if ($request->all()) {
-            $this->validate($request, [
-                'dealer_id'    =>  'required|not_in:0',
-                'inverter_id'  => 'required|not_in:0',
-                'quantity'     => 'required',
-                'do_no'        => 'required'
-            ]);
-            // check entered quantity is less than available quantity
-            $inverter = Inverter::find($request->inverter_id);
-            if($request->quantity>$inverter->total_quantity){
-                return back()->withErrors(['quantity' => 'Entered Quantity exceeds with current stock']);
-
-            }
-            $insertData=[];
-
-            DB::beginTransaction();
+            //            $this->validate($request, [
+            //                'dealer_id'    =>  'required|not_in:0',
+            //                'do_no'        => 'required',
+            //                'notes'        =>'required'
+            //            ]);
             try {
-                #------------------- insert in database--------------------------------#
-                $deliverynote = Deliverynote::create(
-                    [
-                        'dealer_id'     => $request->dealer_id,
-                        'inverter_id'   => $request->inverter_id,
-                        'quantity'      => $request->quantity,
-                        'notes'         => $request->notes,
-                        'do_no'         => $request->do_no,
-                        'user_id'        => Auth::user()->id,
-                    ]
-                );
-                if($deliverynote->id){
-                    // get inverters from inverter_product_table based on quantity entered
-                    $inverter_stock = InverterInventory::select('serial_number','id')->where('is_assigned',0)
-                        ->limit($request->quantity)
-                        ->get();
-                    foreach($inverter_stock as $row){
-                        $serialNo[] = $row->serial_number;
-                        $ids[] = $row->id;
+                DB::beginTransaction();
+                $spareparts = $request->input("sparepart");
+                $csvFiles = $request->file("csv_files");
+
+                // insert delivery note basic info
+                $deliverynote = Deliverynote::create([
+                    "dealer_id" => $request->dealer_id,
+                    "do_no" => $request->do_number,
+                    "user_id" => Auth::user()->id,
+                    "notes" => $request->notes,
+                ]);
+
+                // logic to assign models to dealer based on serial number provided in csv
+
+                foreach ($spareparts as $index => $modelId) {
+                    $product = Inverter::find($modelId);
+                    $csvFile = $csvFiles[$index];
+
+                    // Validate the file type if necessary
+                    if ($csvFile->getClientOriginalExtension() !== "csv") {
+                        return back()->withErrors([
+                            "invalid_csv" =>
+                                "Invalid file type. Only CSV files are allowed.",
+                        ]);
                     }
-                    if(count($serialNo)>0){
-                        for($a=0;$a<count($serialNo);$a++){
-                            $insertData[] = [
-                                'dealer_id' =>      $request->dealer_id,
-                                'inverter_id' =>    $request->inverter_id,
-                                'deliverynote_id'=> $deliverynote->id,
-                                'serial_number' =>  $serialNo[$a],
-                                'created_at'    =>  date('Y-m-d H:i')
-                            ];
+
+                    // Read the CSV file
+                    $csvData = array_map(
+                        "str_getcsv",
+                        file($csvFile->getRealPath())
+                    );
+
+                    // Remove the header row
+                    array_shift($csvData);
+
+                    // Extract the serial numbers from the CSV data
+                    $serialNumbers = array_column($csvData, 0);
+
+                    $existingCount = InverterInventory::where(
+                        "inverter_id",
+                        $modelId
+                    )
+                        ->where("is_assigned", 0)
+                        ->whereIn("serial_number", $serialNumbers)
+                        ->count();
+
+                    // Check if all serial numbers exist
+                    if ($existingCount !== count($serialNumbers)) {
+                        //deduct total stock and sold stock from inverters table
+                        $dealerItems = DealerProduct::where(
+                            "deliverynote_id",
+                            $deliverynote->id
+                        )->get();
+                        if (count($dealerItems) > 0) {
+                            foreach ($dealerItems as $row) {
+                                $inverters[] = $row->inverter_id;
+                                $sNo[] = $row->serial_number;
+                            }
+                            for ($i = 0; $i < count($inverters); $i++) {
+                                $oldDetail = Inverter::select("total_quantity")
+                                    ->where("id", $inverters[$i])
+                                    ->first();
+                                $newTotalStock =
+                                    $oldDetail->total_quantity +
+                                    count($inverters);
+                                $newSoldStock =
+                                    $oldDetail->sold_quantity -
+                                    count($inverters);
+
+                                $affected = DB::table("inverters")
+                                    ->where(["id" => $inverters[$i]])
+                                    ->update([
+                                        "total_quantity" => $newTotalStock,
+                                        "sold_quantity" => $newSoldStock,
+                                    ]);
+                            }
+                            // make is_assigned to 0 in inverters_inventoty table
+
+                            DB::table("inverter_inventories")
+                                ->whereIn(["serial_number" => $sNo])
+                                ->update(["is_assigned" => 0]);
                         }
-                        DealerProduct::insert($insertData);
+                        // delete record from delivery_notes table
+                        Deliverynote::where("id", $deliverynote->id)->delete();
+                        DealerProduct::where(
+                            "deliverynote_id",
+                            $deliverynote->id
+                        )->delete();
+                        return back()->withErrors([
+                            "invalid_csv" =>
+                                "Invalid serial number for Product Model " .
+                                $product->modal_number,
+                        ]);
                     }
-                    // update is_assigned column in inveeters_inventory table
+                    foreach ($serialNumbers as $serialNumber) {
+                        DealerProduct::create([
+                            "dealer_id" => $request->dealer_id,
+                            "inverter_id" => $modelId,
+                            "deliverynote_id" => $deliverynote->id,
+                            "serial_number" => $serialNumber,
+                        ]);
+                        // update is_assigned column in inverters_inventory table
 
-                    $is_assigned = 1;
-                    DB::table('inverter_inventories')
-                        ->whereIn('id', $ids)
-                        ->update(['is_assigned' => $is_assigned]);
-                    // deduct inverter stock
-                    $oldDetail = Inverter::select('total_quantity')->where('id',$request->inverter_id)->first();
-                    $newTotalStock = ($oldDetail->total_quantity)-($request->quantity);
-                    $newSoldStock = ($oldDetail->sold_quantity)+($request->quantity);
+                        $is_assigned = 1;
+                        DB::table("inverter_inventories")
+                            ->where("serial_number", $serialNumber)
+                            ->update(["is_assigned" => $is_assigned]);
+                        // deduct inverter stock
+                        $oldDetail = Inverter::select(
+                            "total_quantity",
+                            "sold_quantity"
+                        )
+                            ->where("id", $modelId)
+                            ->first();
+                        $newTotalStock = $oldDetail->total_quantity - 1;
+                        $newSoldStock = $oldDetail->sold_quantity + 1;
 
-                    $affected= DB::table('inverters')
-                        ->where(['id'=>$request->inverter_id])
-                        ->update(['total_quantity' =>$newTotalStock,'sold_quantity' =>$newSoldStock]);
+                        $affected = DB::table("inverters")
+                            ->where(["id" => $modelId])
+                            ->update([
+                                "total_quantity" => $newTotalStock,
+                                "sold_quantity" => $newSoldStock,
+                            ]);
+                    }
                 }
                 DB::commit();
-                return redirect('/deliverynote-list')->with('status', 'Delivery note added successfully');
-
+                return redirect("/deliverynote-list")->with(
+                    "status",
+                    "Delivery note added successfully"
+                );
+            } catch (\Exception $e) {
+                DB::rollback();
+                // Redirect to inverter page with an error message
+                return redirect("/deliverynote-list")->with("status", $e);
             }
-        catch (\Exception $e) {
-          DB::rollback();
-          // Redirect to users page with an error message
-          return redirect('/deliverynote-list')->with('status', $e);
-    }
-
         }
     }
 
-    public function show($id){
-        if(Auth::user()->role_id==4){
-            return redirect('/dashboard');
+    public function show($id)
+    {
+        if (Auth::user()->role_id == 4) {
+            return redirect("/dashboard");
         }
-        $data['deliveryNote'] = Deliverynote::select('deliverynotes.id as recordid','deliverynotes.quantity as qty',
-            'deliverynotes.notes as notes','inverters.inverter_name as invertername','inverters.modal_number as modal',
-            'users.name as username','users.phoneno_1 as userphone','deliverynotes.created_at as createdat',
-            'deliverynotes.notes as notes','users.email as useremail','deliverynotes.do_no as do_no')
-            ->join('inverters', 'deliverynotes.inverter_id', '=', 'inverters.id')
-            ->join('users', 'deliverynotes.dealer_id', '=', 'users.id')
-            ->where('deliverynotes.id',$id)
+        $data["deliveryNote"] = Deliverynote::select(
+            "deliverynotes.id as recordid",
+            "users.name as username",
+            "users.phoneno_1 as userphone",
+            "deliverynotes.created_at as createdat",
+            "deliverynotes.notes as notes",
+            "users.email as useremail",
+            "deliverynotes.do_no as do_no"
+        )
+
+            ->join("users", "deliverynotes.dealer_id", "=", "users.id")
+            ->where("deliverynotes.id", $id)
             ->first();
-        if($data['deliveryNote']){
-            return view('deliverynote.view-deliverynote',$data);
-        }
-        return redirect('/deliverynote-list')->with('status', 'No record found');
 
+        if ($data["deliveryNote"]) {
+
+            $data['deliveryItems'] = DealerProduct::select('dealer_products.serial_number as sno',
+            'inverters.modal_number as modalNo','dealer_products.created_at as delivery_date')
+                ->join("inverters", "dealer_products.inverter_id", "=", "inverters.id")
+                ->where('dealer_products.deliverynote_id',$id)
+                ->orderBy('dealer_products.id','ASC')
+                ->get();
+            return view("deliverynote.view-deliverynote", $data);
+        }
+        return redirect("/deliverynote-list")->with(
+            "status",
+            "No record found"
+        );
     }
     public function printNote($id)
     {
-        $deliveryNote = Deliverynote::select('deliverynotes.id as recordid','deliverynotes.quantity as qty',
-            'deliverynotes.notes as notes','inverters.inverter_name as invertername','inverters.modal_number as modal',
-            'users.name as username','users.phoneno_1 as userphone','deliverynotes.created_at as createdat',
-            'deliverynotes.notes as notes','users.email as useremail','users.billing_address as address',
-            'deliverynotes.do_no as do_no')
-            ->join('inverters', 'deliverynotes.inverter_id', '=', 'inverters.id')
-            ->join('users', 'deliverynotes.dealer_id', '=', 'users.id')
-            ->where('deliverynotes.id',$id)
+        $deliveryNote = Deliverynote::select(
+            "deliverynotes.id as recordid",
+            "users.name as username",
+            "users.phoneno_1 as userphone",
+            "deliverynotes.created_at as createdat",
+            "deliverynotes.notes as notes",
+            "users.email as useremail",
+            "deliverynotes.do_no as do_no"
+        )
+
+            ->join("users", "deliverynotes.dealer_id", "=", "users.id")
+            ->where("deliverynotes.id", $id)
             ->first();
         //dd($deliveryNote);
-        if(!$deliveryNote){
-            return redirect('/deliverynote-list')->with('status', 'No record found');
+        if (!$deliveryNote) {
+            return redirect("/deliverynote-list")->with(
+                "status",
+                "No record found"
+            );
         }
-        return view('deliverynote.print-deliverynote', compact('deliveryNote'));
-
+        $deliveryItems = DealerProduct::select('dealer_products.serial_number as sno',
+            'inverters.modal_number as modalNo','dealer_products.created_at as delivery_date')
+            ->join("inverters", "dealer_products.inverter_id", "=", "inverters.id")
+            ->where('dealer_products.deliverynote_id',$id)
+            ->orderBy('dealer_products.id','ASC')
+            ->get();
+        return view("deliverynote.print-deliverynote", compact("deliveryNote","deliveryItems"));
     }
 
-    public function downloadNote($id){
-        $data['deliveryNote'] = Deliverynote::select('deliverynotes.id as recordid','deliverynotes.quantity as qty',
-            'deliverynotes.notes as notes','inverters.inverter_name as invertername','inverters.modal_number as modal',
-            'users.name as username','users.phoneno_1 as userphone','deliverynotes.created_at as createdat',
-            'deliverynotes.notes as notes','users.email as useremail','users.billing_address as address',
-            'deliverynotes.do_no as do_no')
-            ->join('inverters', 'deliverynotes.inverter_id', '=', 'inverters.id')
-            ->join('users', 'deliverynotes.dealer_id', '=', 'users.id')
-            ->where('deliverynotes.id',$id)
+    public function downloadNote($id)
+    {
+        $data["deliveryNote"] = Deliverynote::select(
+            "deliverynotes.id as recordid",
+            "users.name as username",
+            "users.phoneno_1 as userphone",
+            "deliverynotes.created_at as createdat",
+            "deliverynotes.notes as notes",
+            "users.email as useremail",
+            "deliverynotes.do_no as do_no"
+        )
+
+            ->join("users", "deliverynotes.dealer_id", "=", "users.id")
+            ->where("deliverynotes.id", $id)
             ->first();
         //dd($deliveryNote);
-        if(!$data['deliveryNote']){
-            return redirect('/deliverynote-list')->with('status', 'No record found');
+        if (!$data["deliveryNote"]) {
+            return redirect("/deliverynote-list")->with(
+                "status",
+                "No record found"
+            );
         }
-        $pdf = PDF::loadView('deliverynote.download-deliverynote', $data);
+        $data['deliveryItems'] = DealerProduct::select('dealer_products.serial_number as sno',
+            'inverters.modal_number as modalNo','dealer_products.created_at as delivery_date')
+            ->join("inverters", "dealer_products.inverter_id", "=", "inverters.id")
+            ->where('dealer_products.deliverynote_id',$id)
+            ->orderBy('dealer_products.id','ASC')
+            ->get();
 
+        $pdf = PDF::loadView("deliverynote.download-deliverynote", $data);
 
-        $rand = time().rand(10,1000);
-        $filename = 'delivery_note_' . $rand . '.pdf';
+        $rand = time() . rand(10, 1000);
+        $filename = "delivery_note_" . $rand . ".pdf";
         return $pdf->download($filename);
-
-
     }
-
 }
