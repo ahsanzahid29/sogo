@@ -49,41 +49,63 @@
                         <!--end::Card title-->
 
                         <!--begin::Card body-->
-                        <div class="card-body pt-0">
-                            <div class="mb-10">
+                        <div class="card-body p-12">
+                            <div class="form-group row mb-5">
+                            <div class="col-md-6 mb-5">
                                 <label for="exampleFormControlInput1" class="form-label"> Dealer Name</label>
                                 <input type="text" class="form-control form-control-solid" placeholder="Dealer Name" value="{{$deliveryNote->username}}" readonly/>
                             </div>
-                            <div class="mb-10">
+                                <div class="col-md-6 mb-5">
                                 <label for="exampleFormControlInput1" class="form-label"> Dealer Email</label>
                                 <input type="text" class="form-control form-control-solid" placeholder="Dealer Name" value="{{$deliveryNote->useremail}}" readonly/>
                             </div>
-                            <div class="mb-10">
+                            </div>
+                            <div class="form-group row mb-5">
+                                <div class="col-md-6 mb-5">
                                 <label for="exampleFormControlInput1" class="form-label"> Dealer Phone</label>
                                 <input type="text" class="form-control form-control-solid" placeholder="Dealer Phone" value="{{$deliveryNote->userphone}}" readonly/>
                             </div>
-                            <div class="mb-10">
-                                <label for="exampleFormControlInput1" class="form-label">DO Number</label>
-                                <input type="text" class="form-control form-control-solid" placeholder="DO Number" value="{{$deliveryNote->do_no}}" readonly/>
+                                <div class="col-md-6 mb-5">
+                                    <label for="exampleFormControlInput1" class="form-label">DO Number</label>
+                                    <input type="text" class="form-control form-control-solid" placeholder="DO Number" value="{{$deliveryNote->do_no}}" readonly/>
+                                </div>
                             </div>
-                            <div class="mb-10">
-                                <label for="exampleFormControlInput1" class="form-label">Product Model</label>
-                                <input type="text" class="form-control form-control-solid" placeholder="Dealer Phone" value="{{$deliveryNote->modal}}" readonly/>
-                            </div>
-                            <div class="mb-10">
-                                <label for="exampleFormControlInput1" class="form-label">Product Name</label>
-                                <input type="text" class="form-control form-control-solid" placeholder="Dealer Phone" value="{{$deliveryNote->invertername}}" readonly/>
-                            </div>
-                            <div id="inverter_detail">
-                            </div>
-                            <div class="mb-10">
-                                <label for="exampleFormControlInput1" class="form-label">Quantity</label>
-                                <input type="type" class="form-control form-control-solid" placeholder="Quantity" name="quantity" value="{{$deliveryNote->qty}}" readonly />
-                            </div>
-                            <div class="mb-10">
+                            <div class="form-group row mb-5">
+                                <div class="col-md-12 mb-5">
                                 <label for="exampleFormControlInput1" class="form-label">Delivery Notes</label>
-                                <textarea class="form-control form-control-solid" placeholder="Notes.." name="notes" readonly>{{$deliveryNote->notes}}</textarea>
+                                <textarea rows="7" cols="7" class="form-control form-control-solid" placeholder="Notes.." name="notes" readonly>{{$deliveryNote->notes}}</textarea>
                             </div>
+                            </div>
+
+                            <h2>Delivery Items</h2>
+                            <hr/>
+
+                            <div class="row mb-5">
+                                <div class="col-12">
+                                    <table class="table table-row-dashed table-row-gray-300 gy-7">
+                                        <thead>
+                                        <tr class="fw-bold fs-6 text-gray-800" >
+                                            <th>Modal No</th>
+                                            <th>Serial No</th>
+                                            <th>Delivery Date</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($deliveryItems as $row)
+                                            <tr>
+                                                <td>{{ $row->modalNo }}</td>
+                                                <td>{{ $row->sno }}</td>
+                                                <td>{{ date('d/m/Y',strtotime($row->delivery_date)) }}</td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+
+
+
                             <div class="mb-10">
                                 <a href="{{ url('/deliverynote-list') }}" class="btn btn-secondary">Cancel</a>
                             </div>

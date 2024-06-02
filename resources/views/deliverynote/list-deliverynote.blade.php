@@ -96,11 +96,11 @@
                             <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_customers_table">
                                 <thead>
                                 <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
+                                    <th>S. No</th>
                                     <th>DO Number</th>
                                     <th>Dealer Name</th>
-                                    <th class="min-w-125px">Product model</th>
-                                    <th class="min-w-125px">Product Name</th>
-                                    <th class="min-w-125px">Quantity</th>
+                                    <th>No of products</th>
+                                    <th>Notes</th>
                                     <th class="min-w-125px">Created Date</th>
                                     <th class="text-end min-w-70px">Actions</th>
                                 </tr>
@@ -108,12 +108,12 @@
                                 <tbody class="fw-semibold text-gray-600">
                                 @foreach($deliveryNotes as $row)
                                 <tr>
-                                    <td>{{$row->do_no}}</td>
-                                    <td>{{ $row->username }}</td>
-                                    <td>{{ $row->modal }}</td>
-                                    <td><a href="javascript:void(0);" title="{{ $row->invertername }}" style="text-decoration: none;color:#99a1b7">{{ Str::limit($row->invertername, 20, '...') }}</a></td>
-                                    <td>{{ $row->qty }}</td>
-                                    <td>{{ date('d/m/Y',strtotime($row->createdat)) }}</td>
+                                    <td>{{$count++}}</td>
+                                    <td>{{ $row->do_no }}</td>
+                                    <td>Test</td>
+                                    <td>{{ $row->total }}</td>
+                                    <td><a href="javascript:void(0);" title="{{ $row->notes }}" style="text-decoration: none;color:#99a1b7">{{ Str::limit($row->notes, 20, '...') }}</a></td>
+                                    <td>{{ date('d/m/Y',strtotime($row->created_at)) }}</td>
                                     <td class="text-end">
                                         <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
                                             <i class="ki-duotone ki-down fs-5 ms-1"></i></a>

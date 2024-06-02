@@ -114,7 +114,7 @@ Route::post('/spare-part-request-items',[SparePartRequestController::class,'save
 Route::get('/deliverynote-list',[DeliveryNoteController::class,'index'])->middleware(['auth'])->name('deliverynote-list');
 Route::get('/deliverynote-add',[DeliveryNoteController::class,'add'])->middleware(['auth'])->name('deliverynote-add');
 Route::get('/dealeruser-detail/{id}', [DeliveryNoteController::class, 'detailDealer'])->middleware(['auth'])->name('delaeruser-detail');
-Route::get('/product-detail-deliverynote/{id}', [DeliveryNoteController::class, 'detailInverter'])->middleware(['auth'])->name('inverter-detail-dnote');
+Route::get('/product-detail-deliverynote', [DeliveryNoteController::class, 'detailInverter'])->middleware(['auth'])->name('inverter-detail-dnote');
 Route::post('/deliverynote-save',[DeliveryNoteController::class,'save'])->middleware(['auth'])->name('deliverynote-save');
 Route::get('/deliverynote-view/{id}', [DeliveryNoteController::class, 'show'])->middleware(['auth'])->name('viewdeiverynote');
 Route::get('/deliverynote-print/{id}', [DeliveryNoteController::class, 'printNote'])->middleware(['auth'])->name('printdeliverynote');

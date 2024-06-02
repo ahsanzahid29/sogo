@@ -24,15 +24,33 @@ class SparePartsController extends Controller
         $data['count'] = 1;
         if($data['role']==4){
             $data['sparePartsForSc']= SparePartInvoiceItem::select(DB::raw('SUM(spare_part_invoice_items.quantity) as total_quantity'),
-                'spare_parts.name as partname','spare_part_categories.name as factorycode','spare_parts.part_type as parttype',
-                'spare_parts.voltage_rating as voltagerating','spare_parts.ampeare_rating as ampearrating',
-            'spare_parts.sale_price as saleprice','spare_parts.base_unit as baseunit','spare_parts.id as recordid',
-                'spare_part_categories.name as category','spare_parts.pieces as pieces')
+                'spare_parts.name as partname',
+                'spare_part_categories.name as factorycode',
+                'spare_parts.part_type as parttype',
+                'spare_parts.voltage_rating as voltagerating',
+                'spare_parts.ampeare_rating as ampearrating',
+                'spare_parts.sale_price as saleprice',
+                'spare_parts.base_unit as baseunit',
+                'spare_parts.id as recordid',
+                'spare_part_categories.name as category',
+                'spare_parts.pieces as pieces'
+            )
                 ->join('spare_parts', 'spare_part_invoice_items.sparepart_id', '=', 'spare_parts.id')
                 ->join('spare_part_categories', 'spare_parts.part_type', '=', 'spare_part_categories.id')
-                ->groupBy('spare_part_invoice_items.sparepart_id', 'spare_parts.name','spare_parts.factory_code',
-                    'spare_parts.part_type','spare_parts.voltage_rating','spare_parts.ampeare_rating','spare_parts.sale_price',
-                'spare_parts.base_unit')
+                ->groupBy(
+                    'spare_part_invoice_items.sparepart_id',
+                    'spare_parts.name',
+                    'spare_parts.factory_code',
+                    'spare_parts.part_type',
+                    'spare_parts.voltage_rating',
+                    'spare_parts.ampeare_rating',
+                    'spare_parts.sale_price',
+                    'spare_parts.base_unit',
+                    'spare_part_categories.name',
+                    'spare_parts.pieces',
+                    'spare_parts.id'
+
+                )
                 ->where('spare_part_invoice_items.service_center_id','=',Auth::user()->id)
                 ->get();
             //dd($data['sparePartsForSc']);

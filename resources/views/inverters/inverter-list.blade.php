@@ -113,7 +113,11 @@
                                     <td><a href="javascript:void(0);" title="{{ $row->inverter_name }}" style="text-decoration: none;color:#99a1b7">{{ Str::limit($row->inverter_name, 20, '...') }}</a></td>
                                     <td>{{ $row->category_name }}</td>
                                     <td>{{ $row->brand }}</td>
+                                    @if($role==4)
+                                        <td></td>
+                                        @else
                                     <td>{{ $row->total_quantity }}</td>
+                                    @endif
                                     <td class="text-end">
                                         @if($role==1)
                                         <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions

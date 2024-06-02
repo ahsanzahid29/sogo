@@ -31,99 +31,113 @@
                     <!--end::Breadcrumb-->
                 </div>
                 <!--end::Page title-->
-
             </div>
             <!--end::Toolbar container-->
         </div>
         <!-- end:Toolbar -->
         <div class="d-flex flex-column flex-column-fluid">
             <div id="kt_app_content_container" class="app-container container-xxl">
+                @error('invalid_csv')
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ $message  }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                @enderror
                 <!--begin::Card-->
                 <div class="card">
                     <!--begin::Card header-->
                     <div class="card-header border-0 pt-6">
                         <!--begin::Card title-->
                         <div class="card-title">
-
                         </div>
                         <!--end::Card title-->
-
                         <!--begin::Card body-->
-                        <form class="form w-100" method="POST" action="{{ route('deliverynote-save') }}">
+                        <form class="form w-100" method="POST" action="{{ route('deliverynote-save') }}" enctype="multipart/form-data">
                             @csrf
-                        <div class="card-body pt-0">
-                            <div class="mb-10">
-                                <label for="exampleFormControlInput1" class="required form-label">Select Dealer</label>
-                                <select id="dealer_user" name="dealer_id" class="form-select form-select-solid" aria-label="Select example" required>
-                                    <option value="">Select Dealer</option>
-                                    @foreach($dealers as $row)
-                                        <option value="{{ $row->id }}">{{ $row->name }}</option>
-                                    @endforeach
-                                </select>
-                                @error('dealer_id')
-                                <div class="alert alert-danger mt-2">{{ $message }}</div>
-                                @enderror
+                            <div class="card-body p-12">
+                                <div class="form-group row mb-5">
+                                    <div class="col-md-6 mb-5">
+                                        <label class="required form-label">DO Number:</label>
+                                        <input type="text" name="do_number" class="form-control mb-2 mb-md-0" placeholder="DO Number" required />
+                                        @error('do_number')
+                                        <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-6 mb-5">
+                                        <label for="exampleFormControlInput1" class="required form-label">Dealer</label>
+                                        <select id="dealer_user" name="dealer_id" class="form-select form-select-solid" aria-label="Select example" required>
+                                            <option value="">Select Dealer</option>
+                                            @foreach($dealers as $row)
+                                                <option value="{{ $row->id }}">{{ $row->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('dealer_id')
+                                        <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div id="dealer_detail">
+                                </div>
+                                <div class="row mb-5">
+                                    <h2>Dealer Products</h2>
+                                    <hr/>
+                                    <div class="col-12">
+                                        <table class="table table-row-dashed table-row-gray-300 gy-7">
+                                            <thead>
+                                            <tr class="fw-bold fs-6 text-gray-800" >
+                                                <th class="min-w-150px">Product Model</th>
+                                                <th>Current Stock</th>
+                                                <th>Qty</th>
+                                                <th>Upload CSV</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="inputRow">
+                                            <tr>
+                                                <td>
+                                                    <select name="sparepart[]" class="form-control part-dropdown" required>
+                                                        <option value="">Select Modal</option>
+                                                        @foreach($inverters as $rowp)
+                                                            <option value="{{$rowp->id}}">{{ $rowp->modal_number }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                                <td><input type="text" placeholder="Current Stock" class="form-control current-stock " readonly></td>
+                                                <td><input type="number" name="qty[]" placeholder="Quantity" class="form-control qty" required></td>
+                                                <td><input type="file" name="csv_files[]" class="form-control" required></td>
+                                                <td><button id="addItemBtn" class="btn btn-light-success">Add</button></td>
+                                            </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row mb-5">
+                                    <div class="col-md-12 mb-5">
+                                        <label class="required form-label">Delivery Notes:</label>
+                                        <textarea name="notes" class="form-control mb-2 mb-md-0" placeholder="Delivery Notes" rows="7" cols="7" required></textarea>
+                                        @error('notes')
+                                        <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+
+                                <div class="mb-10">
+                                    <button type="submit" class="btn btn-success">Save</button>
+                                    <a href="{{ url('/deliverynote-list') }}" class="btn btn-secondary">Cancel</a>
+                                </div>
                             </div>
-                            <div id="dealer_detail">
-                            </div>
-                            <div class="mb-10">
-                                <label for="exampleFormControlInput1" class="required form-label">DO Number</label>
-                                <input type="type" class="form-control form-control-solid" placeholder="DO Number" name="do_no" required/>
-                                @error('quantity')
-                                <div class="alert alert-danger mt-2">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="mb-10">
-                                <label for="exampleFormControlInput1" class="required form-label">Product Model</label>
-                                <select id="product_model" name="inverter_id" class="form-select form-select-solid" aria-label="Select example" required>
-                                    <option value="">Select Product</option>
-                                    @foreach($inverters as $row)
-                                        <option value="{{ $row->id }}">{{ $row->modal_number }}</option>
-                                    @endforeach
-                                </select>
-                                @error('inverter_id')
-                                <div class="alert alert-danger mt-2">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div id="inverter_detail">
-                            </div>
-                            <div class="mb-10">
-                                <label for="exampleFormControlInput1" class="required form-label">Quantity</label>
-                                <input type="type" class="form-control form-control-solid" placeholder="Quantity" name="quantity"/>
-                                @error('quantity')
-                                <div class="alert alert-danger mt-2">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="mb-10">
-                                <label for="exampleFormControlInput1" class="form-label">Delivery Notes</label>
-                                <textarea class="form-control form-control-solid" placeholder="Notes.." name="notes"></textarea>
-                                @error('notes')
-                                <div class="alert alert-danger mt-2">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="mb-10">
-                                <button type="submit" class="btn btn-success">Save</button>
-                                <a href="{{ url('/deliverynote-list') }}" class="btn btn-secondary">Cancel</a>
-                            </div>
-                        </div>
                         </form>
                         <!--end::Card body-->
-
                     </div>
                     <!--end::Card header-->
-                    <!--begin::Card body-->
-                    <div class="card-body pt-0">
-                        <!--begin::Table-->
 
-                    </div>
-                    <!--end::Card body-->
                 </div>
                 <!--end::Card-->
-
-
             </div>
             <!--end::Content wrapper-->
-
         </div>
         <!--end::Content wrapper-->
         <!--begin::Footer-->
@@ -147,6 +161,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
+            var parts = @json($inverters);
             $('#dealer_user').change(function() {
                 var selectedOption = $(this).val();
                 if(selectedOption!=0){
@@ -167,25 +182,51 @@
                 }
 
             });
-            $('#product_model').change(function() {
-                var selectedOption = $(this).val();
-                if(selectedOption!=0){
+            $('#addItemBtn').click(function(e) {
+                e.preventDefault();  // This stops the default form submission action
+                var selectHtml = '<select name="sparepart[]" class="form-control part-dropdown" required>';
+                selectHtml += '<option value="">Select Modal</option>';
+                parts.forEach(function(option) {
+                    selectHtml += '<option value="' + option.id + '">' + option.modal_number + '</option>';
+                });
+                selectHtml += '</select>';
+                var newRow = '<tr>' +
+                    '<td>' + selectHtml + '</td>' +
+                    '<td><input type="text" placeholder="Current Stock" class="form-control current-stock " readonly></td>' +
+                    '<td><input type="number" name="qty[]" placeholder="Quantity" class="form-control qty" required></td>' +
+                    ' <td><input type="file" name="csv_files[]" class="form-control" required></td>'+
+                    '<td><button class="btn btn-light-danger btn-xs removeBtn">Remove</button></td>' +
+                    '</tr>';
+                $('#inputRow').append(newRow);
+
+            });
+
+            // Event delegation to handle click on dynamically created remove buttons
+            $('#inputRow').on('click', '.removeBtn', function() {
+                $(this).closest('tr').empty(); // This empties the content of the td that contains the clicked button
+
+
+        });
+
+            $('#inputRow').on('change', '.part-dropdown', function() {
+                var selectedModalId = $(this).val();
+                var $currentstockField = $(this).closest('tr').find('.current-stock');
+
+                if (selectedModalId) {
                     $.ajax({
-                        url: "{{ url('/product-detail-deliverynote') }}/" + selectedOption,
-                        context: document.body,
-                        error: function (data, transport) {
-                            alert("Sorry, the operation is failed.");
+                        url: "{{ url('/product-detail-deliverynote') }}",
+                        type: 'GET',
+                        data: { partId: selectedModalId },
+                        success: function(response) {
+                            $currentstockField.val(response.currentStock);
                         },
-                        success: function (data) {
-                            $('#inverter_detail').html(data);
+                        error: function(xhr) {
+                            console.error('Error fetching tax data:', xhr.responseText);
                         }
                     });
+                } else {
+                    $currentstockField.val(''); // Clear tax output if no part is selected
                 }
-                else{
-                    $('#inverter_detail').empty();
-
-                }
-
             });
     });
 
