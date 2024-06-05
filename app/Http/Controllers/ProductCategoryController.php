@@ -20,6 +20,7 @@ class ProductCategoryController extends Controller
     public function index(){
 
         $data['category'] = ProductCategory::all();
+
         $data['count'] = 1;
         return view('category.productcategory.category-list',$data);
     }
@@ -31,6 +32,7 @@ class ProductCategoryController extends Controller
                 'name' => 'required|unique:product_categories',
             ]);
             DB::beginTransaction();
+            
             try {
                 DB::table('product_categories')->insert([
                     'name' => $request->name,
