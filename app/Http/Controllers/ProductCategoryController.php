@@ -19,7 +19,7 @@ class ProductCategoryController extends Controller
 
     public function index(){
 
-        $data['category'] = ProductCategory::all();
+        $data['category'] =  DB::table('testcategories')->select('*')->get();
         $data['count'] = 1;
         return view('category.productcategory.category-list',$data);
     }
