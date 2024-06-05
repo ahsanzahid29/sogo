@@ -40,7 +40,7 @@ class SparePartCategoryController extends Controller
 
                 if ($inserted) {
                     \Log::info("Record inserted successfully.");
-                    return redirect('/product-category-list')->with('status', 'Category added');
+                    return redirect('/spareparts-category-list')->with('status', 'Category added');
                 } else {
                     \Log::error("Record insertion failed.");
                     return redirect('/spareparts-category-list')->with('status', 'Category insertion failed.');
@@ -52,7 +52,7 @@ class SparePartCategoryController extends Controller
             }
         }
 
-        
+
     }
     public function edit($id){
         $data['specificCategory'] = SparePartCategory::find($id);
