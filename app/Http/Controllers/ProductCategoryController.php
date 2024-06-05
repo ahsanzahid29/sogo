@@ -32,17 +32,16 @@ class ProductCategoryController extends Controller
             ]);
             DB::beginTransaction();
             try {
+                DB::table('product_categories')->insert([
+                    'name' => $request->name,
+                    'created_at' => date('Y-m-d H:i'),
 
-                $category = ProductCategory::create(
-                    [
-                        'name' => $request->name,
-                    ]
-                );
-                dd($category);
-                if($category->id){
+                ]);
+
+
                     return redirect('/product-category-list')->with('status', 'Category added');
 
-                }
+
             }
             catch (\Exception $e) {
                 DB::rollback();
