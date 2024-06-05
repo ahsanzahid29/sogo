@@ -28,7 +28,7 @@ class ProductCategoryController extends Controller
 
         if ($request->all()) {
             $this->validate($request, [
-                'name' => 'required|unique:product_categories',
+                'name' => 'required',
             ]);
             DB::beginTransaction();
             try {
