@@ -19,7 +19,8 @@ class ProductCategoryController extends Controller
 
     public function index(){
 
-        $data['category'] =  DB::table('testcategories')->select('*')->get();
+        $data['category'] = ProductCategory::all();
+
         $data['count'] = 1;
         return view('category.productcategory.category-list',$data);
     }
@@ -28,11 +29,12 @@ class ProductCategoryController extends Controller
 
         if ($request->all()) {
             $this->validate($request, [
-                'name' => 'required',
+                'name' => 'required|unique:product_categories',
             ]);
             DB::beginTransaction();
+            
             try {
-                DB::table('testcategories')->insert([
+                DB::table('product_categories')->insert([
                     'name' => $request->name,
                     'created_at' => date('Y-m-d H:i'),
 
