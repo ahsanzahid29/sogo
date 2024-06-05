@@ -27,25 +27,32 @@ class SparePartCategoryController extends Controller
             $this->validate($request, [
                 'name' => 'required|unique:spare_part_categories',
             ]);
+
             DB::beginTransaction();
+
             try {
+                $inserted = DB::table('spare_part_categories')->insert([
+                    'name' => $request->name,
+                    'created_at' => date('Y-m-d H:i:s'),
+                ]);
 
-                $category = SparePartCategory::create(
-                    [
-                        'name' => $request->name,
-                    ]
-                );
-                if($category->id){
-                    return redirect('/spareparts-category-list')->with('status', 'Category added');
+                DB::commit();
 
+                if ($inserted) {
+                    \Log::info("Record inserted successfully.");
+                    return redirect('/product-category-list')->with('status', 'Category added');
+                } else {
+                    \Log::error("Record insertion failed.");
+                    return redirect('/spareparts-category-list')->with('status', 'Category insertion failed.');
                 }
-            }
-            catch (\Exception $e) {
+            } catch (\Exception $e) {
                 DB::rollback();
-                // Redirect to users page with an error message
-                return redirect('/spareparts-category-list')->with('status', $e);
+                \Log::error("Error inserting record: " . $e->getMessage());
+                return redirect('/spareparts-category-list')->with('status', 'Error: ' . $e->getMessage());
             }
         }
+
+        
     }
     public function edit($id){
         $data['specificCategory'] = SparePartCategory::find($id);
