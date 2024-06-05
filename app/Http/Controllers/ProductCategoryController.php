@@ -38,6 +38,7 @@ class ProductCategoryController extends Controller
                         'name' => $request->name,
                     ]
                 );
+                dd($category);
                 if($category->id){
                     return redirect('/product-category-list')->with('status', 'Category added');
 
