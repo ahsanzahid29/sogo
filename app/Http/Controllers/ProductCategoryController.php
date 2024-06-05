@@ -25,33 +25,38 @@ class ProductCategoryController extends Controller
         return view('category.productcategory.category-list',$data);
     }
 
-    public function save(Request $request){
-
+    public function save(Request $request)
+    {
         if ($request->all()) {
             $this->validate($request, [
                 'name' => 'required|unique:product_categories',
             ]);
-            DB::beginTransaction();
-            
-            try {
-                DB::table('product_categories')->insert([
-                    'name' => $request->name,
-                    'created_at' => date('Y-m-d H:i'),
 
+            DB::beginTransaction();
+
+            try {
+                $inserted = DB::table('product_categories')->insert([
+                    'name' => $request->name,
+                    'created_at' => date('Y-m-d H:i:s'),
                 ]);
 
+                DB::commit();
 
+                if ($inserted) {
+                    \Log::info("Record inserted successfully.");
                     return redirect('/product-category-list')->with('status', 'Category added');
-
-
-            }
-            catch (\Exception $e) {
+                } else {
+                    \Log::error("Record insertion failed.");
+                    return redirect('/product-category-list')->with('status', 'Category insertion failed.');
+                }
+            } catch (\Exception $e) {
                 DB::rollback();
-                // Redirect to users page with an error message
-                return redirect('/product-category-list')->with('status', $e);
+                \Log::error("Error inserting record: " . $e->getMessage());
+                return redirect('/product-category-list')->with('status', 'Error: ' . $e->getMessage());
             }
         }
     }
+
     public function edit($id){
         $data['specificCategory'] = ProductCategory::find($id);
         $data['category'] = ProductCategory::all();
