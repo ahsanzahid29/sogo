@@ -32,7 +32,7 @@ class ProductCategoryController extends Controller
             ]);
             DB::beginTransaction();
             try {
-                DB::table('product_categories')->insert([
+                DB::table('testcategories')->insert([
                     'name' => $request->name,
                     'created_at' => date('Y-m-d H:i'),
 
