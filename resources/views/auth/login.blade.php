@@ -65,7 +65,7 @@
                             <h1 class="text-gray-900 fw-bolder mb-3">Sign In</h1>
                             <!--end::Title-->
                             <!--begin::Subtitle-->
-                            <div class="text-gray-500 fw-semibold fs-6">Your Social Campaigns</div>
+                            <div class="text-gray-500 fw-semibold fs-6">Welcome To SOGO</div>
                             <!--end::Subtitle=-->
                         </div>
                         <!--begin::Heading-->
@@ -124,7 +124,7 @@
             <!--begin::Content-->
             <div class="d-flex flex-column flex-center py-7 py-lg-15 px-5 px-md-15 w-100">
                 <!--begin::Logo-->
-                <a href="#" class="mb-0 mb-lg-12">
+                <a href="javascript:void(0)" class="mb-0 mb-lg-12">
                     <img alt="Logo" src="{{asset('public/assets/media/logos/custom-1.png')}}" class="h-60px h-lg-75px" />
                 </a>
                 <!--end::Logo-->
