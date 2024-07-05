@@ -14,7 +14,7 @@
     <meta property="og:url" content="SOGO" />
     <meta property="og:site_name" content="SOGO" />
     <link rel="canonical" href="http://authentication/layouts/corporate/sign-in.html" />
-    <link rel="shortcut icon" href="{{asset('public/assets/media/logos/favicon.ico')}}" />
+    <link rel="shortcut icon" href="{{asset('public/assets/media/logos/favicon.png')}}" />
     <!--begin::Fonts(mandatory for all pages)-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
     <!--end::Fonts-->
