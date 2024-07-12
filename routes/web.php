@@ -82,8 +82,12 @@ Route::get('/sparepartmodel-delete/{id}', [SparePartsController::class, 'deleteM
 Route::post('/sparepart-update',[SparePartsController::class,'update'])->middleware(['auth'])->name('update-spartpart');
 
 Route::get('/sparepart-inventory-list',[SparePartsInventoryController::class,'index'])->middleware(['auth'])->name('list-sparepart-inventory');
+//Route::get('/sparepart-inventory-add', [SparePartsInventoryController::class,'add'])->middleware(['auth'])->name('add-sparepart-inventory');
 Route::get('/sparepart-inventory-add', [SparePartsInventoryController::class,'add'])->middleware(['auth'])->name('add-sparepart-inventory');
+Route::get('/spare-part-detail-for-inventory',[SparePartsInventoryController::class,'partDetailForInventory'])->middleware(['auth'])->name('sparepart-detail-for-inventory');
 Route::post('/sparepart-inventory-save',[SparePartsInventoryController::class,'save'])->middleware(['auth'])->name('save-sparepart-inventory');
+Route::get('/sparepart-inentory-detail/{id}', [SparePartsInventoryController::class, 'edit'])->middleware(['auth'])->name('view-receiving-note');
+Route::post('/sparepart-inventory-update',[SparePartsInventoryController::class,'update'])->middleware(['auth'])->name('update-sparepart-inventory');
 
 Route::get('/edit-profile',[GeneralController::class,'editProfile'])->name('edit-my-profile');
 Route::post('/update-profile',[GeneralController::class,'updateProfile'])->middleware(['auth'])->name('update-profile');

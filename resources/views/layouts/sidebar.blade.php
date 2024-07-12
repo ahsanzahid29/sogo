@@ -261,7 +261,7 @@
 														<span class="path6"></span>
 													</i>
 												</span>
-                                <span class="menu-title">Spare Parts Invertory</span>
+                                <span class="menu-title">Spare Parts Receiving Note</span>
                             </a>
                             <!--end:Menu link-->
                         </div>
@@ -504,7 +504,7 @@
 														<span class="path6"></span>
 													</i>
 												</span>
-                                <span class="menu-title">Spare Parts Invertory</span>
+                                <span class="menu-title">Spare Parts Receiving Note</span>
                             </a>
                             <!--end:Menu link-->
                         </div>
@@ -853,7 +853,7 @@
 														<span class="path6"></span>
 													</i>
 												</span>
-                                <span class="menu-title">Spare Parts Invertory</span>
+                                <span class="menu-title">Spare Parts Receiving Note</span>
                             </a>
                             <!--end:Menu link-->
                         </div>
