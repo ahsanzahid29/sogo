@@ -47,6 +47,7 @@
                         <!--end::Card title-->
                         <form class="form w-100" method="POST" action="{{ route('save-sparepart-inventory') }}" enctype="multipart/form-data">
                             @csrf
+                            <input type="hidden" name="serial_no" value="{{ $inentory_serial_no }}" />
 
                             <!--begin::Card body-->
                             <div class="card-body pt-0">

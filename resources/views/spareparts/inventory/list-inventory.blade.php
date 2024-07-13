@@ -70,9 +70,11 @@
                             <div class="card-toolbar">
                                 <!--begin::Toolbar-->
                                 <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
+                                @if($role==1 || $role==2)
                                     <!--begin::Add customer-->
 {{--                                    <a href="{{ route('add-sparepart-inventory') }}" class="btn btn-primary">Add Spare Part Inventory via CSV</a>--}}
                                     <a href="{{ route('add-sparepart-inventory') }}" class="btn btn-primary">Add Spare Part Receiving Note</a>
+                                    @endif
 
                                     <!--end::Add customer-->
                                 </div>

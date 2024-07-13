@@ -116,7 +116,7 @@
                                         @if($detail->status=='pending' && $role==1)
                                         <button type="submit" class="btn btn-warning">Update</button>
                                         @endif
-                                        <a href="{{ route('list-inverter-inventory') }}" class="btn btn-secondary">Cancel</a>
+                                        <a href="{{ route('list-sparepart-inventory') }}" class="btn btn-secondary">Cancel</a>
                                     </div>
                                 </div>
                             </div>

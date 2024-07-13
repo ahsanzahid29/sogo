@@ -16,7 +16,7 @@ class SparePartsInventoryController extends Controller
 {
     public function index()
     {
-        if (Auth::user()->role_id == 1) {
+        if (Auth::user()->role_id == 1 || Auth::user()->role_id == 4) {
             $data["sparePartInventory"] = SparePartsInventoryDetail::select(
                 "spare_parts_inventory_details.id as id",
                 "spare_parts_inventory_details.principle_invoice_no as inv_no",
@@ -136,6 +136,8 @@ class SparePartsInventoryController extends Controller
     {
         $data["spareParts"] = SparePart::all();
         $data["randomString"] = $this->generateRandomString();
+        $data["inentory_serial_no"] = $this->generateRandomString();
+        $data['role'] = Auth::user()->role_id;
         if (Auth::user()->role_id == 1) {
             return view("spareparts.inventory.add-inventory", $data);
         } elseif (Auth::user()->role_id == 2) {
