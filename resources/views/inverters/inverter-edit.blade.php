@@ -38,6 +38,12 @@
         <!-- end:Toolbar -->
         <div class="d-flex flex-column flex-column-fluid">
             <div id="kt_app_content_container" class="app-container container-xxl">
+                @if(session('status'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('status') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
                 <!--begin::Card-->
                 <div class="card">
                     <!--begin::Card header-->
@@ -155,6 +161,34 @@
                                         <textarea name="technical_notes" class="form-control mb-2 mb-md-0" rows="7" cols="7" placeholder="Technical Notes">{{ $inverter->technical_notes }}</textarea>
                                     </div>
                                 </div>
+                                @if(count($inverterSpartsParts)>0)
+                                    <div class="form-group row mb-3">
+                                        <h1>Selected Product Spare Parts</h1>
+                                        <div class="table-responsive mt-4">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                <tr class="fw-bold fs-6 text-gray-800">
+                                                    <th>Factory Code</th>
+                                                    <th>Dosage</th>
+                                                    <th>Plugin Location</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                @foreach($inverterSpartsParts as $rowSpm)
+                                                    <tr>
+                                                        <td>{{ $rowSpm->factory_code }}</td>
+                                                        <td>{{ $rowSpm->dosage }}</td>
+                                                        <td>{{ $rowSpm->plugin }}</td>
+                                                        <td><a href="{{route('delete-sparepart-from-product',$rowSpm->recordid)}}" class="btn btn-small btn-light-danger"> Delete</a></td>
+                                                    </tr>
+                                                @endforeach
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
 
                             <div class="form-group row">

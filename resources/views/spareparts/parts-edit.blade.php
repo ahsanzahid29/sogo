@@ -51,6 +51,12 @@
         <!-- end:Toolbar -->
         <div class="d-flex flex-column flex-column-fluid">
             <div id="kt_app_content_container" class="app-container container-xxl">
+                @if(session('status'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('status') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
                 <!--begin::Card-->
                 <div class="card">
                     <!--begin::Card header-->
