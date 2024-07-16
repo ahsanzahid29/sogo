@@ -126,6 +126,7 @@ class SparePartsController extends Controller
                             'sparepart_id'       => $sparePartId,
                             'inverter_id'        => $request->inverter_modal[$i],
                             'dosage'             => $request->dosage[$i],
+                            'plugin_location'    => $request->plugin_location[$i]
                         ];
                     }
                     SparePartModel::insert($selectedInverters);
@@ -146,8 +147,8 @@ class SparePartsController extends Controller
 
         $data['inverters']= Inverter::get();
         $data['sparePart'] = SparePart::find($id);
-        $data['sparePartModel'] = SparePartModel::select('spare_part_models.id as model_id','spare_part_models.dosage as dosage',
-        'inverters.modal_number as model')
+        $data['sparePartModel'] = SparePartModel::select('spare_part_models.id as model_id','spare_part_models.dosage as dosage'
+            ,'spare_part_models.plugin_location as plugin_location','inverters.modal_number as model')
             ->join('inverters', 'spare_part_models.inverter_id', '=', 'inverters.id')
             ->where('spare_part_models.sparepart_id',$id)
             ->get();
@@ -225,6 +226,7 @@ class SparePartsController extends Controller
                                 'sparepart_id'       => $request->recordid,
                                 'inverter_id'        => $request->inverter_modal[$i],
                                 'dosage'             => $request->dosage[$i],
+                                'plugin_location'    => $request->plugin_location[$i],
                             ];
                         }
                     }

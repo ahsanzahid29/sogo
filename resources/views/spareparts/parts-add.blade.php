@@ -142,7 +142,7 @@
                             <div class="form-group row mb-5">
 
                                 <div class="col-md-12 mb-5 mt-7">
-                                    <button type="button" class="btn btn-success add-form">Add Product Modal</button>
+                                    <button type="button" class="btn btn-success add-form">Add Product Model</button>
 
                                 </div>
 
@@ -153,7 +153,7 @@
                                         <div class="col-md-4 mb-5 mt-2">
                                             <label for="exampleFormControlInput1" class=" required form-label">Product Model</label>
                                             <select name="inverter_modal[]" class="form-select form-select-solid" required>
-                                                <option value="" selected>Select Product Modal</option>
+                                                <option value="" selected>Select Product Model</option>
                                                 @foreach($inverters as $row)
                                                 <option value="{{$row->id}}">{{ $row->modal_number }}</option>
                                                 @endforeach
@@ -162,6 +162,10 @@
                                         <div class="col-md-4 mb-5">
                                             <label class=" required form-label">Dosage :</label>
                                             <input type="text" name="dosage[]" class="form-control mb-2 mb-md-0" placeholder="Dosage" required />
+                                        </div>
+                                        <div class="col-md-4 mb-5">
+                                            <label class=" form-label">Plugin Location :</label>
+                                            <textarea name="plugin_location[]" class="form-control mb-2 mb-md-0" placeholder="Plugin Location"></textarea>
                                         </div>
 
                                     </div>
