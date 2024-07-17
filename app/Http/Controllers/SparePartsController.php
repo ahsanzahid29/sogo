@@ -172,6 +172,24 @@ class SparePartsController extends Controller
 
         }
     }
+    public function updateSalePrice(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|integer',
+            'sale_price' => 'required|numeric',
+        ]);
+
+        $sparePart = SparePart::find($request->id);
+        if ($sparePart) {
+            $sparePart->sale_price = $request->sale_price;
+            $sparePart->save();
+
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Spare part not found']);
+        }
+    }
+
 
     public function update(Request $request){
         if ($request->all()) {

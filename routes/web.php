@@ -76,12 +76,15 @@ Route::get('/sparepart-category-edit/{id}', [SparePartCategoryController::class,
 Route::post('/sparepart-category-update',[SparePartCategoryController::class,'update'])->middleware(['auth'])->name('sparepart-category-update');
 Route::get('/sparepart-category-delete/{id}', [SparePartCategoryController::class, 'delete'])->middleware(['auth'])->name('delete-sparepart-category');
 
+
 Route::get('/spareparts-list',[SparePartsController::class,'index'])->middleware(['auth'])->name('list-spartpart');
 Route::get('/sparepart-add', [SparePartsController::class,'add'])->middleware(['auth'])->name('add-spartpart');
 Route::post('/sparepart-save',[SparePartsController::class,'save'])->middleware(['auth'])->name('save-spartpart');
 Route::get('/sparepart-edit/{id}', [SparePartsController::class, 'edit'])->middleware(['auth'])->name('edit-sparepart');
 Route::get('/sparepartmodel-delete/{id}', [SparePartsController::class, 'deleteModel'])->middleware(['auth'])->name('delete-sparepart-model');
 Route::post('/sparepart-update',[SparePartsController::class,'update'])->middleware(['auth'])->name('update-spartpart');
+Route::post('/sparepart-update-saleprice',[SparePartsController::class,'updateSalePrice'])->middleware(['auth'])->name('update-sale-price');
+
 
 Route::get('/sparepart-inventory-list',[SparePartsInventoryController::class,'index'])->middleware(['auth'])->name('list-sparepart-inventory');
 //Route::get('/sparepart-inventory-add', [SparePartsInventoryController::class,'add'])->middleware(['auth'])->name('add-sparepart-inventory');
