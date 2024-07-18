@@ -18,12 +18,16 @@ class CreateSparePartInventoriesTable extends Migration
             $table->string('factory_code');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('sparepart_id');
+            $table->unsignedBigInteger('spare_part_inventory_detail_id');
             $table->date('repair_date')->nullable();
             $table->string('csv_key')->nullable();
             $table->string('order_number')->nullable();
             $table->string('serial_number')->nullable();
+            $table->integer('qty_required')->default(0);
+            $table->string('part_purchase_price')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('sparepart_id')->references('id')->on('spare_parts');
+            $table->foreign('spare_part_inventory_detail_id')->references('id')->on('spare_parts_inventory_details');
             $table->timestamps();
         });
     }

@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
+
 class SparePartsController extends Controller
 {
     public function __construct()
@@ -126,6 +127,7 @@ class SparePartsController extends Controller
                             'sparepart_id'       => $sparePartId,
                             'inverter_id'        => $request->inverter_modal[$i],
                             'dosage'             => $request->dosage[$i],
+                            'plugin_location'    => $request->plugin_location[$i]
                         ];
                     }
                     SparePartModel::insert($selectedInverters);
@@ -146,8 +148,8 @@ class SparePartsController extends Controller
 
         $data['inverters']= Inverter::get();
         $data['sparePart'] = SparePart::find($id);
-        $data['sparePartModel'] = SparePartModel::select('spare_part_models.id as model_id','spare_part_models.dosage as dosage',
-        'inverters.modal_number as model')
+        $data['sparePartModel'] = SparePartModel::select('spare_part_models.id as model_id','spare_part_models.dosage as dosage'
+            ,'spare_part_models.plugin_location as plugin_location','inverters.modal_number as model')
             ->join('inverters', 'spare_part_models.inverter_id', '=', 'inverters.id')
             ->where('spare_part_models.sparepart_id',$id)
             ->get();
@@ -170,6 +172,24 @@ class SparePartsController extends Controller
 
         }
     }
+    public function updateSalePrice(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|integer',
+            'sale_price' => 'required|numeric',
+        ]);
+
+        $sparePart = SparePart::find($request->id);
+        if ($sparePart) {
+            $sparePart->sale_price = $request->sale_price;
+            $sparePart->save();
+
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Spare part not found']);
+        }
+    }
+
 
     public function update(Request $request){
         if ($request->all()) {
@@ -225,6 +245,7 @@ class SparePartsController extends Controller
                                 'sparepart_id'       => $request->recordid,
                                 'inverter_id'        => $request->inverter_modal[$i],
                                 'dosage'             => $request->dosage[$i],
+                                'plugin_location'    => $request->plugin_location[$i],
                             ];
                         }
                     }

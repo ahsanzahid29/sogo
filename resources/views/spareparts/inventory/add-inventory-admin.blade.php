@@ -115,8 +115,8 @@
                                             <input type="number" name="qty[]" placeholder="Required Quantity" class="form-control mb-2 mb-md-0" />
                                         </div>
                                         <div class="col-md-4 mb-5">
-                                            <label class=" required form-label">Purchase Price :</label>
-                                            <input type="text" name="purchase_price[]" placeholder="Purchase Price" class="form-control mb-2 mb-md-0" />
+                                            <label class=" form-label">Purchase Price :</label>
+                                            <input type="text" disabled placeholder="Purchase Price" class="form-control mb-2 mb-md-0" />
                                         </div>
                                         <div class="col-md-4 mb-5">
                                             <label class="form-label">Previous Purchase Price :</label>

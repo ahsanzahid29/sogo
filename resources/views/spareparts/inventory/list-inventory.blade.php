@@ -13,7 +13,7 @@
                     <!--begin::Page title-->
                     <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                         <!--begin::Title-->
-                        <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">Spare Parts Inventory Listing</h1>
+                        <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">Spare Parts Receiving Note Listing</h1>
                         <!--end::Title-->
                         <!--begin::Breadcrumb-->
                         <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
@@ -28,7 +28,7 @@
                             </li>
                             <!--end::Item-->
                             <!--begin::Item-->
-                            <li class="breadcrumb-item text-muted">Spare Parts Inventory List</li>
+                            <li class="breadcrumb-item text-muted">Spare Parts Receiving Note List</li>
                             <!--end::Item-->
                         </ul>
                         <!--end::Breadcrumb-->
@@ -70,8 +70,12 @@
                             <div class="card-toolbar">
                                 <!--begin::Toolbar-->
                                 <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
+                                @if($role==1 || $role==2)
                                     <!--begin::Add customer-->
-                                    <a href="{{ route('add-sparepart-inventory') }}" class="btn btn-primary">Add Spare Part Inventory via CSV</a>
+{{--                                    <a href="{{ route('add-sparepart-inventory') }}" class="btn btn-primary">Add Spare Part Inventory via CSV</a>--}}
+                                    <a href="{{ route('add-sparepart-inventory') }}" class="btn btn-primary">Add Spare Part Receiving Note</a>
+                                    @endif
+
                                     <!--end::Add customer-->
                                 </div>
                                 <!--end::Toolbar-->
@@ -96,29 +100,50 @@
                                 <thead>
                                 <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
                                     <th>S No</th>
-                                    <th class="min-w-125px">Factory Code</th>
-                                    <th class="min-w-125px">Part Name</th>
-                                    <th class="min-w-125px">Part Description</th>
-                                    <th class="min-w-125px">Serial Number</th>
-                                    <th class="min-w-125px">Order Number</th>
-                                    <th class="min-w-125px">Date of Receipt</th>
+                                    <th class="min-w-125px">Invoice No</th>
+                                    <th class="min-w-125px">Receiving Date</th>
+                                    <th class="min-w-125px">GRN</th>
+                                    <th class="min-w-125px">Parts</th>
+                                    <th class="min-w-125px">Status</th>
+                                    <th class="min-w-125px">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody class="fw-semibold text-gray-600">
-                                @if($factoryCode)
-                                    @for($i=0;$i<count($factoryCode);$i++)
+                                    @foreach($sparePartInventory as $row)
                                 <tr>
                                     <td>{{ $count ++ }}</td>
-                                    <td>{{$factoryCode[$i]}}</td>
-                                    <td><a href="javascript:void(0);" title="{{ $partName[$i] }}" style="text-decoration: none;color:#99a1b7">{{ Str::limit($partName[$i], 20, '...') }}</a></td>
-                                    <td>{{ $partType[$i] }}</td>
-                                    <td>{{ $serialNo[$i] }}</td>
-                                    <td>{{$orderNumber[$i]}}</td>
-                                    <td>{{ date('d/m/Y',strtotime($receiptDate[$i])) }}</td>
+                                    <td>{{ $row->inv_no }}</td>
+                                    <td>{{ date('d/m/Y',strtotime($row->inv_date)) }}</td>
+                                    <td>{{ $row->grn }}</td>
+                                    <td>{{ $row->inventory_count_count }}</td>
+                                    <td>
+                                        @if($row->status=='pending')
+                                            <div class="badge badge-light-warning">Pending</div>
+                                        @else
+                                            <div class="badge badge-light-success">Completed</div>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
+                                            <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
+                                        <!--begin::Menu-->
+                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
+                                            <!--begin::Menu item-->
+                                            <div class="menu-item px-3">
+                                                @if($row->status=='pending')
+                                                    <a href="{{route('view-receiving-note',$row->id)}}" class="menu-link px-3">Edit</a>
+                                                @else
+                                                    <a href="{{route('view-receiving-note',$row->id)}}" class="menu-link px-3">View</a>
+                                                @endif
+                                            </div>
+                                            <!--end::Menu item-->
+                                        </div>
+                                        <!--end::Menu-->
+                                    </td>
 
                                 </tr>
-                                    @endfor
-                                @endif
+                                    @endforeach
+
 
                                 </tbody>
                                 <!--end::Table body-->

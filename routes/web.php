@@ -57,6 +57,7 @@ Route::get('/inverter-add', [InverterController::class,'add'])->middleware(['aut
 Route::post('/inverter-save',[InverterController::class,'save'])->middleware(['auth'])->name('inverter-add');
 Route::get('/inverter-edit/{id}', [InverterController::class, 'edit'])->middleware(['auth'])->name('edit-inverter');
 Route::post('/inverter-update',[InverterController::class,'update'])->middleware(['auth'])->name('update-inverter');
+Route::get('/sparepart-product-delete/{id}', [InverterController::class, 'deleteSparePart'])->middleware(['auth'])->name('delete-sparepart-from-product');
 
 Route::get('/product-category-list',[ProductCategoryController::class,'index'])->middleware(['auth'])->name('list-inverter-category');
 Route::post('/product-category-save',[ProductCategoryController::class,'save'])->middleware(['auth'])->name('product-category-add');
@@ -68,11 +69,13 @@ Route::get('/inverters-inventory-list',[InverterInventoryController::class,'inde
 Route::get('/inverters-inventory-add', [InverterInventoryController::class,'add'])->middleware(['auth'])->name('add-inverter-inventory');
 Route::post('/inventory-save',[InverterInventoryController::class,'save'])->middleware(['auth'])->name('save-inverter-inventory');
 
+
 Route::get('/spareparts-category-list',[SparePartCategoryController::class,'index'])->middleware(['auth'])->name('list-category-spartpart');
 Route::post('/sparepart-category-save',[SparePartCategoryController::class,'save'])->middleware(['auth'])->name('sparepart-category-add');
 Route::get('/sparepart-category-edit/{id}', [SparePartCategoryController::class, 'edit'])->middleware(['auth'])->name('edit-sparepart-category');
 Route::post('/sparepart-category-update',[SparePartCategoryController::class,'update'])->middleware(['auth'])->name('sparepart-category-update');
 Route::get('/sparepart-category-delete/{id}', [SparePartCategoryController::class, 'delete'])->middleware(['auth'])->name('delete-sparepart-category');
+
 
 Route::get('/spareparts-list',[SparePartsController::class,'index'])->middleware(['auth'])->name('list-spartpart');
 Route::get('/sparepart-add', [SparePartsController::class,'add'])->middleware(['auth'])->name('add-spartpart');
@@ -80,10 +83,16 @@ Route::post('/sparepart-save',[SparePartsController::class,'save'])->middleware(
 Route::get('/sparepart-edit/{id}', [SparePartsController::class, 'edit'])->middleware(['auth'])->name('edit-sparepart');
 Route::get('/sparepartmodel-delete/{id}', [SparePartsController::class, 'deleteModel'])->middleware(['auth'])->name('delete-sparepart-model');
 Route::post('/sparepart-update',[SparePartsController::class,'update'])->middleware(['auth'])->name('update-spartpart');
+Route::post('/sparepart-update-saleprice',[SparePartsController::class,'updateSalePrice'])->middleware(['auth'])->name('update-sale-price');
+
 
 Route::get('/sparepart-inventory-list',[SparePartsInventoryController::class,'index'])->middleware(['auth'])->name('list-sparepart-inventory');
+//Route::get('/sparepart-inventory-add', [SparePartsInventoryController::class,'add'])->middleware(['auth'])->name('add-sparepart-inventory');
 Route::get('/sparepart-inventory-add', [SparePartsInventoryController::class,'add'])->middleware(['auth'])->name('add-sparepart-inventory');
+Route::get('/spare-part-detail-for-inventory',[SparePartsInventoryController::class,'partDetailForInventory'])->middleware(['auth'])->name('sparepart-detail-for-inventory');
 Route::post('/sparepart-inventory-save',[SparePartsInventoryController::class,'save'])->middleware(['auth'])->name('save-sparepart-inventory');
+Route::get('/sparepart-inentory-detail/{id}', [SparePartsInventoryController::class, 'edit'])->middleware(['auth'])->name('view-receiving-note');
+Route::post('/sparepart-inventory-update',[SparePartsInventoryController::class,'update'])->middleware(['auth'])->name('update-sparepart-inventory');
 
 Route::get('/edit-profile',[GeneralController::class,'editProfile'])->name('edit-my-profile');
 Route::post('/update-profile',[GeneralController::class,'updateProfile'])->middleware(['auth'])->name('update-profile');

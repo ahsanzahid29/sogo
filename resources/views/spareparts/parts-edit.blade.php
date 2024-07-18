@@ -51,6 +51,12 @@
         <!-- end:Toolbar -->
         <div class="d-flex flex-column flex-column-fluid">
             <div id="kt_app_content_container" class="app-container container-xxl">
+                @if(session('status'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('status') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
                 <!--begin::Card-->
                 <div class="card">
                     <!--begin::Card header-->
@@ -160,6 +166,7 @@
                                             <tr class="fw-bold fs-6 text-gray-800">
                                                 <th>Model</th>
                                                 <th>Dosage</th>
+                                                <th>Plugin Location</th>
                                                 <th>Action</th>
                                             </tr>
                                             </thead>
@@ -168,6 +175,7 @@
                                                 <tr>
                                                     <td>{{ $rowSpm->model }}</td>
                                                     <td>{{ $rowSpm->dosage }}</td>
+                                                    <td>{{ $rowSpm->plugin_location }}</td>
                                                     <td><a href="{{route('delete-sparepart-model',$rowSpm->model_id)}}" class="btn btn-small btn-light-danger"> Delete</a></td>
                                                 </tr>
                                             @endforeach
@@ -179,7 +187,7 @@
                                 @endif
                             <div class="form-group row mb-5">
                               <div class="col-md-6 mb-5 mt-7">
-                              <button type="button" class="btn btn-success add-form">Add Product Modal</button>
+                              <button type="button" class="btn btn-success add-form">Add Product Model</button>
                               </div>
                             </div>
 
@@ -190,7 +198,7 @@
                                         <div class="col-md-4 mb-5 mt-2">
                                             <label for="exampleFormControlInput1" class=" form-label">Product Model</label>
                                             <select name="inverter_modal[]" class="form-select form-select-solid">
-                                                <option value="" selected>Select Product Modal</option>
+                                                <option value="" selected>Select Product Model</option>
                                                 @foreach($inverters as $row)
                                                 <option value="{{$row->id}}">{{ $row->modal_number }}</option>
                                                 @endforeach
@@ -199,6 +207,10 @@
                                         <div class="col-md-4 mb-5">
                                             <label class=" form-label">Dosage :</label>
                                             <input type="text" name="dosage[]" class="form-control mb-2 mb-md-0" placeholder="Dosage" />
+                                        </div>
+                                        <div class="col-md-4 mb-5">
+                                            <label class=" form-label">Plugin Location :</label>
+                                            <textarea name="plugin_location[]" class="form-control mb-2 mb-md-0" placeholder="Plugin Location"></textarea>
                                         </div>
 
                                     </div>

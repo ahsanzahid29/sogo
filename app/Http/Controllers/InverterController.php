@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Inverter;
 use App\Models\ProductCategory;
+use App\Models\SparePart;
+use App\Models\SparePartModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class InverterController extends Controller
 {
@@ -61,6 +64,8 @@ class InverterController extends Controller
             $productManaualName='';
             $troubleshootGuideName='';
             $inverterImageName='';
+
+
 
             DB::beginTransaction();
             try {
@@ -140,8 +145,101 @@ class InverterController extends Controller
                         'user_id'=> Auth::user()->id,
                     ]
                 );
-                DB::commit();
+                // add data in spare_parts_model via csv
+                if (($handle = fopen($request->file("sparepart_file")->getPathname(),"r")) !== false) {
+                    $headers = fgetcsv($handle, 1000, ",");
 
+                    // Remove the BOM (Byte Order Mark) from the first column name
+                    $firstHeader = $headers[0];
+                    $firstHeader = preg_replace('/^\xEF\xBB\xBF/', "", $firstHeader);
+                    $headers[0] = $firstHeader;
+
+                    // Now create an associative array with header names as keys and their indices as values
+                    $headerIndexes = array_flip($headers);
+                    // Check for required columns
+                    $requiredColumns = ["FactoryCode","Dosage","PluginLocation"];
+                    $headerIndexes = array_flip($headers);
+
+                    foreach ($requiredColumns as $column) {
+                        if (!array_key_exists($column, $headerIndexes)) {
+                            return back()->withErrors([
+                                "sparepart_file" => "Missing required column: $column",
+                            ]);
+                        }
+                    }
+
+                    // Read each row and validate data
+                    $insertData = [];
+                    $enteredFactoryCode = [];
+
+                    while (($row = fgetcsv($handle, 1000, ",")) !== false) {
+                        $enteredFactoryCode[] = $row[$headerIndexes["FactoryCode"]];
+                        // get spare part id from model name
+                        $sparePart = SparePart::select("id")
+                            ->where("factory_code", $row[$headerIndexes["FactoryCode"]])
+                            ->first();
+                        //print_r($row[$headerIndexes["FactoryCode"]]);
+                        if ($sparePart) {
+                            // Extract data using column headers
+                            $data = [
+                                "inverter_id"      =>   $inverter->id,
+                                "sparepart_id"     =>   $sparePart->id,
+                                "dosage"           =>   $row[$headerIndexes["Dosage"]] ?? "",
+                                "plugin_location"  =>   $row[$headerIndexes["PluginLocation"]] ?? "",
+
+                            ];
+                        } else {
+                            return back()->withErrors([
+                                "sparepart_file" => "Invalid data",
+                            ]);
+                        }
+
+
+                        // Validate row data
+                        $validator = Validator::make($data, [
+                            "inverter_id" => "required",
+                            "sparepart_id" => "required",
+                            "dosage" => "required",
+                        ]);
+
+                        if ($validator->fails()) {
+                            continue; // Skip rows with validation errors
+                        }
+                        // check factory code duplicates within an array
+                        $valueCounts = array_count_values($enteredFactoryCode);
+
+                        $hasRepetitions = false;
+                        foreach ($valueCounts as $count) {
+                            if ($count > 1) {
+                                $hasRepetitions = true;
+                                break;
+                            }
+                        }
+
+                        if ($hasRepetitions) {
+                            return back()->withErrors([
+                                "sparepart_file" => "Duplicate Factory Code found",
+                            ]);
+                        } else {}
+                        // Add validated data to the insertion array
+                        $insertData[] = $data;
+                    }
+
+                    //dd($insertData);
+                    fclose($handle);
+
+
+                    // Insert validated data into the database
+                    if (!empty($insertData)) {
+                        SparePartModel::insert($insertData);
+                    } else {
+                        return back()->withErrors([
+                            "sparepart_file" => "No valid data to import",
+                        ]);
+                    }
+                }
+
+                DB::commit();
                 return redirect('/inverters-list')->with('status', 'Product added successfully');
             }
             catch (\Exception $e) {
@@ -155,9 +253,14 @@ class InverterController extends Controller
 
     public function edit($id){
        $inverter = Inverter::find($id);
+       $inverterSpartsParts= SparePartModel::select('spare_part_models.id as recordid','spare_part_models.dosage',
+       'spare_part_models.plugin_location as plugin','spare_parts.factory_code')
+           ->join('spare_parts', 'spare_part_models.sparepart_id', '=', 'spare_parts.id')
+           ->where('spare_part_models.inverter_id',$id)
+           ->get();
        $productCategory = ProductCategory::all();
        if($inverter){
-           return view('inverters.inverter-edit', compact('inverter','productCategory'));
+           return view('inverters.inverter-edit', compact('inverter','productCategory','inverterSpartsParts'));
 
        }
        else{
@@ -271,5 +374,20 @@ class InverterController extends Controller
 
         }
 
+    }
+    public function deleteSparePart($id){
+        $sparePartDetail = SparePartModel::find($id);
+        $productId = $sparePartDetail->inverter_id;
+        if($productId){
+            // Delete spare part model
+            SparePartModel::where('id', $id)->delete();
+
+            return redirect('/inverter-edit/'.$productId)->with('status', 'Spare Part deleted successfully');
+        }
+        else{
+            return redirect('/inverter-edit/'.$productId)->with('status', 'Something went wrong');
+
+
+        }
     }
 }
