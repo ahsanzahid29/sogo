@@ -161,34 +161,7 @@
                                         <textarea name="technical_notes" class="form-control mb-2 mb-md-0" rows="7" cols="7" placeholder="Technical Notes">{{ $inverter->technical_notes }}</textarea>
                                     </div>
                                 </div>
-                                @if(count($inverterSpartsParts)>0)
-                                    <div class="form-group row mb-3">
-                                        <h1>Selected Product Spare Parts</h1>
-                                        <div class="table-responsive mt-4">
-                                            <table class="table table-bordered">
-                                                <thead>
-                                                <tr class="fw-bold fs-6 text-gray-800">
-                                                    <th>Factory Code</th>
-                                                    <th>Dosage</th>
-                                                    <th>Plugin Location</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                @foreach($inverterSpartsParts as $rowSpm)
-                                                    <tr>
-                                                        <td>{{ $rowSpm->factory_code }}</td>
-                                                        <td>{{ $rowSpm->dosage }}</td>
-                                                        <td>{{ $rowSpm->plugin }}</td>
-                                                        <td><a href="{{route('delete-sparepart-from-product',$rowSpm->recordid)}}" class="btn btn-small btn-light-danger"> Delete</a></td>
-                                                    </tr>
-                                                @endforeach
 
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                @endif
                             </div>
 
                             <div class="form-group row">
@@ -214,6 +187,47 @@
                     <!--end::Card body-->
                 </div>
                 <!--end::Card-->
+                    <!--begin::Card-->
+
+                        <h2 class="mt-4">Spare Parts</h2>
+
+                        <!--end::Card header-->
+
+                            <!--begin::Card body-->
+                        <div class="card-body pt-0 mt-3 ">
+                            <!--begin::Table-->
+                            <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_customers_table">
+                                <thead>
+                                <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
+                                    <th>Factory Code</th>
+                                    <th>Dosage</th>
+                                    <th>Plugin Location</th>
+                                    <th>Action</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody class="fw-semibold text-gray-600">
+                                @foreach($inverterSpartsParts as $rowSpm)
+                                    <tr>
+                                        <td>{{ $rowSpm->factory_code }}</td>
+                                        <td>{{ $rowSpm->dosage }}</td>
+                                        <td>{{ $rowSpm->plugin }}</td>
+                                        <td><a href="{{route('delete-sparepart-from-product',$rowSpm->recordid)}}" class="btn btn-small btn-light-danger"> Delete</a></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                                <!--end::Table body-->
+                            </table>
+                            <!--end::Table-->
+                        </div>
+                        <!--end::Card body-->
+                    </div>
+                    <!--end::Card-->
 
 
             </div>
@@ -238,3 +252,12 @@
     </div>
     <!--end:::Main-->
 @endsection
+@push('scripts_bottom')
+    <script type="text/javascript">
+        $("#kt_customers_table").DataTable();
+    </script>
+    <script src="{{asset('public/assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
+    <script src="{{asset('public/assets/js/custom/apps/ecommerce/customers/listing/listing.js')}}"></script>
+
+
+@endpush
