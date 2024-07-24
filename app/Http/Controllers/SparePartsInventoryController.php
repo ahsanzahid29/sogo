@@ -132,10 +132,17 @@ class SparePartsInventoryController extends Controller
     {
         return Str::random($length); // This will give you a random alphanumeric string
     }
+    function generateSequentialNumber($number)
+    {
+        return str_pad($number, 4, '0', STR_PAD_LEFT);
+    }
     public function add()
     {
         $data["spareParts"] = SparePart::all();
         $data["randomString"] = $this->generateRandomString();
+        $count = SparePartsInventoryDetail::count();
+        $finalCount = $count +1;
+        $data["randomString"] = 'SK'.date('y').$this->generateSequentialNumber($finalCount);
         $data["inentory_serial_no"] = $this->generateRandomString();
         $data['role'] = Auth::user()->role_id;
         if (Auth::user()->role_id == 1) {
