@@ -80,7 +80,7 @@ class SparePartsController extends Controller
                 //'ampeare_rating' => 'required',
                 'sale_price' => 'required',
                 //'base_unit' => 'required',
-                'pieces' => 'required',
+                'unit' => 'required|not_in:0',
                 'part_image' => 'nullable|mimes:jpeg,jpg,png,gif',
 
             ]);
@@ -109,7 +109,8 @@ class SparePartsController extends Controller
                         //'voltage_rating' => $request->voltage_rating,
                        // 'ampeare_rating' => $request->ampeare_rating,
                         //'base_unit'       => $request->base_unit,
-                        'pieces'          => $request->pieces,
+                        'pieces'          => 1,
+                        'unit'            =>  $request->unit,
                         'sale_price'      => $request->sale_price,
                         'total_quantity'  => 0,
                         'sold_quantity'   => 0,
@@ -201,7 +202,7 @@ class SparePartsController extends Controller
                // 'ampeare_rating' => 'required',
                 'sale_price' => 'required',
                 //'base_unit' => 'required',
-                'pieces' => 'required',
+                'unit' => 'required|not_in:0',
                 'part_image' => 'nullable|mimes:jpeg,jpg,png,gif',
 
             ]);
@@ -229,7 +230,8 @@ class SparePartsController extends Controller
                     //'voltage_rating' => $request->voltage_rating,
                     //'ampeare_rating' => $request->ampeare_rating,
                     //'base_unit'      => $request->base_unit,
-                    'pieces'         => $request->pieces,
+                    'pieces'         => 1,
+                    'unit'           => $request->unit,
                     'sale_price'     => $request->sale_price,
                     'part_image'     => $partImageName,
                     'technical_notes' => $request->technical_notes
