@@ -73,12 +73,7 @@
                                         <input type="text" value="{{ date('d/m/Y',strtotime($detail->receiving_invoice_date)) }}" class="form-control mb-2 mb-md-0"  disabled />
                                     </div>
                                 </div>
-                                <div class="form-group row mb-5">
-                                    <div class="col-md-12 mb-5">
-                                        <label class="form-label">Remarks:</label>
-                                        <textarea class="form-control mb-2 mb-md-0" disabled rows="7" cols="7">{{ $detail->remarks }}</textarea>
-                                    </div>
-                                </div>
+
 
                                 <div id="form-container">
                                     @foreach($sp_inventory as $row)
@@ -97,19 +92,39 @@
                                             <input type="number" value="{{ $row->qty }}" placeholder="Required Quantity" class="form-control mb-2 mb-md-0" disabled />
                                         </div>
                                         @if($detail->status=='pending' && $role==1)
-                                        <div class="col-md-4 mb-5">
-                                            <label class="required form-label">Purchase Price :</label>
-                                            <input type="number" name="purchase_price[]" value="{{$row->pprice}}" placeholder="Purchase Price" class="form-control mb-2 mb-md-0" required />
-                                        </div>
+                                            <div class="col-md-4 mb-5">
+                                                <label class="required form-label">Purchase Price :</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text" id="basic-addon1">Rs.</span>
+                                                    <input type="number" name="purchase_price[]" value="{{$row->pprice}}" placeholder="Purchase Price" class="form-control mb-2 mb-md-0" required />
+                                                </div>
+                                            </div>
+{{--                                        <div class="col-md-4 mb-5">--}}
+{{--                                            <label class="required form-label">Purchase Price :</label>--}}
+{{--                                            <input type="number" name="purchase_price[]" value="{{$row->pprice}}" placeholder="Purchase Price" class="form-control mb-2 mb-md-0" required />--}}
+{{--                                        </div>--}}
                                         @else
                                             <div class="col-md-4 mb-5">
-                                                <label class="form-label">Purchase Price :</label>
-                                                <input type="text" value="{{$row->pprice}}" placeholder="Purchase Price" class="form-control mb-2 mb-md-0" disabled />
+                                                <label class=" form-label">Purchase Price :</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text" id="basic-addon1">Rs.</span>
+                                                    <input type="text" value="{{$row->pprice}}" placeholder="Purchase Price" class="form-control mb-2 mb-md-0" disabled />
+                                                </div>
                                             </div>
+{{--                                            <div class="col-md-4 mb-5">--}}
+{{--                                                <label class="form-label">Purchase Price :</label>--}}
+{{--                                                <input type="text" value="{{$row->pprice}}" placeholder="Purchase Price" class="form-control mb-2 mb-md-0" disabled />--}}
+{{--                                            </div>--}}
                                         @endif
                                     </div>
                                         <hr/>
                                     @endforeach
+                                </div>
+                                <div class="form-group row mb-5">
+                                    <div class="col-md-12 mb-5">
+                                        <label class="form-label">Remarks:</label>
+                                        <textarea class="form-control mb-2 mb-md-0" disabled rows="7" cols="7">{{ $detail->remarks }}</textarea>
+                                    </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-md-12">
