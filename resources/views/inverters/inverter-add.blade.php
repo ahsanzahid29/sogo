@@ -166,7 +166,7 @@
                                 <div class="col-md-12">
 
                                     <button type="submit" class="btn btn-success">Save</button>
-                                    <a href="{{ url('/inverters-list') }}" class="btn btn-secondary">Cancel</a>
+                                    <a href="{{ url('/products-list') }}" class="btn btn-secondary">Cancel</a>
                                 </div>
                             </div>
 

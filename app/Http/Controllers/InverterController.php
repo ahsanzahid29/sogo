@@ -240,12 +240,12 @@ class InverterController extends Controller
                 }
 
                 DB::commit();
-                return redirect('/inverters-list')->with('status', 'Product added successfully');
+                return redirect('/products-list')->with('status', 'Product added successfully');
             }
             catch (\Exception $e) {
                 DB::rollback();
                 // Redirect to users page with an error message
-                return redirect('/inverters-list')->with('status', $e);
+                return redirect('/products-list')->with('status', $e);
             }
 
         }
@@ -364,12 +364,12 @@ class InverterController extends Controller
                 Inverter::where('id', $request->recordid)->update($newdata);
                 DB::commit();
 
-                return redirect('/inverters-list')->with('status', 'Product updated successfully');
+                return redirect('/products-list')->with('status', 'Product updated successfully');
             }
             catch (\Exception $e) {
                 DB::rollback();
                 // Redirect to inverter page with an error message
-                return redirect('/inverters-list')->with('status', $e);
+                return redirect('/products-list')->with('status', $e);
             }
 
         }

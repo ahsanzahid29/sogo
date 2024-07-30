@@ -52,11 +52,11 @@ Route::get('/user-password/{id}', [UserController::class, 'changePassword'])->mi
 Route::get('/add-password/{uuid}', [GeneralController::class, 'addPassword'])->name('addPassword');
 Route::post('/save-password',[GeneralController::class,'savePassword'])->name('password.add');
 
-Route::get('/inverters-list',[InverterController::class,'index'])->middleware(['auth'])->name('list-inverter');
-Route::get('/inverter-add', [InverterController::class,'add'])->middleware(['auth'])->name('add-inverter');
+Route::get('/products-list',[InverterController::class,'index'])->middleware(['auth'])->name('list-inverter');
+Route::get('/products-add', [InverterController::class,'add'])->middleware(['auth'])->name('add-inverter');
 Route::post('/inverter-save',[InverterController::class,'save'])->middleware(['auth'])->name('inverter-add');
-Route::get('/inverter-edit/{id}', [InverterController::class, 'edit'])->middleware(['auth'])->name('edit-inverter');
-Route::post('/inverter-update',[InverterController::class,'update'])->middleware(['auth'])->name('update-inverter');
+Route::get('/products-edit/{id}', [InverterController::class, 'edit'])->middleware(['auth'])->name('edit-inverter');
+Route::post('/products-update',[InverterController::class,'update'])->middleware(['auth'])->name('update-inverter');
 Route::get('/sparepart-product-delete/{id}', [InverterController::class, 'deleteSparePart'])->middleware(['auth'])->name('delete-sparepart-from-product');
 
 Route::get('/product-category-list',[ProductCategoryController::class,'index'])->middleware(['auth'])->name('list-inverter-category');
@@ -65,8 +65,8 @@ Route::get('/product-category-edit/{id}', [ProductCategoryController::class, 'ed
 Route::post('/product-category-update',[ProductCategoryController::class,'update'])->middleware(['auth'])->name('product-category-update');
 Route::get('/product-category-delete/{id}', [ProductCategoryController::class, 'delete'])->middleware(['auth'])->name('delete-product-category');
 
-Route::get('/inverters-inventory-list',[InverterInventoryController::class,'index'])->middleware(['auth'])->name('list-inverter-inventory');
-Route::get('/inverters-inventory-add', [InverterInventoryController::class,'add'])->middleware(['auth'])->name('add-inverter-inventory');
+Route::get('/products-inventory-list',[InverterInventoryController::class,'index'])->middleware(['auth'])->name('list-inverter-inventory');
+Route::get('/products-inventory-add', [InverterInventoryController::class,'add'])->middleware(['auth'])->name('add-inverter-inventory');
 Route::post('/inventory-save',[InverterInventoryController::class,'save'])->middleware(['auth'])->name('save-inverter-inventory');
 
 
