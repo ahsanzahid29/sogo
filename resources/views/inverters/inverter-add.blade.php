@@ -110,7 +110,7 @@
                                 </div>
                                 <div class="col-md-4 mb-5">
                                     <label class="form-label">Warranty Lag (in Months) :</label>
-                                    <input type="number" name="warranty_lag" class="form-control mb-2 mb-md-0" placeholder="Warranty Lag" />
+                                    <input type="number" max="3" name="warranty_lag" class="form-control mb-2 mb-md-0" placeholder="Warranty Lag" />
                                 </div>
                             </div>
 
