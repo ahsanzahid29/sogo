@@ -169,7 +169,7 @@ class InverterInventoryController extends Controller
                         ->where(['id'=>$row->inverter_id])
                         ->update(['total_quantity' =>$newTotal]);
                 }
-                return redirect('/inverters-inventory-list')->with('status', 'Inventory added successfully');
+                return redirect('/products-inventory-list')->with('status', 'Inventory added successfully');
             } else {
                 return back()->withErrors(['inventory_file' => 'No valid data to import']);
             }

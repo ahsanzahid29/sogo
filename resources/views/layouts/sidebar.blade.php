@@ -146,7 +146,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link {{ $productActive }}" href="{{ url('/inverters-list') }}">
+                            <a class="menu-link {{ $productActive }}" href="{{ url('/products-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-text-align-center fs-2">
 														<span class="path1"></span>
@@ -165,7 +165,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link {{ $productInventoryActive }}" href="{{ url('/inverters-inventory-list') }}">
+                            <a class="menu-link {{ $productInventoryActive }}" href="{{ url('/products-inventory-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-text-align-center fs-2">
 														<span class="path1"></span>
@@ -348,7 +348,7 @@
 														<span class="path6"></span>
 													</i>
 												</span>
-                                <span class="menu-title">Inverters Delivery Note</span>
+                                <span class="menu-title">Product Delivery Note</span>
                             </a>
                             <!--end:Menu link-->
                         </div>
@@ -427,7 +427,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link {{ $productActive }}" href="{{ url('/inverters-list') }}">
+                            <a class="menu-link {{ $productActive }}" href="{{ url('/products-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-text-align-center fs-2">
 														<span class="path1"></span>
@@ -446,7 +446,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link {{ $productInventoryActive }}" href="{{ url('/inverters-inventory-list') }}">
+                            <a class="menu-link {{ $productInventoryActive }}" href="{{ url('/products-inventory-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-text-align-center fs-2">
 														<span class="path1"></span>
@@ -579,7 +579,7 @@
 														<span class="path6"></span>
 													</i>
 												</span>
-                                <span class="menu-title">Inverters Delivery Note</span>
+                                <span class="menu-title">Product Delivery Note</span>
                             </a>
                             <!--end:Menu link-->
                         </div>
@@ -649,7 +649,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link {{ $productActive }}" href="{{ url('/inverters-list') }}">
+                            <a class="menu-link {{ $productActive }}" href="{{ url('/products-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-text-align-center fs-2">
 														<span class="path1"></span>
@@ -668,7 +668,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link {{ $productInventoryActive  }}" href="{{ url('/inverters-inventory-list') }}">
+                            <a class="menu-link {{ $productInventoryActive  }}" href="{{ url('/products-inventory-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-text-align-center fs-2">
 														<span class="path1"></span>
@@ -721,7 +721,7 @@
 														<span class="path6"></span>
 													</i>
 												</span>
-                                <span class="menu-title">Inverters Delivery Note</span>
+                                <span class="menu-title">Product Delivery Note</span>
                             </a>
                             <!--end:Menu link-->
                         </div>
@@ -795,7 +795,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link {{ $productActive }}" href="{{ url('/inverters-list') }}">
+                            <a class="menu-link {{ $productActive }}" href="{{ url('/products-list') }}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-text-align-center fs-2">
 														<span class="path1"></span>

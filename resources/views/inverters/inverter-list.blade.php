@@ -29,7 +29,7 @@
                             </li>
                             <!--end::Item-->
                             <!--begin::Item-->
-                            <li class="breadcrumb-item text-muted">Inverters</li>
+                            <li class="breadcrumb-item text-muted">Products</li>
                             <!--end::Item-->
                         </ul>
                         <!--end::Breadcrumb-->
@@ -72,7 +72,7 @@
                                 <!--begin::Toolbar-->
                                 <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
                                     <!--begin::Add customer-->
-                                    <a href="{{ url('/inverter-add') }}" class="btn btn-primary">Add Product</a>
+                                    <a href="{{ url('/products-add') }}" class="btn btn-primary">Add Product</a>
                                     <!--end::Add customer-->
                                 </div>
                                 <!--end::Toolbar-->
