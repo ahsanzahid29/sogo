@@ -234,7 +234,7 @@
                             $invoiceActive='';
                             $spRequestActive='';
                             if (Route::currentRouteName()=='list-sparepart-inventory'|| Route::currentRouteName()=='add-sparepart-inventory'
-                            ){
+                            || Route::currentRouteName()=='view-receiving-note'){
                             $spInvActiveActive='active';
                             }
                              if (Route::currentRouteName()=='list-sp-invoice'|| Route::currentRouteName()=='add-sp-invoice'
@@ -407,7 +407,7 @@
                             $productInventoryActive='active';
                             }
                             if (Route::currentRouteName()=='list-sparepart-inventory'|| Route::currentRouteName()=='add-sparepart-inventory'
-                            ){
+                            || Route::currentRouteName()=='view-receiving-note'){
                             $spInvActiveActive='active';
                             }
                              if (Route::currentRouteName()=='list-spartpart'|| Route::currentRouteName()=='add-spartpart'

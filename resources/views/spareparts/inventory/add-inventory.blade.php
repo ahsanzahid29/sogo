@@ -111,17 +111,32 @@
                                             <input type="text" id="current_stock" disabled placeholder="Current Stock" class="form-control mb-2 mb-md-0 current-stock-box" />
                                         </div>
                                         <div class="col-md-4 mb-5">
-                                            <label class=" required form-label">Required Quantity :</label>
+                                            <label class=" required form-label">Quantity Received :</label>
                                             <input type="number" name="qty[]" placeholder="Required Quantity" class="form-control mb-2 mb-md-0" />
                                         </div>
                                         <div class="col-md-4 mb-5">
-                                            <label class=" required form-label">Purchase Price :</label>
-                                            <input type="text" name="purchase_price[]" placeholder="Purchase Price" class="form-control mb-2 mb-md-0" />
+                                        <label class=" required form-label">Purchase Price :</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text" id="basic-addon1">Rs.</span>
+                                                <input type="text" name="purchase_price[]" placeholder="Purchase Price" class="form-control mb-2 mb-md-0" />
+                                            </div>
                                         </div>
+
+{{--                                        <div class="col-md-4 mb-5">--}}
+{{--                                            <label class=" required form-label">Purchase Price :</label>--}}
+{{--                                            <input type="text" name="purchase_price[]" placeholder="Purchase Price" class="form-control mb-2 mb-md-0" />--}}
+{{--                                        </div>--}}
                                         <div class="col-md-4 mb-5">
                                             <label class="form-label">Previous Purchase Price :</label>
-                                            <input type="text" id="previous_purchase_price" disabled placeholder="Previous Purchase Price" class="form-control mb-2 mb-md-0 previous-purchase-price-box" />
+                                            <div class="input-group">
+                                                <span class="input-group-text" id="basic-addon1">Rs.</span>
+                                                <input type="text" id="previous_purchase_price" disabled placeholder="Previous Purchase Price" class="form-control mb-2 mb-md-0 previous-purchase-price-box" />
+                                            </div>
                                         </div>
+{{--                                        <div class="col-md-4 mb-5">--}}
+{{--                                            <label class="form-label">Previous Purchase Price :</label>--}}
+{{--                                            <input type="text" id="previous_purchase_price" disabled placeholder="Previous Purchase Price" class="form-control mb-2 mb-md-0 previous-purchase-price-box" />--}}
+{{--                                        </div>--}}
 
                                     </div>
                                 </div>
