@@ -116,8 +116,8 @@
                                     <input type="number" name="service_warranty" class="form-control mb-2 mb-md-0" value="{{$inverter->service_warranty}}" placeholder="Service Warranty" />
                                 </div>
                                 <div class="col-md-4 mb-5">
-                                    <label class="form-label">Warranty Lag (in Years) :</label>
-                                    <input type="number" name="warranty_lag" class="form-control mb-2 mb-md-0" value="{{$inverter->warranty_lag}}" placeholder="Warranty Lag" />
+                                    <label class="form-label">Warranty Lag (in Months) :</label>
+                                    <input type="number" max="3" name="warranty_lag" class="form-control mb-2 mb-md-0" value="{{$inverter->warranty_lag}}" placeholder="Warranty Lag" />
                                 </div>
                             </div>
 

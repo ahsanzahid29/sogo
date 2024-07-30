@@ -32,8 +32,9 @@ class InverterInventoryController extends Controller
         foreach($inventory as $row){
             $detail = DB::table('inverter_inventories')->select('*')
                 ->where('serial_number',$row->serial_number)->first();
-            $productName = Inverter::where('modal_number',$row->model_number)->first();
-            $container_no[]   = $productName->inverter_name;
+            //$productName = Inverter::where('modal_number',$row->model_number)->first();
+            $productName = Inverter::where('modal_number', 'like', '%' . $row->model_number . '%')->first();
+            $container_no[]   = $row->model_number;
             $order_no[]       = $detail->order_number;
             $model_number[]   = $row->model_number;
             $serial_number[]  = $row->serial_number;
