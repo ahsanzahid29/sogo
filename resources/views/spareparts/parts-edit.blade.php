@@ -138,9 +138,13 @@
 {{--                                    @enderror--}}
 {{--                                </div>--}}
                                 <div class="col-md-6 mb-5">
-                                    <label class="required form-label">Pieces :</label>
-                                    <input type="number" class="form-control mb-2 mb-md-0" name="pieces" placeholder="Pieces" value="{{ $sparePart->pieces }}" required />
-                                    @error('pieces')
+                                    <label for="exampleFormControlInput1" class="required form-label">Unit :</label>
+                                    <select class="form-select form-select-solid" name="unit" aria-label="Select example">
+                                        <option value="0">Select Unit</option>
+                                        <option value="1" @if($sparePart->unit==1) selected @endif>Pieces</option>
+                                        <option value="2" @if($sparePart->unit==2) selected @endif>Kgs</option>
+                                    </select>
+                                    @error('unit')
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                                     @enderror
                                 </div>

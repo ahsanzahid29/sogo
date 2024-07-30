@@ -120,12 +120,23 @@
 {{--                                    @enderror--}}
 {{--                                </div>--}}
                                 <div class="col-md-6 mb-5">
-                                    <label class="required form-label">Pieces :</label>
-                                    <input type="number" value="1" class="form-control mb-2 mb-md-0" name="pieces" placeholder="Pieces" required />
-                                    @error('pieces')
+                                    <label for="exampleFormControlInput1" class="required form-label">Unit :</label>
+                                    <select class="form-select form-select-solid" name="unit" aria-label="Select example">
+                                        <option value="0">Select Unit</option>
+                                        <option value="1">Pieces</option>
+                                        <option value="2">Kgs</option>
+                                    </select>
+                                    @error('unit')
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                                     @enderror
                                 </div>
+{{--                                <div class="col-md-6 mb-5">--}}
+{{--                                    <label class="required form-label">Pieces :</label>--}}
+{{--                                    <input type="number" value="1" class="form-control mb-2 mb-md-0" name="pieces" placeholder="Pieces" required />--}}
+{{--                                    @error('pieces')--}}
+{{--                                    <div class="alert alert-danger mt-2">{{ $message }}</div>--}}
+{{--                                    @enderror--}}
+{{--                                </div>--}}
 
                             </div>
                             <div class="form-group row mb-5">
