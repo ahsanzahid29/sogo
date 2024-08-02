@@ -88,7 +88,7 @@
                                             <textarea  disabled class="form-control mb-2 mb-md-0">{{ $row->spname }}</textarea>
                                         </div>
                                         <div class="col-md-4 mb-5">
-                                            <label class="form-label">Required Quantity :</label>
+                                            <label class="form-label">Quantity Received :</label>
                                             <input type="number" value="{{ $row->qty }}" placeholder="Required Quantity" class="form-control mb-2 mb-md-0" disabled />
                                         </div>
                                         @if($detail->status=='pending' && $role==1)
