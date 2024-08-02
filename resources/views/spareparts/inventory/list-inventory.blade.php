@@ -135,6 +135,8 @@
                                                 @else
                                                     <a href="{{route('view-receiving-note',$row->id)}}" class="menu-link px-3">View</a>
                                                 @endif
+                                                    <a href="{{route('pdf-receiving-note',$row->id)}}" class="menu-link px-3">Print</a>
+
                                             </div>
                                             <!--end::Menu item-->
                                         </div>

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use PDF;
 
 class SparePartsInventoryController extends Controller
 {
@@ -498,6 +499,32 @@ class SparePartsInventoryController extends Controller
             ->get();
 
         return view("spareparts.inventory.inventory-detail", $data);
+    }
+
+    public function viewPdf($id){
+
+        $data["detail"] = SparePartsInventoryDetail::find($id);
+        $data["sp_inventory"] = SparePartInventory::select(
+            "spare_part_inventories.factory_code as factory_code",
+            "spare_part_inventories.qty_required as qty",
+            "spare_part_inventories.part_purchase_price as pprice",
+            "spare_parts.name as spname",
+            "spare_part_inventories.id as inv_id"
+        )
+            ->join(
+                "spare_parts",
+                "spare_part_inventories.sparepart_id",
+                "=",
+                "spare_parts.id"
+            )
+            ->where(
+                "spare_part_inventories.spare_part_inventory_detail_id",
+                "=",
+                $id
+            )
+            ->get();
+        return view('spareparts.inventory.print-inventory',$data);
+
     }
     public function update(Request $request)
     {

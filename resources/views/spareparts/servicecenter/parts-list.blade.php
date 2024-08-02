@@ -1,6 +1,13 @@
 @extends('layouts.dashboard')
 @push('scripts_top')
     <link href="{{asset('public/assets/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
+    <style>
+        .description {
+            max-width: 100px; /* Set the maximum width for the column */
+            word-wrap: break-word; /* Allow words to break and wrap to the next line */
+            white-space: normal; /* Enable normal text wrapping */
+        }
+    </style>
 @endpush
 @section('content')
     <!--begin::Main-->
@@ -90,9 +97,9 @@
                             <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_customers_table">
                                 <thead>
                                 <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
-                                    <th>S. No</th>
-                                    <th>Part Description</th>
-                                    <th class="min-w-125px">Factory Code</th>
+                                    <th class="min-w-50px">S. No</th>
+                                    <th class="min-w-50px description">Part Description</th>
+                                    <th class="min-w-150px">Factory Code</th>
                                     <th class="min-w-125px">Part Type</th>
                                     <th class="min-w-125px">Sale Price</th>
                                     <th class="min-w-125px">Pieces</th>
@@ -103,7 +110,7 @@
                                 @foreach($sparePartsForSc as $row)
                                 <tr>
                                     <td>{{ $count ++ }}</td>
-                                    <td><a href="javascript:void(0);" title="{{ $row->partname }}" style="text-decoration: none;color:#99a1b7">{{ Str::limit($row->partname, 20, '...') }}</a></td>
+                                    <td class="description">{{ $row->partname }}</td>
                                     <td>{{ $row->factorycode }}</td>
                                     <td>{{ $row->category }}</td>
                                     <td>{{ $row->saleprice }}</td>
