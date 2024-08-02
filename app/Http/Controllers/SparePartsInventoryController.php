@@ -530,12 +530,24 @@ class SparePartsInventoryController extends Controller
     {
         $inventoryIds = $request->inventory_ids;
         $newPurchasePrice = $request->purchase_price;
+        $principle_invoice_no= $request->principle_invoice_no;
+        $principle_invoice_date= $request->principle_invoice_date;
+        $remarks= $request->remarks;
 
         $inventoryMainDetail = SparePartsInventoryDetail::find(
             $request->record_id
         );
         DB::beginTransaction();
         try {
+            // update basic inventory detail
+            $newdata = [
+                'principle_invoice_no'      => $principle_invoice_no,
+                'principle_invoice_date'    => $principle_invoice_date,
+                'remarks'                   => $remarks,
+
+            ];
+            SparePartsInventoryDetail::where('id', $request->record_id)->update($newdata);
+
             // add purchase_price in spare_part_inventories table
             for ($i = 0; $i < count($inventoryIds); $i++) {
                 $affected = DB::table("spare_part_inventories")
