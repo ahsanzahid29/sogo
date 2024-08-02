@@ -11,22 +11,18 @@
             padding: 20px;
             background-color: #f9f9f9;
         }
-
         .container {
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-
         .header, .invoice-items, .total {
             margin-bottom: 20px;
         }
-
         .header div, .invoice-items div, .total div {
             margin-bottom: 10px;
         }
-
         .header input, .invoice-items input, .total input {
             width: 100%;
             padding: 10px; /* Ensure consistent padding */
@@ -35,33 +31,37 @@
             box-sizing: border-box;
             font-size: 16px; /* Ensure consistent font size */
         }
-
         .header input[readonly], .invoice-items input[readonly], .total input[readonly] {
             background-color: #f2f2f2;
         }
-
         .invoice-items table {
             width: 100%;
             border-collapse: collapse;
         }
-
         .invoice-items th, .invoice-items td {
             border: 1px solid #ddd;
             padding: 8px;
             text-align: left;
         }
-
         .invoice-items th {
             background-color: #f2f2f2;
         }
-
         .total {
             text-align: right;
             font-size: 18px;
         }
-
         .total .grand-total {
             font-weight: bold;
+        }
+        textarea {
+            width: 100%; /* Use full width of the container */
+            height: 100px; /* Set a specific height */
+            padding: 10px; /* Add padding for better appearance */
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box; /* Ensure padding doesn't affect overall width/height */
+            font-size: 16px; /* Consistent font size */
+            resize: none; /* Disable resizing if needed */
         }
     </style>
     <script>
@@ -94,7 +94,6 @@
             <input type="text" id="service-center-address" value="{{ date('d/m/Y',strtotime($detail->receiving_invoice_date)) }}" readonly>
         </div>
     </div>
-
     <div class="invoice-items">
         <h2>Invoice Items</h2>
         <table>
@@ -118,8 +117,12 @@
             </tbody>
         </table>
     </div>
-
-
+    <div class="header">
+        <div>
+            <label for="remarks">Remarks:</label>
+            <textarea id="remarks" readonly>{{ $detail->remarks }}</textarea>
+        </div>
+    </div>
 </div>
 </body>
 </html>

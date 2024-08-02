@@ -52,12 +52,20 @@
                             <div class="card-body pt-0">
                                 <div class="form-group row mb-5">
                                     <div class="col-md-6 mb-5">
-                                        <label class="form-label">Principle Invoice No:</label>
-                                        <input type="text" class="form-control mb-2 mb-md-0"  placeholder="Principle Invoice No" value="{{ $detail->principle_invoice_no }}" disabled />
+                                        @if($detail->status=='pending')
+                                            <label class="required form-label">Principle Invoice No:</label>
+                                        @else
+                                            <label class=" form-label">Principle Invoice No:</label>
+                                        @endif
+                                        <input type="text" class="form-control mb-2 mb-md-0" name="principle_invoice_no"  placeholder="Principle Invoice No" value="{{ $detail->principle_invoice_no }}" @if($detail->status=='pending')required @else disabled @endif />
                                     </div>
                                     <div class="col-md-6 mb-5">
-                                        <label class="form-label">Principle Invoice Date:</label>
-                                        <input type="text" class="form-control mb-2 mb-md-0"  value="{{ date('d/m/Y',strtotime($detail->principle_invoice_date)) }}" disabled />
+                                        @if($detail->status=='pending')
+                                            <label class="required form-label">Principle Invoice Date:</label>
+                                        @else
+                                            <label class=" form-label">Principle Invoice Date:</label>
+                                        @endif
+                                        <input type="date" class="form-control mb-2 mb-md-0" name="principle_invoice_date"  value="{{ $detail->principle_invoice_date }}" @if($detail->status=='pending')required @else disabled @endif />
                                     </div>
                                 </div>
                                 <div class="form-group row mb-5">
@@ -123,7 +131,7 @@
                                 <div class="form-group row mb-5">
                                     <div class="col-md-12 mb-5">
                                         <label class="form-label">Remarks:</label>
-                                        <textarea class="form-control mb-2 mb-md-0" disabled rows="7" cols="7">{{ $detail->remarks }}</textarea>
+                                        <textarea class="form-control mb-2 mb-md-0" name="remarks"  rows="7" cols="7" @if($detail->status=='pending')required @else disabled @endif>{{ $detail->remarks }}</textarea>
                                     </div>
                                 </div>
                                 <div class="form-group row">
