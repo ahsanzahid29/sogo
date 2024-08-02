@@ -122,8 +122,12 @@
                                     </td>
 {{--                                    <td>{{ $row->sale_price }}</td>--}}
                                     <td>
+                                        <div class="input-group">
+                                            <span class="input-group-text" id="basic-addon1">Rs.</span>
+                                            <input type="text" class="form-control sale-price" value="{{ $row->sale_price }}" data-id="{{ $row->id }}" readonly     onfocus="enableInput(this)" />
+                                        </div>
 
-                                    <input type="text" class="form-control sale-price" value="{{ $row->sale_price }}" data-id="{{ $row->id }}" readonly     onfocus="enableInput(this)" />
+{{--                                    <input type="text" class="form-control sale-price" value="{{ $row->sale_price }}" data-id="{{ $row->id }}" readonly     onfocus="enableInput(this)" />--}}
 
                                     </td>
 
