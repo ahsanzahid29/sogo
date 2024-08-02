@@ -1,4 +1,14 @@
 @extends('layouts.dashboard')
+@push('scripts_top')
+    <style>
+        .delivery_demo{
+            float: right;
+            font-size: 14px
+        }
+
+    </style>
+
+@endpush
 @section('content')
     <!--begin::Main-->
     <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
@@ -103,8 +113,11 @@
                                                     </select>
                                                 </td>
                                                 <td><input type="text" placeholder="Current Stock" class="form-control current-stock " readonly></td>
-                                                <td><input type="number" name="qty[]" placeholder="Quantity" class="form-control qty" required></td>
-                                                <td><input type="file" name="csv_files[]" class="form-control" required></td>
+                                                <td><input type="number" name="qty[]" placeholder="Quantity" class="form-control qty" required>
+                                                </td>
+                                                <td><input type="file" name="csv_files[]" class="form-control" required>
+                                                    <a target="_blank" href="{{asset('public/files/csv/deliverynote-inventory.csv')}}" class="delivery_demo">View Demo</a>
+                                                </td>
                                                 <td><button id="addItemBtn" class="btn btn-light-success">Add</button></td>
                                             </tr>
 
