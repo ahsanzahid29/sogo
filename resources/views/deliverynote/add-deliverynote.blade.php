@@ -95,6 +95,7 @@
                                         <table class="table table-row-dashed table-row-gray-300 gy-7">
                                             <thead>
                                             <tr class="fw-bold fs-6 text-gray-800" >
+                                                <th>#</th>
                                                 <th class="min-w-150px">Product Model</th>
                                                 <th>Current Stock</th>
                                                 <th>Qty</th>
@@ -104,6 +105,7 @@
                                             </thead>
                                             <tbody id="inputRow">
                                             <tr>
+                                                <td>1</td>
                                                 <td>
                                                     <select name="sparepart[]" class="form-control part-dropdown" required>
                                                         <option value="">Select Model</option>
@@ -128,8 +130,8 @@
 
                                 <div class="form-group row mb-5">
                                     <div class="col-md-12 mb-5">
-                                        <label class="required form-label">Delivery Notes:</label>
-                                        <textarea name="notes" class="form-control mb-2 mb-md-0" placeholder="Delivery Notes" rows="7" cols="7" required></textarea>
+                                        <label class=" form-label">Remarks:</label>
+                                        <textarea name="notes" class="form-control mb-2 mb-md-0" placeholder="Remarks" rows="7" cols="7"></textarea>
                                         @error('notes')
                                         <div class="alert alert-danger mt-2">{{ $message }}</div>
                                         @enderror
@@ -197,6 +199,7 @@
             });
             $('#addItemBtn').click(function(e) {
                 e.preventDefault();  // This stops the default form submission action
+                var rowCount = $('#inputRow tr').length + 1; 
                 var selectHtml = '<select name="sparepart[]" class="form-control part-dropdown" required>';
                 selectHtml += '<option value="">Select Model</option>';
                 parts.forEach(function(option) {
@@ -204,6 +207,7 @@
                 });
                 selectHtml += '</select>';
                 var newRow = '<tr>' +
+                    '<td>' + rowCount + '</td>' +
                     '<td>' + selectHtml + '</td>' +
                     '<td><input type="text" placeholder="Current Stock" class="form-control current-stock " readonly></td>' +
                     '<td><input type="number" name="qty[]" placeholder="Quantity" class="form-control qty" required></td>' +
