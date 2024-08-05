@@ -840,7 +840,7 @@
                         </div>
                         <!--end:Menu item-->
                         <!--begin:Menu item-->
-                        <div class="menu-item">
+                        {{-- <div class="menu-item">
                             <!--begin:Menu link-->
                             <a class="menu-link {{ $spInvActiveActive }}" href="{{ url('/sparepart-inventory-list') }}">
 												<span class="menu-icon">
@@ -856,7 +856,7 @@
                                 <span class="menu-title">Spare Parts Receiving Note</span>
                             </a>
                             <!--end:Menu link-->
-                        </div>
+                        </div> --}}
                         <!--end:Menu item-->
                         <!--begin:Menu item-->
                         <div class="menu-item">
