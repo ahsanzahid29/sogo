@@ -50,12 +50,20 @@ class SparePartRequestController extends Controller
         return view('sparepartrequest.list', $data);
     }
 
+    function generateSequentialNumber($number)
+    {
+        return str_pad($number, 4, '0', STR_PAD_LEFT);
+    }
+
     public function add()
     {
 
         if (Auth::user()->role_id == 4)
         {
-            $data['randomString'] = Str::random(4);
+            $count = SparePartRequest::count();
+            $finalCount = $count +1;
+            $data["randomString"] = 'SK'.date('y').$this->generateSequentialNumber($finalCount);
+            //$data['randomString'] = Str::random(4);
             $data['allSpareParts'] = SparePart::all();
             return view('sparepartrequest.add-request', $data);
         }
