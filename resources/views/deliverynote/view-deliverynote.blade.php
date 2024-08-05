@@ -66,8 +66,8 @@
                                 <input type="text" class="form-control form-control-solid" placeholder="Dealer Phone" value="{{$deliveryNote->userphone}}" readonly/>
                             </div>
                                 <div class="col-md-6 mb-5">
-                                    <label for="exampleFormControlInput1" class="form-label">DO Number</label>
-                                    <input type="text" class="form-control form-control-solid" placeholder="DO Number" value="{{$deliveryNote->do_no}}" readonly/>
+                                    <label for="exampleFormControlInput1" class="form-label">Head Office DO Number</label>
+                                    <input type="text" class="form-control form-control-solid" placeholder="Head Office DO Number" value="{{$deliveryNote->do_no}}" readonly/>
                                 </div>
                             </div>
                             <div class="form-group row mb-5">
@@ -85,7 +85,7 @@
                                     <table class="table table-row-dashed table-row-gray-300 gy-7">
                                         <thead>
                                         <tr class="fw-bold fs-6 text-gray-800" >
-                                            <th>Modal No</th>
+                                            <th>Model No</th>
                                             <th>Serial No</th>
                                             <th>Delivery Date</th>
                                         </tr>

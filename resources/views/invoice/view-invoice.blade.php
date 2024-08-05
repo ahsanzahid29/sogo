@@ -79,8 +79,8 @@
                                                 <th>Factory Code</th>
                                                 <th>Net Unit Price</th>
                                                 <th>Qty</th>
-                                                <th>Tax (%)</th>
-                                                <th>Discount</th>
+                                                {{-- <th>Tax (%)</th>
+                                                <th>Discount</th> --}}
                                                 <th>Subtotal</th>
                                             </tr>
                                             </thead>
@@ -90,8 +90,8 @@
                                                 <td> <input type="text" value="{{$row->sparepart}}" disabled  class="form-control"></td>
                                                 <td> <input type="text" value="{{$row->itemunitprice}}" disabled  class="form-control"></td>
                                                 <td> <input type="text" value="{{$row->itemqty}}" disabled  class="form-control"></td>
-                                                <td> <input type="text" value="{{$row->itemtax}}" disabled  class="form-control"></td>
-                                                <td> <input type="text" value="{{$row->itemdiscount}}" disabled  class="form-control"></td>
+                                                {{-- <td> <input type="text" value="{{$row->itemtax}}" disabled  class="form-control"></td>
+                                                <td> <input type="text" value="{{$row->itemdiscount}}" disabled  class="form-control"></td> --}}
                                                 <td> <input type="text" value="{{$row->itemtotal}}" disabled  class="form-control"></td>
                                             </tr>
                                             @endforeach

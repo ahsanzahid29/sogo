@@ -139,8 +139,8 @@ class SparePartsInvoiceController extends Controller
                            'quantity'           => $request->qty[$i],
                            'sale_price'         => $request->sale_price[$i],
                            'service_center_id'  => $request->service_user,
-                           'item_tax'           => $request->item_tax[$i],
-                           'item_discount'      => $request->item_discount[$i],
+                           'item_tax'           => '0.00',
+                           'item_discount'      =>'0.00',
                            'item_total'         => $request->item_total[$i],
                        ];
                }

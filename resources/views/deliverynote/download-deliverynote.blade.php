@@ -72,12 +72,12 @@
         <li><span class="label">Dealer Name:</span><span class="value">{{ $deliveryNote->username }}</span></li>
         <li><span class="label">Dealer Phone:</span><span class="value">{{ $deliveryNote->userphone }}</span></li>
         <li><span class="label">Dealer Address:</span><span class="value">{{ $deliveryNote->address }}</span></li>
-        <li><span class="label">DO Number:</span><span class="value">{{ $deliveryNote->do_no }}</span></li>
+        <li><span class="label">Head Office DO Number:</span><span class="value">{{ $deliveryNote->do_no }}</span></li>
     </ul>
     <table>
         <thead>
         <tr>
-            <th>Modal No</th>
+            <th>Model No</th>
             <th>Serial No</th>
             <th>Delivery Date</th>
         </tr>

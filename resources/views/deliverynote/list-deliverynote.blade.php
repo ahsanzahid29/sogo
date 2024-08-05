@@ -97,7 +97,7 @@
                                 <thead>
                                 <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
                                     <th>S. No</th>
-                                    <th>DO Number</th>
+                                    <th>Head Office DO Number</th>
                                     <th>Dealer Name</th>
                                     <th>No of products</th>
                                     <th>Notes</th>
