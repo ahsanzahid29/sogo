@@ -93,6 +93,8 @@
                                                 <th>Net Unit Price</th>
                                                 <th>Current Stock</th>
                                                 <th>Qty</th>
+                                                <th>Tax (%)</th>
+                                                <th>Discount</th>
                                                 <th>Subtotal</th>
                                                 <th>Action</th>
                                             </tr>
@@ -110,6 +112,8 @@
                                                 <td><input type="text" name="sale_price[]" placeholder="Net unit price" class="form-control unit-price" readonly></td>
                                                 <td><input type="text" placeholder="Current Stock" class="form-control current-stock " readonly></td>
                                                 <td><input type="number" name="qty[]" placeholder="Quantity" class="form-control qty" required></td>
+                                                <td><input type="text" name="item_tax[]" placeholder="Tax (%)" class="form-control tax-input" required></td>
+                                                <td><input type="text" name="item_discount[]" placeholder="Discount" class="form-control discount-input" required></td>
                                                 <td><input type="text" name="item_total[]" placeholder="Sub Total" class="form-control total-cost"></td>
                                                 <td><button id="addItemBtn" class="btn btn-light-success">Add</button></td>
                                             </tr>
@@ -217,6 +221,8 @@
                     '<td><input type="text" name="sale_price[]" placeholder="Net unit price" class="form-control unit-price" readonly></td>' +
                     '<td><input type="text" placeholder="Current Stock" class="form-control current-stock " readonly></td>' +
                     '<td><input type="number" name="qty[]" placeholder="Quantity" class="form-control qty" required></td>' +
+                    '<td><input type="text" name="item_tax[]" placeholder="Tax (%)" class="form-control tax-input" required></td>' +
+                    '<td><input type="text" name="item_discount[]" placeholder="Discount" class="form-control discount-input" required></td>' +
                     '<td><input type="text" name="item_total[]" placeholder="Sub Total" class="form-control total-cost"></td>' +
                     '<td><button class="btn btn-light-danger btn-xs removeBtn">Remove</button></td>' +
                     '</tr>';
@@ -252,10 +258,9 @@
                     $unitPriceField.val(''); // Clear tax output if no part is selected
                 }
             });
-            $('#inputRow').on('input', '.qty', function() {
+            $('#inputRow').on('input', '.quantity-input, .price-input, .tax-input, .discount-input', function() {
                 var $row = $(this).closest('tr');
                 var focVal  = $('#foc').val();
-                
                 if(focVal==1){
                     var taxRate = 0;
                     var discount = 0;
@@ -266,11 +271,13 @@
                 else{
                     var quantity = parseFloat($row.find('.qty').val()) || 0;
                     var price = parseFloat($row.find('.unit-price').val()) || 0;
+                    var taxRate = parseFloat($row.find('.tax-input').val()) || 0;
+                    var discount = parseFloat($row.find('.discount-input').val()) || 0;
                     var subtotal = quantity * price;
-                    var totalCost = subtotal ;  // Calculate total cost including tax
-                  
+                    var totalCost = subtotal + (subtotal * (taxRate / 100));  // Calculate total cost including tax
+                    var costwithDiscount = totalCost - discount;
                 }
-                $row.find('.total-cost').val(totalCost.toFixed(2));  // Display total cost, formatted to 2 decimal places
+                $row.find('.total-cost').val(costwithDiscount.toFixed(2));  // Display total cost, formatted to 2 decimal places
                 updateGrandTotal();
             });
 

@@ -67,8 +67,8 @@
                             <div class="card-body p-12">
                                 <div class="form-group row mb-5">
                                     <div class="col-md-6 mb-5">
-                                        <label class="required form-label">DO Number:</label>
-                                        <input type="text" name="do_number" class="form-control mb-2 mb-md-0" placeholder="DO Number" required />
+                                        <label class="required form-label">Head Office DO Number:</label>
+                                        <input type="text" name="do_number" class="form-control mb-2 mb-md-0" placeholder="Head Office DO Number" required />
                                         @error('do_number')
                                         <div class="alert alert-danger mt-2">{{ $message }}</div>
                                         @enderror
@@ -106,7 +106,7 @@
                                             <tr>
                                                 <td>
                                                     <select name="sparepart[]" class="form-control part-dropdown" required>
-                                                        <option value="">Select Modal</option>
+                                                        <option value="">Select Model</option>
                                                         @foreach($inverters as $rowp)
                                                             <option value="{{$rowp->id}}">{{ $rowp->modal_number }}</option>
                                                         @endforeach
@@ -198,7 +198,7 @@
             $('#addItemBtn').click(function(e) {
                 e.preventDefault();  // This stops the default form submission action
                 var selectHtml = '<select name="sparepart[]" class="form-control part-dropdown" required>';
-                selectHtml += '<option value="">Select Modal</option>';
+                selectHtml += '<option value="">Select Model</option>';
                 parts.forEach(function(option) {
                     selectHtml += '<option value="' + option.id + '">' + option.modal_number + '</option>';
                 });

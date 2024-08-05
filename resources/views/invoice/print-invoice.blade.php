@@ -99,8 +99,8 @@
                 <th>Product Name</th>
                 <th>Net Unit Price</th>
                 <th>Qty</th>
-                <th>Tax (%)</th>
-                <th>Discount</th>
+                {{-- <th>Tax (%)</th>
+                <th>Discount</th> --}}
                 <th>Subtotal</th>
             </tr>
             </thead>
@@ -110,8 +110,8 @@
                     <td>{{$row->sparepart}} </td>
                     <td> {{$row->itemunitprice}}</td>
                     <td>{{$row->itemqty}} </td>
-                    <td> {{$row->itemtax}}</td>
-                    <td> {{$row->itemdiscount}} </td>
+                    {{-- <td> {{$row->itemtax}}</td>
+                    <td> {{$row->itemdiscount}} </td> --}}
                     <td> {{$row->itemtotal}}</td>
                 </tr>
             @endforeach
