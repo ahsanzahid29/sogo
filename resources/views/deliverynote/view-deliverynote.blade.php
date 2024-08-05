@@ -72,8 +72,8 @@
                             </div>
                             <div class="form-group row mb-5">
                                 <div class="col-md-12 mb-5">
-                                <label for="exampleFormControlInput1" class="form-label">Delivery Notes</label>
-                                <textarea rows="7" cols="7" class="form-control form-control-solid" placeholder="Notes.." name="notes" readonly>{{$deliveryNote->notes}}</textarea>
+                                <label for="exampleFormControlInput1" class="form-label">Remarks</label>
+                                <textarea rows="7" cols="7" class="form-control form-control-solid" placeholder="Remarks.." name="notes" readonly>{{$deliveryNote->notes}}</textarea>
                             </div>
                             </div>
 
