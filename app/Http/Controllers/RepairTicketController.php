@@ -296,6 +296,7 @@ class RepairTicketController extends Controller
                     "=",
                     Auth::user()->id,
                 ],
+                ['spare_parts.status','=','active']
             ])
             ->first();
         $partStock = $detail->total_quantity;

@@ -160,6 +160,17 @@
                                 </div>
 
                             </div>
+                            <div class="form-group row mb-5">
+                                <div class="col-md-6 mb-5">
+                                <label class="form-label mb-2">Status:</label>
+                                <div class="form-check form-switch form-check-custom form-check-solid">
+                                    <input class="form-check-input" name="status" type="checkbox" value="active" id="inverterstatus" @if($sparePart->status=='active')checked="checked" @else @endif />
+                                    <label class="form-check-label" for="inverterstatus">
+                                        Active
+                                    </label>
+                                </div>
+                                </div>
+                            </div>
 
                             @if(count($sparePartModel)>0)
                                 <div class="form-group row mb-3">

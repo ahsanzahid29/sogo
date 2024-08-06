@@ -103,20 +103,21 @@ class SparePartsController extends Controller
                 #------------------- insert in database--------------------------------#
                 $sparePart = SparePart::create(
                     [
-                        'name'           => $request->name,
-                        'factory_code'   => $request->factory_code,
-                        'part_type'      => $request->part_type,
+                        'name'             => $request->name,
+                        'factory_code'     => $request->factory_code,
+                        'part_type'        => $request->part_type,
                         //'voltage_rating' => $request->voltage_rating,
                        // 'ampeare_rating' => $request->ampeare_rating,
                         //'base_unit'       => $request->base_unit,
-                        'pieces'          => 1,
-                        'unit'            =>  $request->unit,
-                        'sale_price'      => $request->sale_price,
-                        'total_quantity'  => 0,
-                        'sold_quantity'   => 0,
-                        'user_id'         => Auth::user()->id,
-                        'part_image'      => $partImageName,
-                        'technical_notes'  => $request->technical_notes
+                        'pieces'           => 1,
+                        'unit'             =>  $request->unit,
+                        'sale_price'       => $request->sale_price,
+                        'total_quantity'   => 0,
+                        'sold_quantity'    => 0,
+                        'user_id'          => Auth::user()->id,
+                        'part_image'       => $partImageName,
+                        'technical_notes'  => $request->technical_notes,
+                        'status'           =>$request->status ? $request->status :'inactive'
                     ]
                 );
                 $sparePartId = $sparePart->id;
@@ -234,7 +235,8 @@ class SparePartsController extends Controller
                     'unit'           => $request->unit,
                     'sale_price'     => $request->sale_price,
                     'part_image'     => $partImageName,
-                    'technical_notes' => $request->technical_notes
+                    'technical_notes' => $request->technical_notes,
+                    'status'           =>$request->status ? $request->status :'inactive'
 
                 ];
 
