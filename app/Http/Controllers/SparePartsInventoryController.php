@@ -145,7 +145,7 @@ class SparePartsInventoryController extends Controller
         if (Auth::user()->role_id == 4) {
             return redirect("dashboard");
         }
-        $data["spareParts"] = SparePart::all();
+        $data["spareParts"] = SparePart::where('status','active')->get();
         $data["randomString"] = $this->generateRandomString();
         $count = SparePartsInventoryDetail::count();
         $finalCount = $count +1;

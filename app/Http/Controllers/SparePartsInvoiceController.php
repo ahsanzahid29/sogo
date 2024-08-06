@@ -57,7 +57,7 @@ class SparePartsInvoiceController extends Controller
                                 ['status','=','active']
                             ])
                             ->get();
-       $data['spareParts'] = SparePart::all();
+       $data['spareParts'] = SparePart::where('status','active')->get();
        return view('invoice.add-invoice',$data);
    }
    public function detail($id){

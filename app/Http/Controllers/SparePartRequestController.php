@@ -64,7 +64,7 @@ class SparePartRequestController extends Controller
             $finalCount = $count +1;
             $data["randomString"] = 'SK'.date('y').$this->generateSequentialNumber($finalCount);
             //$data['randomString'] = Str::random(4);
-            $data['allSpareParts'] = SparePart::all();
+            $data['allSpareParts'] = SparePart::where('status','active')->get();
             return view('sparepartrequest.add-request', $data);
         }
         else
