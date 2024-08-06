@@ -155,9 +155,20 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-3 mb-5">
-                                    <label class="form-label mb-2">Demo File</label>
+                                    <label class="form-label mb-2">Demo File:</label>
                                     <a target="_blank" style="color:blue" class="form-control mb-2 mb-md-0" href="{{asset('public/files/csv/sparepart-in-inverter.csv')}}">View Demo</a>
 
+                                </div>
+                            </div>
+                            <div class="form-group row mb-5">
+                                <div class="col-md-6 mb-5">
+                                <label class="form-label mb-2">Status:</label>
+                                <div class="form-check form-switch form-check-custom form-check-solid">
+                                    <input class="form-check-input" name="status" type="checkbox" value="active" id="inverterstatus" checked="checked" />
+                                    <label class="form-check-label" for="inverterstatus">
+                                        Active
+                                    </label>
+                                </div>
                                 </div>
                             </div>
 

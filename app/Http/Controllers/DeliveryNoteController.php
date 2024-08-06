@@ -62,7 +62,10 @@ class DeliveryNoteController extends Controller
             return redirect("/dashboard");
         }
         $data["dealers"] = User::where("role_id", 3)->get();
-        $data["inverters"] = Inverter::where("total_quantity", ">", 0)->get();
+        $data["inverters"] = Inverter::where([
+            ["total_quantity", ">", 0],
+            ["status",'=','active']
+        ])->get();
         return view("deliverynote.add-deliverynote", $data);
     }
     public function detailDealer($id)

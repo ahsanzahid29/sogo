@@ -163,13 +163,24 @@
                                 </div>
 
                             </div>
+                            <div class="form-group row mb-5">
+                                <div class="col-md-6 mb-5">
+                                <label class="form-label mb-2">Status:</label>
+                                <div class="form-check form-switch form-check-custom form-check-solid">
+                                    <input class="form-check-input" name="status" type="checkbox" value="active" id="inverterstatus" @if($inverter->status=='active')checked="checked" @else @endif />
+                                    <label class="form-check-label" for="inverterstatus">
+                                        Active
+                                    </label>
+                                </div>
+                                </div>
+                            </div>
 
                             <div class="form-group row">
 
                                 <div class="col-md-12">
 
                                     <button type="submit" class="btn btn-warning">Update</button>
-                                    <a href="{{ url('/inverters-list') }}" class="btn btn-secondary">Cancel</a>
+                                    <a href="{{ url('/products-list') }}" class="btn btn-secondary">Cancel</a>
                                 </div>
                             </div>
 

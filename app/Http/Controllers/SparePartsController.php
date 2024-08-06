@@ -65,7 +65,7 @@ class SparePartsController extends Controller
     }
 
     public function add(){
-        $data['inverters']= Inverter::get();
+        $data['inverters']= Inverter::where('status','active')->get();
         $data['sparePartCategory'] = SparePartCategory::all();
         return view('spareparts.parts-add',$data);
     }

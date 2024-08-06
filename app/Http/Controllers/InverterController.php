@@ -143,8 +143,10 @@ class InverterController extends Controller
                         'total_quantity'=> 0,
                         'sold_quantity'=> 0,
                         'user_id'=> Auth::user()->id,
+                        'status' =>$request->status ? $request->status :'inactive'
                     ]
                 );
+                if ($request->file('sparepart_file')) {
                 // add data in spare_parts_model via csv
                 if (($handle = fopen($request->file("sparepart_file")->getPathname(),"r")) !== false) {
                     $headers = fgetcsv($handle, 1000, ",");
@@ -238,6 +240,7 @@ class InverterController extends Controller
                         ]);
                     }
                 }
+            }
 
                 DB::commit();
                 return redirect('/products-list')->with('status', 'Product added successfully');
@@ -358,6 +361,7 @@ class InverterController extends Controller
                     'product_manual'=> $productManaualName ? $productManaualName : $oldDetail->product_manual,
                     'troubleshoot_guide'=> $troubleshootGuideName ? $troubleshootGuideName : $oldDetail->troubleshoot_guide,
                     'inverter_image'=> $inverterImageName ? $inverterImageName : $oldDetail->inverter_image,
+                    'status' =>$request->status ? $request->status :'inactive'
 
                 ];
 
