@@ -95,7 +95,7 @@
                                     <div class="form-group row mb-5 repeatable-section">
                                         <div class="col-md-4 mb-5 mt-2">
                                             <label for="exampleFormControlInput1" class=" required form-label">Spare Parts</label>
-                                            <select name="parts[]" class="form-select form-select-solid spare-part-dropdown" required>
+                                            <select name="parts[]" class="form-select myselect form-select-solid spare-part-dropdown" required>
                                                 <option value="" selected>Select Spare Part</option>
                                                 @foreach($spareParts as $row)
                                                     <option value="{{$row->id}}">{{ $row->factory_code }}</option>
@@ -164,10 +164,13 @@
     </div>
     <!--end:::Main-->
 @endsection
-@push('scripts_bottom')
+@push('scripts_bottom') 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
         $(document).ready(function() {
+            $('.myselect').select2();
             // Function to handle the AJAX call and update text boxes
             function handleDropdownChange(dropdown) {
                 var selectedValue = $(dropdown).val();
