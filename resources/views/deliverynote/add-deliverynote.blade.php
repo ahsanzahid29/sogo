@@ -207,7 +207,7 @@
             $('#addItemBtn').click(function(e) {
                 e.preventDefault();  // This stops the default form submission action
                 var rowCount = $('#inputRow tr').length + 1; 
-                var selectHtml = '<select name="sparepart[]" class="form-control part-dropdown" required>';
+                var selectHtml = '<select name="sparepart[]" class="form-control myselect part-dropdown" required>';
                 selectHtml += '<option value="">Select Model</option>';
                 parts.forEach(function(option) {
                     selectHtml += '<option value="' + option.id + '">' + option.modal_number + '</option>';
@@ -222,7 +222,7 @@
                     '<td><button class="btn btn-light-danger btn-xs removeBtn">Remove</button></td>' +
                     '</tr>';
                 $('#inputRow').append(newRow);
-
+                $('.myselect').select2();
             });
 
             // Event delegation to handle click on dynamically created remove buttons

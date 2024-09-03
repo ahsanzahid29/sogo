@@ -103,7 +103,7 @@
                                                     <select name="sparepart[]" class="form-control myselect part-dropdown" required>
                                                         <option value="">Select Spare Part</option>
                                                         @foreach($spareParts as $rowspp)
-                                                            <option value="{{$rowspp->id}}">{{ $rowspp->factory_code }}</option>
+                                                            <option data-search="{{ $rowspp->name }}" value="{{$rowspp->id}}">{{ $rowspp->factory_code }}</option>
                                                         @endforeach
                                                     </select>
                                                 </td>
@@ -185,7 +185,35 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
         $(document).ready(function() {
-            $('.myselect').select2();
+            function customMatcher(params, data) {
+      // If there are no search terms, return all of the data
+      if ($.trim(params.term) === '') {
+        return data;
+      }
+
+      // Convert search term to lower case for case insensitive search
+      var searchTerm = params.term.toLowerCase();
+
+      // Check if the text contains the search term
+      if (data.text.toLowerCase().indexOf(searchTerm) > -1) {
+        return data;
+      }
+
+      // Check if the data-search attribute contains the search term
+      if (typeof data.element !== 'undefined') {
+        var searchAttribute = $(data.element).data('search');
+        if (searchAttribute && searchAttribute.toLowerCase().indexOf(searchTerm) > -1) {
+          return data;
+        }
+      }
+
+      // Return null if the term should not be displayed
+      return null;
+    }
+
+            $('.myselect').select2({
+      matcher: customMatcher
+    });
             var parts = @json($spareParts);
             $('#service_user').change(function() {
                 var selectedOption = $(this).val();
@@ -209,10 +237,10 @@
             });
             $('#addItemBtn').click(function(e) {
                 e.preventDefault();  // This stops the default form submission action
-                var selectHtml = '<select name="sparepart[]" class="form-control part-dropdown" required>';
+                var selectHtml = '<select name="sparepart[]" class="form-control myselect part-dropdown" required>';
                 selectHtml += '<option value="">Select Spare Part</option>';
                 parts.forEach(function(option) {
-                    selectHtml += '<option value="' + option.id + '">' + option.factory_code + '</option>';
+                    selectHtml += '<option data-search="' + option.name + '" value="' + option.id + '">' + option.factory_code + '</option>';
                 });
                 selectHtml += '</select>';
                 var newRow = '<tr>' +
@@ -225,6 +253,9 @@
                     '</tr>';
                 $('#inputRow').append(newRow);
                 updateGrandTotal();
+                $('.myselect').select2({
+      matcher: customMatcher
+    });
             });
 
             // Event delegation to handle click on dynamically created remove buttons

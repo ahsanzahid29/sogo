@@ -170,7 +170,37 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
         $(document).ready(function() {
-            $('.myselect').select2();
+
+            function customMatcher(params, data) {
+      // If there are no search terms, return all of the data
+      if ($.trim(params.term) === '') {
+        return data;
+      }
+
+      // Convert search term to lower case for case insensitive search
+      var searchTerm = params.term.toLowerCase();
+
+      // Check if the text contains the search term
+      if (data.text.toLowerCase().indexOf(searchTerm) > -1) {
+        return data;
+      }
+
+      // Check if the data-search attribute contains the search term
+      if (typeof data.element !== 'undefined') {
+        var searchAttribute = $(data.element).data('search');
+        if (searchAttribute && searchAttribute.toLowerCase().indexOf(searchTerm) > -1) {
+          return data;
+        }
+      }
+
+      // Return null if the term should not be displayed
+      return null;
+    }
+
+            $('.myselect').select2({
+      matcher: customMatcher
+    });
+    var parts = @json($spareParts);
             // Function to handle the AJAX call and update text boxes
             function handleDropdownChange(dropdown) {
                 var selectedValue = $(dropdown).val();
@@ -201,6 +231,7 @@
             });
 
             // Function to add new rows
+/*
             $('#add-button').on('click', function() {
                 var originalSection = $('.repeatable-section').first();
                 var clone = originalSection.clone(true);
@@ -226,6 +257,88 @@
                 // Append the hr element and the cloned section to the form container
                 $('#form-container').append(hr).append(clone);
             });
+*/
+
+            $('#add-button').on('click', function() {
+    // Create a new div to contain the form elements
+    var newSection = $('<div class="form-group row mb-5 repeatable-section"></div>');
+    
+    // Spare Parts Select Dropdown
+    var sparePartsSelect = $('<div class="col-md-4 mb-5 mt-2"></div>').append(
+        $('<label for="exampleFormControlInput1" class="required form-label">Spare Parts</label>'),
+        $('<select name="parts[]" class="form-select myselect form-select-solid spare-part-dropdown" required></select>')
+            .append('<option value="" selected>Select Spare Part</option>')
+            .append(function() {
+                var options = '';
+                @foreach($spareParts as $row)
+                    options += `<option data-search="{{ $row->name }}" value="{{$row->id}}">{{ $row->factory_code }}</option>`;
+                @endforeach
+                return options;
+            })
+    );
+
+    // Description Textarea
+    var descriptionTextarea = $('<div class="col-md-4 mb-5"></div>').append(
+        $('<label class="required form-label">Description :</label>'),
+        $('<textarea id="description" disabled class="form-control mb-2 mb-md-0 description-box"></textarea>')
+    );
+
+    // Current Stock Input
+    var currentStockInput = $('<div class="col-md-4 mb-5"></div>').append(
+        $('<label class="required form-label">Current Stock :</label>'),
+        $('<input type="text" id="current_stock" disabled placeholder="Current Stock" class="form-control mb-2 mb-md-0 current-stock-box" />')
+    );
+
+    // Quantity Received Input
+    var quantityInput = $('<div class="col-md-4 mb-5"></div>').append(
+        $('<label class="required form-label">Quantity Received :</label>'),
+        $('<input type="number" name="qty[]" placeholder="Required Quantity" class="form-control mb-2 mb-md-0" />')
+    );
+
+    // Purchase Price Input
+    var purchasePriceInput = $('<div class="col-md-4 mb-5"></div>').append(
+        $('<label class="required form-label">Purchase Price :</label>'),
+        $('<div class="input-group"></div>').append(
+            $('<span class="input-group-text" id="basic-addon1">Rs.</span>'),
+            $('<input type="text" name="purchase_price[]" placeholder="Purchase Price" class="form-control mb-2 mb-md-0" />')
+        )
+    );
+
+    // Previous Purchase Price Input
+    var previousPriceInput = $('<div class="col-md-4 mb-5"></div>').append(
+        $('<label class="form-label">Previous Purchase Price :</label>'),
+        $('<div class="input-group"></div>').append(
+            $('<span class="input-group-text" id="basic-addon1">Rs.</span>'),
+            $('<input type="text" id="previous_purchase_price" disabled placeholder="Previous Purchase Price" class="form-control mb-2 mb-md-0 previous-purchase-price-box" />')
+        )
+    );
+
+    // Remove Button
+    var removeButton = $('<button type="button" class="btn btn-danger remove-button">Remove</button>').on('click', function() {
+        $(this).closest('.repeatable-section').prev('hr').remove(); // Remove the preceding hr
+        $(this).closest('.repeatable-section').remove(); // Remove the section itself
+    });
+
+    var buttonContainer = $('<div class="col-md-4 mb-5"></div>').append(removeButton);
+
+    // Append all elements to the new section
+    newSection.append(sparePartsSelect, descriptionTextarea, currentStockInput, quantityInput, purchasePriceInput, previousPriceInput, buttonContainer);
+
+    // Create an hr element
+    var hr = $('<hr>');
+
+    // Append the hr element and the new section to the form container
+    $('#form-container').append(hr).append(newSection);
+
+    // Reinitialize select2 on new elements
+    $('.myselect').select2({
+        matcher: customMatcher
+    });
+});
+
+
+
+
         });
     </script>
 
